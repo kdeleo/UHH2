@@ -335,6 +335,16 @@ infile_dict_CHSVersion["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShigh
 infile_dict_dzcut["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 
 
+### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled, noCPP
+infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI CHS high pT noCPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
+
+### PUPPI v13
+infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2016_v13
+
 
 ###
 # Charged particle protection
