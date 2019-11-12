@@ -81,6 +81,7 @@ def plot_control(hists, folder):
         for pu in hists[key]:
             hist = hists[key][pu]
 
+           
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
                 if bin%10 !=0: continue
@@ -94,7 +95,7 @@ def plot_control(hists, folder):
                 projection.GetYaxis().SetTitle("Events")
                 projection.GetXaxis().SetRangeUser(0.5,1.5)
 
-                projection.Draw("pe same")
+                projection.Draw()
 
                 info = extratext("pT " + str(bin),0.2,0.5)
                 info.Draw()
@@ -108,7 +109,6 @@ def plot_control(hists, folder):
                 info3.Draw()
 
                 name = pu.replace(" ","_")
-
                 c.Print(folder+"/control/"+key+"_"+name+"_"+str(bin)+".eps")
 
 # used to place extra text in the Canvas if needed
@@ -334,11 +334,16 @@ TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 infile_dict_dzcut["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 
-### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled, without charged particle protection
-infile_puppi_inc_2016_CHShighpT_dzcutenabled_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI CHS high pT, noCPP"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled_noCPP
-infile_dict_dzcut["PUPPI CHS high pT, noCPP"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled_noCPP
+
+#### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled, noCPP
+#infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI CHS high pT noCPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
+
+#### PUPPI v13
+#infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2016_v13
 
 
 ###
@@ -357,7 +362,6 @@ plot_reso(reso_hists_CP,folder_CP,"reso","resolution",0.05,0.4,True)
 ###
 # QCD CHS vs PUPPI
 hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
-plot_control(hists_CHS,folder_CHS)
 
 reso_hists_CHS = get_reso(hists_CHS)
 plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)

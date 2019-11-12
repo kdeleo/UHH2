@@ -11,7 +11,7 @@ import math
 import re
 import time
 import datetime
-from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph
+from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph, TString
 from collections import OrderedDict
 import CMSPlotStyle
 
@@ -39,6 +39,9 @@ gROOT.SetStyle("CMS_Style")
 gStyle.SetOptStat(0)
 gStyle.SetPaintTextFormat("2.3f")
 
+colors = [kBlack, kRed, kSpring, kOrange,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+markers = [22,25,28,32,21,20,20,22,22,22,22,22,22,22,22]
+
 berror = False
 beps = True
 
@@ -52,8 +55,8 @@ beps = True
 def get_hists(infile_dict,hist_folder):
     hists={}
     # make list for all histogramm JetPtResponse_* based on first file
-    if infile_dict.has_key("PUPPI 2016 102"):
-        lista = infile_dict["PUPPI 2016 102"].Get(hist_folder).GetListOfKeys()
+    if infile_dict.has_key("PUPPI default"):
+        lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -76,11 +79,11 @@ def get_hists(infile_dict,hist_folder):
 def plot_control(hists, folder):
     print "plot control"
 
+    hist_dict = {}
 
     for key in hists:
         for pu in hists[key]:
             hist = hists[key][pu]
-
            
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
@@ -89,13 +92,15 @@ def plot_control(hists, folder):
 
                 # plot for each pT bin the distribution and save in folder+"/control/"
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                
                 c = TCanvas()
+
+
                 projection.GetXaxis().SetTitle("p_{T}^{reco} / p_{T}^{gen}")
                 projection.GetYaxis().SetTitle("Events")
                 projection.GetXaxis().SetRangeUser(0.5,1.5)
 
                 projection.Draw()
+
 
                 info = extratext("pT " + str(bin),0.2,0.5)
                 info.Draw()
@@ -109,7 +114,72 @@ def plot_control(hists, folder):
                 info3.Draw()
 
                 name = pu.replace(" ","_")
+                hist_dict[key+"_"+name+"_"+str(bin)] = projection.Clone()
+
                 c.Print(folder+"/control/"+key+"_"+name+"_"+str(bin)+".eps")
+
+
+    # plot different scale in same TCanvas
+    print "============= JER scale"
+    for key in hist_dict:
+        print "####################3 new key " + key
+        if not "PUPPI_default" in key: continue
+        splitted = key.split("_")
+        c1 = TCanvas()
+        leg = TLegend(0.5,0.5,0.9,0.9,"","brNDC")        
+        leg.SetBorderSize(0);
+        leg.SetTextSize(0.035);
+        leg.SetFillColor(0);
+        leg.SetLineColor(1);
+        leg.SetTextFont(42);
+
+        i=0
+        for key2 in hist_dict:
+            if splitted[1] not in key2: continue
+            if splitted[-1] not in key2.split("_")[-1]: continue
+            if splitted[-1]=='0': continue
+
+            print key2
+            projection2  = hist_dict[key2]
+            projection2.Rebin(2)
+            if projection2.Integral() != 0:
+                projection2.Scale(1/projection2.Integral())
+            projection2.GetXaxis().SetTitle("p_{T}^{reco} / p_{T}^{gen}")
+            projection2.GetYaxis().SetTitle("Events")
+            projection2.GetXaxis().SetRangeUser(0.5,3)
+
+            print i
+            projection2.SetLineColor(colors[i])
+            projection2.SetMarkerColor(colors[i])
+            projection2.SetMarkerStyle(markers[i])
+            c1.cd()
+            projection2.Draw("same")
+            legname = TString(key2)
+            legname.ReplaceAll("JetPtResponse_","")
+            legname.ReplaceAll(re.findall(r'Eta\d*p*\d*to\d*p*\d*_', key2)[0],"")
+            legname.ReplaceAll("_"+key2.split("_")[-1],"")
+            print legname
+            legname = str(legname)
+            leg.AddEntry(projection2,legname,"lp")
+            i+=1
+
+        # info = extratext("pT " + str(key2.split("_")[-1]),0.2,0.5)
+        # info.Draw()
+        
+        # info2 = extratext(pu ,0.2,0.6)
+        # info2.Draw()
+        
+        etabins = re.findall(r'Eta\d*p*\d*to\d*p*\d*', key)
+        eta = etabins[0].replace("Eta","").replace("p",".").replace("to","< |#eta| <")
+        info3 = extratext(eta ,0.7,0.7)
+        info3.Draw()
+        
+        leg.Draw()
+            
+        c1.Print(folder+"/control_all/"+key+".eps")
+
+        
+
 
 # used to place extra text in the Canvas if needed
 def extratext(text,x,y):
@@ -275,10 +345,10 @@ folder_dzcut = "JER/PUPPI_dzcut/"
 ### Original QCD file from 2016v2 in CMSSW102
 infile_QCD_orig_2016_102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_effmis.root")
 TH1.AddDirectory(0)
-infile_dict["PUPPI 2016 102"]=infile_QCD_orig_2016_102
-infile_dict_chargedProtection["PUPPI 2016 102"]=infile_QCD_orig_2016_102
-infile_dict_CHSVersion["PUPPI 2016 102"]=infile_QCD_orig_2016_102
-infile_dict_dzcut["PUPPI 2016 102"]=infile_QCD_orig_2016_102
+infile_dict["PUPPI default"]=infile_QCD_orig_2016_102
+infile_dict_chargedProtection["PUPPI default"]=infile_QCD_orig_2016_102
+infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2016_102
+infile_dict_dzcut["PUPPI default"]=infile_QCD_orig_2016_102
 
 ### CHS original QCD file from 2016v2 in CMSSW102 
 infile_QCD_CHS = TFile("/nfs/dust/cms/user/abenecke/ZPrimeTotTPrime/CMSSW_8X/rootfiles/puppi_CMSSW_9_2_4/uhh2.AnalysisModuleRunner.MC.QCD_8_0_CHS_koastas.root")
@@ -321,40 +391,40 @@ infile_dict_dzcut["PUPPI dzcutfalse"]=infile_puppi_inc_2016_chargedparticleprote
 ### PUPPI where the charged particles are kept in the same way as CHS -> also influences the enutrals since more charged are know participating in the alpha calculation
 infile_puppi_inc_2016_chargednoneutrals = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_chargednonneutrals_effmis.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI CHS version"]=infile_puppi_inc_2016_chargednoneutrals
+infile_dict_CHSVersion["PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargednoneutrals
 
 ### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV
 infile_puppi_inc_2016_CHShighpT = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_effmis.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI CHS high pT"]=infile_puppi_inc_2016_CHShighpT
+infile_dict_CHSVersion["PUPPI low pT neutral, high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT
 
-### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled
-infile_puppi_inc_2016_CHShighpT_dzcutenabled = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_effmis.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
-infile_dict_dzcut["PUPPI CHS high pT, dzcut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
-
-
-### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled, noCPP
-infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI CHS high pT noCPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
+#### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled
+##infile_puppi_inc_2016_CHShighpT_dzcutenabled = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_effmis.root")
+#infile_puppi_inc_2016_CHShighpT_dzcutenabled = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI low pT with dz cut (LV/PU), high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
+#infile_dict_dzcut["PUPPI low pT with dz cut (LV/PU), high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 
 ### PUPPI v13
 infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2016_v13
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13 
+
+#### PUPPI highpt no CPP
+#infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI low pT neutral, high pT LV, no dz cut, no CPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
 
 
-###
-# Charged particle protection
-###
-# QCD CHS vs PUPPI
-hists_CP = get_hists(infile_dict_chargedProtection,"puppi_jet_pt_8_wJEC")
-#plot_control(hists_CP,folder_CP)
+# ###
+# # Charged particle protection
+# ###
+# # QCD CHS vs PUPPI
+# hists_CP = get_hists(infile_dict_chargedProtection,"puppi_jet_pt_8_wJEC")
+# #plot_control(hists_CP,folder_CP)
 
-reso_hists_CP = get_reso(hists_CP)
-plot_reso(reso_hists_CP,folder_CP,"reso","resolution",0.05,0.4,True)
+# reso_hists_CP = get_reso(hists_CP)
+# plot_reso(reso_hists_CP,folder_CP,"reso","resolution",0.05,0.4,True)
 
 
 ###
@@ -365,13 +435,14 @@ hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
 
 reso_hists_CHS = get_reso(hists_CHS)
 plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)
+plot_control(hists_CHS,folder_CHS)
 
 
-###
-# dzcut
-###
-# QCD CHS vs PUPPI
-hists_dzcut = get_hists(infile_dict_dzcut,"puppi_jet_pt_8_wJEC")
+# ###
+# # dzcut
+# ###
+# # QCD CHS vs PUPPI
+# hists_dzcut = get_hists(infile_dict_dzcut,"puppi_jet_pt_8_wJEC")
 
-reso_hists_dzcut = get_reso(hists_dzcut)
-plot_reso(reso_hists_dzcut,folder_dzcut,"reso","resolution",0.05,0.4,True)
+# reso_hists_dzcut = get_reso(hists_dzcut)
+# plot_reso(reso_hists_dzcut,folder_dzcut,"reso","resolution",0.05,0.4,True)

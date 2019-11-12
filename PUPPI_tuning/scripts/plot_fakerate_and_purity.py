@@ -663,6 +663,9 @@ if b_DY:
     infile_puppi_v4_2016tune = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3_v4.root")
     TH1.AddDirectory(0)
 
+    infile_puppi_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v2_v13.root")
+    TH1.AddDirectory(0)
+
     ########## puppi v6 for Irene
     infile_puppi_v6_inc = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/DY_2017/uhh2.AnalysisModuleRunner.MC.2017v2_MC_DYJetsToLL_M_50_inc_v6.root")
     TH1.AddDirectory(0)
@@ -743,6 +746,7 @@ if b_DY:
             ##### puppi v4, v5, middle
             eff_v4 =calculate_eff(infile_puppi_v4,hist_folder,el.GetName(),el.GetName()+postfix)
             eff_v4_2016tune =calculate_eff(infile_puppi_v4_2016tune,hist_folder,el.GetName(),el.GetName()+postfix)
+            eff_v13 =calculate_eff(infile_puppi_v13,hist_folder,el.GetName(),el.GetName()+postfix)
             eff_v5_middle =calculate_eff(infile_puppi_v5_middle,hist_folder,el.GetName(),el.GetName()+postfix)
             eff_v4_middle =calculate_eff(infile_puppi_v4_middle,hist_folder,el.GetName(),el.GetName()+postfix)
 
@@ -795,8 +799,8 @@ if b_DY:
 
             ##### 2016 vs 2017 vs 2018
             if b_2016_vs_2017_vs_2018:
-                hists =[eff_v4_inc_pt20,eff_puppi_orig_2016_CMSSW102,eff_v4_2016tune,eff_puppi_orig_2017_CMSSW102,eff_puppi_orig_2018_CMSSW102] 
-                legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI tune 2016","PUPPI 2017","PUPPI 2018"]
+                hists =[eff_v4_inc_pt20,eff_puppi_orig_2016_CMSSW102,eff_v4_2016tune,eff_v13] 
+                legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13"]
 
                 ymax = 1.15
 
@@ -892,6 +896,8 @@ if b_DY:
 
             purity_v4_2016tune =calculate_eff(infile_puppi_v4_2016tune,hist_folder,el.GetName(),el.GetName()+postfix)
 
+            purity_v13 =calculate_eff(infile_puppi_v13,hist_folder,el.GetName(),el.GetName()+postfix)
+
             ##### puppi v4 and v5
             purity_v5_middle =calculate_eff(infile_puppi_v5_middle,hist_folder,el.GetName(),el.GetName()+postfix)
             purity_v4_middle =calculate_eff(infile_puppi_v4_middle,hist_folder,el.GetName(),el.GetName()+postfix)
@@ -943,8 +949,8 @@ if b_DY:
 
             ##### comparison 2016 vs 2017
             if b_2016_vs_2017_vs_2018:
-                hists =[purity_v4_inc_pt20,purity_puppi_orig_2016_CMSSW102,purity_v4_2016tune,purity_puppi_orig_2017_CMSSW102,purity_puppi_orig_2018_CMSSW102] 
-                legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI tune 2016","PUPPI 2017","PUPPI 2018"]
+                hists =[purity_v4_inc_pt20,purity_puppi_orig_2016_CMSSW102,purity_v4_2016tune,purity_v13] 
+                legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13"]
 
                 ymax = 1.1
                 ymin = 0.8
