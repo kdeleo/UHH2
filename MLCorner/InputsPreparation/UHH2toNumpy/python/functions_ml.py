@@ -24,7 +24,7 @@ def readout_to_numpy_arrays(infilename, treename, outpath, outname, unwanted_tag
     tree = infile.Get(treename)
     leaves = tree.GetListOfLeaves()
     variables = []
-    eventweights = ['eventweight']
+    eventweights = ['weight']
     for leaf in leaves:
         write = True
         for tag in unwanted_tags:

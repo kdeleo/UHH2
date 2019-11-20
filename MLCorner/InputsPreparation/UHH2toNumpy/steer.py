@@ -16,15 +16,15 @@ ModuleRunner = ModuleRunner(path_MLDIR, outpath)
 
 # ---- Macro for ML inputs preparation ----
 #names of the process, e.g part after uhh2.AnalysisModuleRunner. in the input file name
-procnames = ['TTbar', 'QCD_Mu', 'ST', 'DYJets', 'WJets', 'RSGluon', 'RSGluon_M1000', 'RSGluon_M2000', 'RSGluon_M3000', 'RSGluon_M4000', 'RSGluon_M5000', 'RSGluon_M6000']
+procnames = ['TTToSemiLeptonic_2017']
 #name of branches to be skipped in conversion
 ## exact names
-unwanted_exact_tags = ['n_ele', 'n_mu']
+unwanted_exact_tags = ['Mttbar', 'NPV', 'event', 'isRealData', 'luminosityBlock', 'met_pt', 'passEcalBadCalib', 'rec_chi2','rho', 'run', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'year']
 ## partial names to exclude common set of variables at once
-unwanted_tags = ['weight_', 'jet4', 'jet5', 'jet6', 'jet7', 'jet8', 'jet9', 'jet10', 'N_bJets_', '_zprime', 'eventweight', 
-                  '_ele1', 'tau32', 'tau21','e_jet','px_','py_','e_ak8','met_p','pz_']
+unwanted_tags = ['ak4jet1_', 'ak8jet1_', 'beamspot_', 'weight_pu', 'prefiringWeight', 'trigger', 'gen', 'jets', 'slimmed', 'm_', 'offlineSlimmedPrimaryVertices_', 'GenParticles_',
+                  'lep1_']
 
-syst_vars = ['NOMINAL','JEC_up','JEC_down','JER_down','JER_up']
+syst_vars = ['NOMINAL']
 for syst_var in syst_vars:
     print'--- Convert inputs for ',syst_var,' variation ---'
     ModuleRunner.ReadoutMLVariables(procnames=procnames,unwanted_tags=unwanted_tags, unwanted_exact_tags=unwanted_exact_tags,syst_var=syst_var)
