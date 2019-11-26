@@ -389,9 +389,9 @@ TH1.AddDirectory(0)
 infile_dict_dzcut["PUPPI dzcutfalse"]=infile_puppi_inc_2016_chargedparticleprotection_dzcutfalse
 
 ### PUPPI where the charged particles are kept in the same way as CHS -> also influences the enutrals since more charged are know participating in the alpha calculation
-#infile_puppi_inc_2016_chargednoneutrals = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_chargednonneutrals_effmis.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargednoneutrals
+infile_puppi_inc_2016_chargednoneutrals = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_chargednonneutrals_effmis.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargednoneutrals
 
 ### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV
 #infile_puppi_inc_2016_CHShighpT = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_effmis.root")
@@ -412,9 +412,15 @@ infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
 
 
 ### PUPPI v13v2
-infile_puppi_inc_2016_v13v2 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13v2.root")
+#infile_puppi_inc_2016_v13v2 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13v2.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13v2 beagle"]=infile_puppi_inc_2016_v13v2 
+
+
+### PUPPI all1
+infile_puppi_inc_2016_all1 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_all1.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13v2 beagle"]=infile_puppi_inc_2016_v13v2 
+infile_dict_CHSVersion["PUPPI all1"]=infile_puppi_inc_2016_all1
 
 #### PUPPI highpt no CPP
 #infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
