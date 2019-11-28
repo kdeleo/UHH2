@@ -16,7 +16,7 @@ ModuleRunner = ModuleRunner(path_MLDIR, outpath)
 
 # ---- Macro for ML inputs preparation ----
 #names of the process, e.g part after uhh2.AnalysisModuleRunner. in the input file name
-procnames = ['TTbar', 'ST', 'WJets', 'Diboson']
+procnames = ['TTbar', 'ST', 'WJets', 'Diboson', 'QCD', 'DY']
 #name of branches to be skipped in conversion
 ## exact names
 unwanted_exact_tags = ['Mttbar', 'NPV', 'event', 'isRealData', 'luminosityBlock', 'met_pt', 'passEcalBadCalib', 'rec_chi2','rho', 'run', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'year']
