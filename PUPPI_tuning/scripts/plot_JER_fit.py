@@ -11,7 +11,7 @@ import math
 import re
 import time
 import datetime
-from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph, TString
+from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph, TString, TF1
 from collections import OrderedDict
 import CMSPlotStyle
 
@@ -87,6 +87,7 @@ def plot_control(hists, folder):
            
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
+                #if bin != 500: continue
                 if bin%10 !=0: continue
                 if bin>100: continue
 
@@ -207,37 +208,53 @@ def get_reso(hists):
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
            
             for bin in range(0,hist.GetNbinsX()+1):
+                #if bin != 40 : continue
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
+                #projection.GetXaxis().SetRangeUser(0.5,1.5)
+                projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
-                projection_2 = hist.ProjectionY("_y",bin,bin+1)
-                projection_2.GetXaxis().SetRangeUser(mean-1.5*rms,mean+1.5*rms)
-                mean_2 = projection_2.GetMean()
-                rms_2 = projection_2.GetRMS() 
- 
-                projection_3 = hist.ProjectionY("_y",bin,bin+1)
-                projection_3.GetXaxis().SetRangeUser(mean_2-1.5*rms_2,mean_2+1.5*rms_2)
-                mean_3 = projection_3.GetMean()
-                rms_3 = projection_3.GetRMS()  
-
-
                 resolution = 0
-#                if rms_2 !=0:
-#                    resolution = rms_2/mean_2
-                if rms_3 !=0:
-                    resolution = rms_3/mean_3
+                if rms !=0:
+                    resolution = rms/mean
+
+                #print key
+                #print "mean = %.3f, rms = %.3f, resolution = %.3f " % (mean, rms, resolution)
 
 
+                # Gaussian fit of the peaks
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                gaussian_fit.SetParameter(1, 1.0);
+                gaussian_fit.SetParameter(2, 0.1);
+                projection.Fit(gaussian_fit, "R"); 
 
-                reso.SetBinContent(bin,resolution)
-                reso.SetBinError(bin,projection_3.GetRMSError())
-                mean_h.SetBinContent(bin,mean_3)
-                mean_h.SetBinError(bin,projection_3.GetRMSError())
-                rms_h.SetBinContent(bin,rms_3)
+
+                for i in range(0,2):
+                    lower_bound = gaussian_fit.GetParameter(1) -1.5*gaussian_fit.GetParameter(2);
+                    higher_bound = gaussian_fit.GetParameter(1)+1.5*gaussian_fit.GetParameter(2);
+                    
+                    gaussian_fit = TF1("gaussian_fit", "gaus",lower_bound,higher_bound);
+                    gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
+                    gaussian_fit.SetParameter(2, gaussian_fit.GetParameter(2));
+                    projection.Fit(gaussian_fit,"R");
+
+                resolution_2 = 0
+                if gaussian_fit.GetParameter(2) !=0:
+                    resolution_2 = gaussian_fit.GetParameter(2)/gaussian_fit.GetParameter(1)
+ 
+                #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
+
+
+                #reso.SetBinContent(bin,resolution)
+                #reso.SetBinError(bin,projection.GetRMSError())
+                reso.SetBinContent(bin,resolution_2)
+                reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                mean_h.SetBinContent(bin,mean)
+                mean_h.SetBinError(bin,projection.GetRMSError())
+                rms_h.SetBinContent(bin,rms)
     
             if not reso_hists.has_key(key): reso_hists[key] = {}
             if not reso_hists[key].has_key(pu): reso_hists[key][pu] = {}
@@ -403,15 +420,15 @@ infile_puppi_inc_2016_chargedparticleprotection_dzcutfalse = TFile("/nfs/dust/cm
 TH1.AddDirectory(0)
 infile_dict_dzcut["PUPPI dzcutfalse"]=infile_puppi_inc_2016_chargedparticleprotection_dzcutfalse
 
-### PUPPI where the charged particles are kept in the same way as CHS -> also influences the enutrals since more charged are know participating in the alpha calculation
-infile_puppi_inc_2016_chargednoneutrals = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_chargednonneutrals_effmis.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargednoneutrals
+#### PUPPI where the charged particles are kept in the same way as CHS -> also influences the enutrals since more charged are know participating in the alpha calculation
+#infile_puppi_inc_2016_chargednoneutrals = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_chargednonneutrals_effmis.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargednoneutrals
 
-### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV
+#### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV
 #infile_puppi_inc_2016_CHShighpT = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_effmis.root")
 #TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI low pT neutral, high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT
+#infile_dict_CHSVersion["PUPPI PUPPI low pT neutral, high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT
 
 #### PUPPI where the charged particles are kept in the same way as CHS startig from a particle pT of 20 GeV with dzcut enabled
 ##infile_puppi_inc_2016_CHShighpT_dzcutenabled = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison//uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_effmis.root")
@@ -423,7 +440,7 @@ infile_dict_CHSVersion["PUPPI all LV, no dzcut"]=infile_puppi_inc_2016_chargedno
 ### PUPPI v13
 infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13 
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
 
 
 ### PUPPI v13v2
@@ -432,15 +449,20 @@ infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
 #infile_dict_CHSVersion["PUPPI v13v2 beagle"]=infile_puppi_inc_2016_v13v2 
 
 
-### PUPPI all1
-infile_puppi_inc_2016_all1 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_all1.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI all1"]=infile_puppi_inc_2016_all1
+#### PUPPI all1
+#infile_puppi_inc_2016_all1 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_all1.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI all1"]=infile_puppi_inc_2016_all1
 
 #### PUPPI highpt no CPP
 #infile_puppi_inc_2016_CHShighpT_noCPP = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016v2_CHShighpT_dzcutenabled_noCPP_effmis.root")
 #TH1.AddDirectory(0)
 #infile_dict_CHSVersion["PUPPI low pT neutral, high pT LV, no dz cut, no CPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
+
+### PUPPI newNPP
+infile_puppi_inc_2016_newNPP = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newNPP.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI newNPP"]=infile_puppi_inc_2016_newNPP
 
 
 # ###
