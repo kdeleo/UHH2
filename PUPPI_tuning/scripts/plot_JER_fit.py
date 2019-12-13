@@ -77,6 +77,8 @@ def get_hists(infile_dict,hist_folder):
 
 # plots the different response histograms for each 10th bin
 def plot_control(hists, folder):
+    markers = [21,22,20,28,34,20,20,20,20,20,20]
+    colors = [(kAzure-4), kRed, kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -212,8 +214,8 @@ def get_reso(hists):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                #projection.GetXaxis().SetRangeUser(0.5,1.5)
-                projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                projection.GetXaxis().SetRangeUser(0.5,1.5)
+                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -248,10 +250,10 @@ def get_reso(hists):
                 #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                #reso.SetBinContent(bin,resolution)
-                #reso.SetBinError(bin,projection.GetRMSError())
-                reso.SetBinContent(bin,resolution_2)
-                reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                reso.SetBinContent(bin,resolution)
+                reso.SetBinError(bin,projection.GetRMSError())
+                #reso.SetBinContent(bin,resolution_2)
+                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)
@@ -269,8 +271,8 @@ def get_reso(hists):
 #plots the resolution for the different hists
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
-    markers = [20,25,26,28,34,20,20,20,20,20,20]
-    
+    markers = [22,21,20,28,34,20,20,20,20,20,20]
+    colors = [kRed, (kAzure-4), kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -282,9 +284,9 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
         i=0
         jj=0
         for pu in reso_hists[key]:
-            if i == 2 or i==4: i+=1
-            reso_hists[key][pu][reso_mean_rms].SetLineColor(i+1)
-            reso_hists[key][pu][reso_mean_rms].SetMarkerColor(i+1)
+            #if i == 2 or i==4: i+=1
+            reso_hists[key][pu][reso_mean_rms].SetLineColor(colors[i])
+            reso_hists[key][pu][reso_mean_rms].SetMarkerColor(colors[i])
             reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(markers[jj])
             reso_hists[key][pu][reso_mean_rms].SetMarkerSize(1.2)
             reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitle("p_{T}^{gen}")
@@ -373,6 +375,10 @@ folder_dzcut = "JER_fit/PUPPI_dzcut/"
 
 
 
+### PUPPI v13ultimative (newNPP)
+infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
 
 ### Original QCD file from 2016v2 in CMSSW102
 infile_QCD_orig_2016_102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_effmis.root")
@@ -437,10 +443,10 @@ infile_dict_dzcut["PUPPI dzcutfalse"]=infile_puppi_inc_2016_chargedparticleprote
 #infile_dict_CHSVersion["PUPPI low pT with dz cut (LV/PU), high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 #infile_dict_dzcut["PUPPI low pT with dz cut (LV/PU), high pT LV, no dz cut"]=infile_puppi_inc_2016_CHShighpT_dzcutenabled
 
-### PUPPI v13
-infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
+#### PUPPI v13
+#infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
 
 
 ### PUPPI v13v2
@@ -459,10 +465,6 @@ infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13
 #TH1.AddDirectory(0)
 #infile_dict_CHSVersion["PUPPI low pT neutral, high pT LV, no dz cut, no CPP"]=infile_puppi_inc_2016_CHShighpT_noCPP
 
-### PUPPI newNPP
-infile_puppi_inc_2016_newNPP = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newNPP.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI newNPP"]=infile_puppi_inc_2016_newNPP
 
 
 # ###
