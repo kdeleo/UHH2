@@ -358,19 +358,19 @@ infile_dict={}
 # all variants of the charged protection included
 ###
 infile_dict_chargedProtection={}
-folder_CP = "JER_fit/ChargedPRotection/"
+folder_CP = "JER_fit_16/ChargedPRotection/"
 
 ###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_16/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
 ###
 infile_dict_dzcut={}
-folder_dzcut = "JER_fit/PUPPI_dzcut/"
+folder_dzcut = "JER_fit_16/PUPPI_dzcut/"
 
 
 
@@ -379,6 +379,12 @@ folder_dzcut = "JER_fit/PUPPI_dzcut/"
 infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
 TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
+
+
+### PUPPI v13ultimative new commit
+infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13 new commit"]=infile_puppi_inc_2016_v13newcommit
 
 ### Original QCD file from 2016v2 in CMSSW102
 infile_QCD_orig_2016_102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_effmis.root")
