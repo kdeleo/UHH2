@@ -91,7 +91,7 @@ def plot_control(hists, folder):
 #                if bin%100 != 0: continue
                 #if bin != 500: continue
                 if bin%10 !=0: continue
-                if bin>100: continue
+                if bin>100 : continue
 
                 # plot for each pT bin the distribution and save in folder+"/control/"
                 projection = hist.ProjectionY("_y",bin,bin+1)
@@ -100,7 +100,7 @@ def plot_control(hists, folder):
 
                 projection.GetXaxis().SetTitle("p_{T}^{reco} / p_{T}^{gen}")
                 projection.GetYaxis().SetTitle("Events")
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
+                projection.GetXaxis().SetRangeUser(0.0,1.5)
 
                 projection.Draw()
 
@@ -149,7 +149,7 @@ def plot_control(hists, folder):
                 projection2.Scale(1/projection2.Integral())
             projection2.GetXaxis().SetTitle("p_{T}^{reco} / p_{T}^{gen}")
             projection2.GetYaxis().SetTitle("Events")
-            projection2.GetXaxis().SetRangeUser(0.5,3)
+            projection2.GetXaxis().SetRangeUser(0.0,3)
 
             print i
             projection2.SetLineColor(colors[i])
@@ -214,8 +214,8 @@ def get_reso(hists):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
-                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                #projection.GetXaxis().SetRangeUser(0.5,1.5)
+                projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -250,10 +250,10 @@ def get_reso(hists):
                 #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                reso.SetBinContent(bin,resolution)
-                reso.SetBinError(bin,projection.GetRMSError())
-                #reso.SetBinContent(bin,resolution_2)
-                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                #reso.SetBinContent(bin,resolution)
+                #reso.SetBinError(bin,projection.GetRMSError())
+                reso.SetBinContent(bin,resolution_2)
+                reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)
@@ -272,7 +272,7 @@ def get_reso(hists):
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
     markers = [22,21,20,28,34,20,20,20,20,20,20]
-    colors = [kRed, (kAzure-4), kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
+    colors = [kRed, (kAzure-4), kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue,kRed] 
 
     for key in reso_hists:
         c = TCanvas()
