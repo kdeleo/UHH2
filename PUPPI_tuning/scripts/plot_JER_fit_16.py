@@ -89,7 +89,7 @@ def plot_control(hists, folder):
            
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
-                if bin != 40: continue
+                if bin != 50: continue
                 #if bin%10 !=0: continue
                 #if bin>100 : continue
 
@@ -197,7 +197,7 @@ def extratext(text,x,y):
 
 
 # calculate the resolution
-def get_reso(hists):
+def get_reso(hists,folder):
     reso_hists = {}
     print "get mean and rms"
 
@@ -210,7 +210,7 @@ def get_reso(hists):
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
            
             for bin in range(0,hist.GetNbinsX()+1):
-                if bin != 40 : continue
+                if bin != 50 : continue
                 #if bin%10 : continue
                 #if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
@@ -241,7 +241,19 @@ def get_reso(hists):
                     gaussian_fit = TF1("gaussian_fit", "gaus",lower_bound,higher_bound);
                     gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
                     gaussian_fit.SetParameter(2, gaussian_fit.GetParameter(2));
-                    projection.Fit(gaussian_fit,"R");
+                    
+                    fit_result = projection.Fit(gaussian_fit,"R");
+                    
+                c1 = TCanvas() 
+                projection.Draw()
+                text = CMSPlotStyle.draw_info("Chi2/NDF %.2f"%(gaussian_fit.GetChisquare()/gaussian_fit.GetNDF()),0.92,0.87)
+                text.Draw()              
+                text2 = CMSPlotStyle.draw_info("reso %.2f"%(gaussian_fit.GetParameter(2)),0.92,0.7)
+                text2.Draw()
+                text3 = CMSPlotStyle.draw_info("rms %.2f"%(rms),0.92,0.5)
+                text3.Draw()
+                name = pu.replace(" ","_")
+                c1.Print(folder + "gaussian"+"_"+key+"_"+name+"_"+str(bin)+".eps") 
 
                 resolution_2 = 0
                 if gaussian_fit.GetParameter(2) !=0:
@@ -375,10 +387,10 @@ folder_dzcut = "JER_fit_16/PUPPI_dzcut/"
 
 
 
-#### PUPPI v13ultimative (newNPP)
-#infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
+### PUPPI v13ultimative (newNPP)
+infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
 
 
 ### PUPPI v13ultimative new commit
@@ -490,7 +502,7 @@ infile_dict_dzcut["PUPPI dzcutfalse"]=infile_puppi_inc_2016_chargedparticleprote
 # QCD CHS vs PUPPI
 hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
 
-reso_hists_CHS = get_reso(hists_CHS)
+reso_hists_CHS = get_reso(hists_CHS,folder_CHS)
 plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)
 plot_control(hists_CHS,folder_CHS)
 
