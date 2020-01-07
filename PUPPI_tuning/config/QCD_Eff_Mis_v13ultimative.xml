@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
-<!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis//PUPPI_tuning/rootfiles2/">
+<!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis//PUPPI_tuning/rootfiles/">
 <!ENTITY NEVT "-1">
 <!ENTITY b_Cacheable "False">
 
@@ -9,10 +9,10 @@
 
 
 <!--<!ENTITY QCD_2016v2_newcommit                     SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
--->
+
 <!ENTITY QCD_2016v2                                  SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2016/QCD_v13_newNPP/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
 
-<!--<!ENTITY QCD_2017v2_chs                   SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2017/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
+<!ENTITY QCD_2017v2_chs                   SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2017/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
 
 <!ENTITY QCD_2018_chs                     SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2018/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml"> 
 
@@ -20,11 +20,14 @@
 
 <!ENTITY QCD_2018_v13ultimate       SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2018/QCD_v13ultimative/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml">--> 
 
+<!ENTITY QCD_2017v2_v13_newPR       SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit_etaregion/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
+
+
 ]>
 
 <!--
 <ConfigParse NEventsBreak="0" FileSplit="20" />
-<ConfigSGE RAM ="4" DISK ="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_QCD_PUPPI_EFF_Mis_v13ultimative"/>
+<ConfigSGE RAM ="1" DISK ="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_QCD_PUPPI_EFF_Mis_v13_2017PR"/>
 -->
 
 
@@ -34,10 +37,10 @@
 
    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&SELdir;/" PostFix="" TargetLumi="35867.059983" >
 
-
+<!--
      <InputData Version="QCD_2016v2" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
     &QCD_2016v2; <InputTree Name="AnalysisTree"/>  </InputData>
-<!--
+
      <InputData Version="QCD_2016v2_newcommit" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
     &QCD_2016v2_newcommit; <InputTree Name="AnalysisTree"/>  </InputData>
 
@@ -56,6 +59,9 @@
     &QCD_2018_v13ultimate; <InputTree Name="AnalysisTree"/>  </InputData>
 -->
 
+
+     <InputData Version="QCD_2017v2_v13_newPR" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2017v2_v13_newPR; <InputTree Name="AnalysisTree"/>  </InputData>
             
         <UserConfig>
             <!-- define which collections to read from the input. Only specify what you need to save I/O time -->

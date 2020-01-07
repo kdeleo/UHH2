@@ -78,7 +78,7 @@ def get_hists(infile_dict,hist_folder):
 # plots the different response histograms for each 10th bin
 def plot_control(hists, folder):
     markers = [21,22,20,28,34,20,20,20,20,20,20]
-    colors = [(kAzure-4), kRed, kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+    colors = [(kAzure-4), kRed, kBlack, kGreen,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -215,8 +215,8 @@ def get_reso(hists):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
-                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                #projection.GetXaxis().SetRangeUser(0.5,1.5)
+                projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -228,33 +228,33 @@ def get_reso(hists):
                 #print "mean = %.3f, rms = %.3f, resolution = %.3f " % (mean, rms, resolution)
 
 
-                ## Gaussian fit of the peaks
-                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
-                #gaussian_fit.SetParameter(1, 1.0);
-                #gaussian_fit.SetParameter(2, 0.1);
-                #projection.Fit(gaussian_fit, "R"); 
+                # Gaussian fit of the peaks
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                gaussian_fit.SetParameter(1, 1.0);
+                gaussian_fit.SetParameter(2, 0.1);
+                projection.Fit(gaussian_fit, "R"); 
 
 
-                #for i in range(0,2):
-                #    lower_bound = gaussian_fit.GetParameter(1) -1.5*gaussian_fit.GetParameter(2);
-                #    higher_bound = gaussian_fit.GetParameter(1)+1.5*gaussian_fit.GetParameter(2);
-                #    
-                #    gaussian_fit = TF1("gaussian_fit", "gaus",lower_bound,higher_bound);
-                #    gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
-                #    gaussian_fit.SetParameter(2, gaussian_fit.GetParameter(2));
-                #    projection.Fit(gaussian_fit,"R");
+                for i in range(0,2):
+                    lower_bound = gaussian_fit.GetParameter(1) -1.5*gaussian_fit.GetParameter(2);
+                    higher_bound = gaussian_fit.GetParameter(1)+1.5*gaussian_fit.GetParameter(2);
+                    
+                    gaussian_fit = TF1("gaussian_fit", "gaus",lower_bound,higher_bound);
+                    gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
+                    gaussian_fit.SetParameter(2, gaussian_fit.GetParameter(2));
+                    projection.Fit(gaussian_fit,"R");
 
-                #resolution_2 = 0
-                #if gaussian_fit.GetParameter(2) !=0:
-                #    resolution_2 = gaussian_fit.GetParameter(2)/gaussian_fit.GetParameter(1)
+                resolution_2 = 0
+                if gaussian_fit.GetParameter(2) !=0:
+                    resolution_2 = gaussian_fit.GetParameter(2)/gaussian_fit.GetParameter(1)
  
-                ##print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
+                #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                reso.SetBinContent(bin,resolution)
-                reso.SetBinError(bin,projection.GetRMSError())
-                #reso.SetBinContent(bin,resolution_2)
-                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                #reso.SetBinContent(bin,resolution)
+                #reso.SetBinError(bin,projection.GetRMSError())
+                reso.SetBinContent(bin,resolution_2)
+                reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)
@@ -273,7 +273,7 @@ def get_reso(hists):
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
     markers = [22,21,20,28,34,20,20,20,20,20,20]
-    colors = [kRed, (kAzure-4), kBlack, kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
+    colors = [kRed, (kAzure-4), kBlack, kGreen,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -393,6 +393,10 @@ TH1.AddDirectory(0)
 infile_dict["CHS"]=infile_QCD_CHS
 infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
 
+### PUPPI v13ultimative (newNPP) - new PR  
+infile_puppi_inc_2017_v13_newPR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13_newPR.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13 new PR"]=infile_puppi_inc_2017_v13_newPR
 
 
 
