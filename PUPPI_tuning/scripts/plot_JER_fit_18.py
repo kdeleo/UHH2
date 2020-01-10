@@ -358,27 +358,32 @@ infile_dict={}
 # all variants of the charged protection included
 ###
 infile_dict_chargedProtection={}
-folder_CP = "JER_fit_18/ChargedPRotection/"
+folder_CP = "JER_fit_18_newPR/ChargedPRotection/"
 
 ###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_18/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_18_newPR/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
 ###
 infile_dict_dzcut={}
-folder_dzcut = "JER_fit_18/PUPPI_dzcut/"
+folder_dzcut = "JER_fit_18_newPR/PUPPI_dzcut/"
 
 
 
 
-### PUPPI v13ultimative (newNPP)
-infile_puppi_inc_2018_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2018_v13ultimate.root")
+#### PUPPI v13ultimative (newNPP)
+#Infile_puppi_inc_2018_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2018_v13ultimate.root")
+#TH1.AddDirectory(0)
+#Infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2018_v13ultimative
+
+### PUPPI v13 new PR
+infile_puppi_inc_2018_v13_PR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2018_v13_newPR.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2018_v13ultimative
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2018_v13_PR
 
 ### Original QCD file from 2018 in CMSSW102
 #infile_QCD_orig_2018_102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2018_effmis.root")

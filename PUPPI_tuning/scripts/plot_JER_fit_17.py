@@ -11,7 +11,7 @@ import math
 import re
 import time
 import datetime
-from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph, TString, TF1
+from ROOT import TFile,TCanvas,gROOT,gStyle,TLegend,TGraphAsymmErrors,kGreen,kOrange,kSpring,TF1,kAzure, TH2F,TH1F,gPad, TPaveText, TH1,kRed,SetOwnership, TMath, kBlue, kBlack, kFALSE, kTRUE,kSienna,TLatex, Double, TMultiGraph, TString, TF1, kMagenta
 from collections import OrderedDict
 import CMSPlotStyle
 
@@ -77,8 +77,8 @@ def get_hists(infile_dict,hist_folder):
 
 # plots the different response histograms for each 10th bin
 def plot_control(hists, folder):
-    markers = [21,22,20,28,34,20,20,20,20,20,20]
-    colors = [(kAzure-4), kRed, kBlack, kGreen,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+    markers = [21,22,20,34,28,20,20,20,20,20,20]
+    colors = [(kAzure-4), kRed, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -272,8 +272,8 @@ def get_reso(hists):
 #plots the resolution for the different hists
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
-    markers = [22,21,20,28,34,20,20,20,20,20,20]
-    colors = [kRed, (kAzure-4), kBlack, kGreen,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
+    markers = [22,21,20,34,28,20,20,20,20,20,20]
+    colors = [kRed,(kAzure-4),kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -359,27 +359,32 @@ infile_dict={}
 # all variants of the charged protection included
 ###
 infile_dict_chargedProtection={}
-folder_CP = "JER_fit_17/ChargedPRotection/"
+folder_CP = "JER_fit_17_newPR/ChargedPRotection/"
 
 ###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_17/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_17_newPR/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
 ###
 infile_dict_dzcut={}
-folder_dzcut = "JER_fit_17/PUPPI_dzcut/"
+folder_dzcut = "JER_fit_17_newPR/PUPPI_dzcut/"
 
 
 
 
-### PUPPI v13ultimative (newNPP)
-infile_puppi_inc_2017_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13ultimate.root")
+#### PUPPI v13ultimative (newNPP)
+#infile_puppi_inc_2017_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13ultimate.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017_v13ultimative
+
+### PUPPI v13 - new PR  
+infile_puppi_inc_2017_v13_newPR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13_newPR.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017_v13ultimative
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017_v13_newPR
 
 ### Original QCD file from 2017 in CMSSW102
 infile_QCD_orig_2017_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_puppi.root")
@@ -392,12 +397,6 @@ infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfi
 TH1.AddDirectory(0)
 infile_dict["CHS"]=infile_QCD_CHS
 infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
-
-### PUPPI v13ultimative (newNPP) - new PR  
-infile_puppi_inc_2017_v13_newPR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13_newPR.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 new PR"]=infile_puppi_inc_2017_v13_newPR
-
 
 
 

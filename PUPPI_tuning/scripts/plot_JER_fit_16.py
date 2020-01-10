@@ -89,9 +89,9 @@ def plot_control(hists, folder):
            
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
-                if bin != 50: continue
-                #if bin%10 !=0: continue
-                #if bin>100 : continue
+                #if bin != 50: continue
+                if bin%10 !=0: continue
+                if bin>100 : continue
 
                 # plot for each pT bin the distribution and save in folder+"/control/"
                 projection = hist.ProjectionY("_y",bin,bin+1)
@@ -210,9 +210,9 @@ def get_reso(hists,folder):
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
            
             for bin in range(0,hist.GetNbinsX()+1):
-                if bin != 50 : continue
-                #if bin%10 : continue
-                #if bin>100 and bin%30: continue
+                #if bin != 50 : continue
+                if bin%10 : continue
+                if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
                 #projection.GetXaxis().SetRangeUser(0.5,1.5)
                 projection.GetXaxis().SetRangeUser(-10.0,10.0)
@@ -244,16 +244,16 @@ def get_reso(hists,folder):
                     
                     fit_result = projection.Fit(gaussian_fit,"R");
                     
-                c1 = TCanvas() 
-                projection.Draw()
-                text = CMSPlotStyle.draw_info("Chi2/NDF %.2f"%(gaussian_fit.GetChisquare()/gaussian_fit.GetNDF()),0.92,0.87)
-                text.Draw()              
-                text2 = CMSPlotStyle.draw_info("reso %.2f"%(gaussian_fit.GetParameter(2)),0.92,0.7)
-                text2.Draw()
-                text3 = CMSPlotStyle.draw_info("rms %.2f"%(rms),0.92,0.5)
-                text3.Draw()
-                name = pu.replace(" ","_")
-                c1.Print(folder + "gaussian"+"_"+key+"_"+name+"_"+str(bin)+".eps") 
+                #c1 = TCanvas() 
+                #projection.Draw()
+                #text = CMSPlotStyle.draw_info("Chi2/NDF %.2f"%(gaussian_fit.GetChisquare()/gaussian_fit.GetNDF()),0.92,0.87)
+                #text.Draw()              
+                #text2 = CMSPlotStyle.draw_info("reso %.2f"%(gaussian_fit.GetParameter(2)),0.92,0.7)
+                #text2.Draw()
+                #text3 = CMSPlotStyle.draw_info("rms %.2f"%(rms),0.92,0.5)
+                #text3.Draw()
+                #name = pu.replace(" ","_")
+                #c1.Print(folder + "gaussian"+"_"+key+"_"+name+"_"+str(bin)+".eps") 
 
                 resolution_2 = 0
                 if gaussian_fit.GetParameter(2) !=0:
@@ -283,8 +283,8 @@ def get_reso(hists,folder):
 #plots the resolution for the different hists
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
-    markers = [20,22,21,28,34,20,20,20,20,20,20]
-    colors = [kBlack, kRed, (kAzure-4), kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue,kRed] 
+    markers = [22,21,20,28,34,20,20,20,20,20,20]
+    colors = [kRed, (kAzure-4), kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue,kRed] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -370,33 +370,33 @@ infile_dict={}
 # all variants of the charged protection included
 ###
 infile_dict_chargedProtection={}
-folder_CP = "JER_fit_16/ChargedPRotection/"
+folder_CP = "JER_fit_16_newPR/ChargedPRotection/"
 
 ###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_16/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_16_newPR/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
 ###
 infile_dict_dzcut={}
-folder_dzcut = "JER_fit_16/PUPPI_dzcut/"
+folder_dzcut = "JER_fit_16_newPR/PUPPI_dzcut/"
 
 
 
 
-### PUPPI v13ultimative (newNPP)
-infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
+#### PUPPI v13ultimative (newNPP)
+#infile_puppi_inc_2016_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13ultimative.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13ultimative
 
 
 ### PUPPI v13ultimative new commit
-infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit.root")
+infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2016_v13newcommit
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13newcommit
 
 ### Original QCD file from 2016v2 in CMSSW102
 infile_QCD_orig_2016_102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/CMSSW102vs80Comparison/uhh2.AnalysisModuleRunner.MC.PUPPI_QCD_2016_effmis.root")
