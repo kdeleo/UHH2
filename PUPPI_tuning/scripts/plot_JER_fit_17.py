@@ -215,8 +215,8 @@ def get_reso(hists):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                #projection.GetXaxis().SetRangeUser(0.5,1.5)
-                projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                projection.GetXaxis().SetRangeUser(0.5,1.5)
+                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -251,10 +251,10 @@ def get_reso(hists):
                 #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                #reso.SetBinContent(bin,resolution)
-                #reso.SetBinError(bin,projection.GetRMSError())
-                reso.SetBinContent(bin,resolution_2)
-                reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                reso.SetBinContent(bin,resolution)
+                reso.SetBinError(bin,projection.GetRMSError())
+                #reso.SetBinContent(bin,resolution_2)
+                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)
