@@ -394,7 +394,7 @@ folder_dzcut = "JER_fit_16_newPR/PUPPI_dzcut/"
 
 
 ### PUPPI v13ultimative new commit
-infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit.root")
+infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13_newPR.root")
 TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13newcommit
 

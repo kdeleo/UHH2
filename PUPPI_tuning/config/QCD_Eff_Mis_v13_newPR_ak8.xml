@@ -6,28 +6,24 @@
 <!ENTITY b_Cacheable "False">
 
 
+
+<!ENTITY QCD_2016v2_ak8_chs_PU50                                   SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2016/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
+
+<!ENTITY QCD_2017v2_ak8_chs_PU50                                   SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2017/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
+
+<!ENTITY QCD_2018_ak8_chs_PU50                                     SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2018/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml"> 
 <!--
-<!ENTITY QCD_2016v2_newcommit_ak8                     SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
--->
-<!ENTITY QCD_2016v2_ak8_chs                                  SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2016/QCD_v13_newNPP/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
-<!--
-<!ENTITY QCD_2017v2_chs                   SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2017/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
+<!ENTITY QCD_2016v2_v13_newPR_ak8_PU50                         SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
 
-<!ENTITY QCD_2018_chs                     SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2018/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml"> 
+<!ENTITY QCD_2017v2_v13_newPR_ak8_PU50                         SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit_etaregion/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
 
-<!ENTITY QCD_2017v2_v13ultimate       SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2017/QCD_v13ultimate/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml"> 
-
-<!ENTITY QCD_2018_v13ultimate       SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10/CMSSW_10_2_10/src/UHH2/scripts/crab/PUPPI/2018/QCD_v13ultimative/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml">
-
-<!ENTITY QCD_2017v2_v13_newPR       SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/newcommit_etaregion/QCD_Pt-15to7000_TuneCUETP8M1_Flat_13TeV_pythia8.xml">
-
-<!ENTITY QCD_2018_v13_newPR         SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/2018/newPR/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml"> 
+<!ENTITY QCD_2018_v13_newPR_ak8_PU50                           SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_2_10_withcommit/CMSSW_10_2_16/src/UHH2/scripts/crab/PUPPIStudies/2018/newPR/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8_ext2.xml"> 
 -->
 ]>
 
 <!--
 <ConfigParse NEventsBreak="0" FileSplit="20" />
-<ConfigSGE RAM ="1" DISK ="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_QCD_PUPPI_EFF_Mis_v13_ak8_chs"/>
+<ConfigSGE RAM ="1" DISK ="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_QCD_PUPPI_EFF_Mis_v13_ak8_PU50"/>
 -->
 
 
@@ -38,33 +34,23 @@
    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&SELdir;/" PostFix="" TargetLumi="35867.059983" >
 
 
-     <InputData Version="QCD_2016v2_ak8_chs" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2016v2_ak8_chs; <InputTree Name="AnalysisTree"/>  </InputData>
-<!--
-     <InputData Version="QCD_2016v2_newcommit_ak8_chs" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2016v2_newcommit_ak8_chs; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="QCD_2016v2_ak8_chs_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2016v2_ak8_chs_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 
-     <InputData Version="QCD_2017v2_chs" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2017v2_chs; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="QCD_2017v2_ak8_chs_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2017v2_ak8_chs_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 
-     <InputData Version="QCD_2018_chs" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2018_chs; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="QCD_2018_ak8_chs_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2018_ak8_chs_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 
+   <!--  <InputData Version="QCD_2016v2_v13_newPR_ak8_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2016v2_v13_newPR_ak8_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 
-     <InputData Version="QCD_2017v2_v13ultimate" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2017v2_v13ultimate; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="QCD_2017v2_v13_newPR_ak8_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2017v2_v13_newPR_ak8_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 
-
-     <InputData Version="QCD_2018_v13ultimate" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2018_v13ultimate; <InputTree Name="AnalysisTree"/>  </InputData>
-
-
-     <InputData Version="QCD_2017v2_v13_newPR" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2017v2_v13_newPR; <InputTree Name="AnalysisTree"/>  </InputData>
-           
-
-     <InputData Version="QCD_2018_v13_newPR" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &QCD_2018_v13_newPR; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="QCD_2018_v13_newPR_ak8_PU50" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2018_v13_newPR_ak8_PU50; <InputTree Name="AnalysisTree"/>  </InputData>
 -->
  
         <UserConfig>
@@ -73,17 +59,18 @@
             <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
             <Item Name="MuonCollection" Value="slimmedMuonsUSER" /> 
             <!-- <Item Name="TauCollection" Value="slimmedTaus" /> -->
-            <!-- <Item Name="JetCollection" Value="patJetsAK4PFPUPPI" /> -->
-            <Item Name="JetCollection" Value="patJetsAk4PuppiJets" />
-            <!--<Item Name="TopJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />-->
-            <Item Name="TopJetCollection" Value="jetsAk8CHSSubstructure_SoftDropCHS" />
+            <!-- <Item Name="JetCollection" Value="patJetsAK4PFPUPPI" />-->
+            <!-- <Item Name="JetCollection" Value="jetsAk4Puppi" /> -->
+            <!--<Item Name="JetCollection" Value="patJetsAk4PuppiJets" />-->
+            <Item Name="JetCollection" Value="jetsAk8CHS" />
+            <!--<Item Name="TopJetCollection" Value="jetsAk8CHSSubstructure_SoftDropCHS" />-->
             <!--<Item Name="JetCollection" Value="jetsAk4CHS" />-->
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
             <Item Name="METName" Value="slimmedMETsPuppi" />
             <Item Name="GenParticleCollection" Value="GenParticles" /> 
                         
             <!-- the class name of the AnalysisModule subclasses to run: -->
-            <Item Name="AnalysisModule" Value="QCDEffPurityModule_ak8" /> 
+            <Item Name="AnalysisModule" Value="QCDEffPurityModule" /> 
             
             <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
                  MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC

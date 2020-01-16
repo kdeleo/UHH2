@@ -605,7 +605,8 @@ if b_DY:
 
 
     ############  PUPPI normal (2016/2017/2018) in 102
-    infile_puppi_2016_CMSSW102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/DY_2016/uhh2.AnalysisModuleRunner.MC.2016v3_MC_DYJetsToLL_M_50_inc_PUPPI_orig.root")
+    #infile_puppi_2016_CMSSW102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/DY_2016/uhh2.AnalysisModuleRunner.MC.2016v3_MC_DYJetsToLL_M_50_inc_PUPPI_orig.root")
+    infile_puppi_2016_CMSSW102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3.root")
     TH1.AddDirectory(0)
     infile_dict["PUPPI 2016 v2"]=infile_puppi_2016_CMSSW102
 
@@ -618,7 +619,8 @@ if b_DY:
     infile_dict["PUPPI 2018"]=infile_puppi_2018_CMSSW102
 
     ############  CHS normal (2016/2017/2018) in 102
-    infile_chs_2016_CMSSW102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/DY_2016/uhh2.AnalysisModuleRunner.MC.2016v3_MC_DYJetsToLL_M_50_inc_CHS.root")
+    #infile_chs_2016_CMSSW102 = TFile("/nfs/dust/cms/user/abenecke/PUPPI/CMSSW_102X/rootfiles/DY_2016/uhh2.AnalysisModuleRunner.MC.2016v3_MC_DYJetsToLL_M_50_inc_CHS.root")
+    infile_chs_2016_CMSSW102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3_chs.root")
     TH1.AddDirectory(0)
     infile_dict["CHS 2016 v3"]=infile_chs_2016_CMSSW102
 
@@ -668,6 +670,10 @@ if b_DY:
 
     ############ puppi v13 ultimative
     infile_puppi_v13ultimative = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v2_v13ultimative.root")
+    TH1.AddDirectory(0)
+
+    ############ puppi v13 newPR
+    infile_puppi_v13_newPR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3_v13_PR.root")
     TH1.AddDirectory(0)
 
     ########## puppi v6 for Irene
@@ -757,6 +763,8 @@ if b_DY:
             ##### puppi v13ultimative 2016
             eff_v13ultimative =calculate_eff(infile_puppi_v13ultimative,hist_folder,el.GetName(),el.GetName()+postfix)
 
+            ##### puppi v13 new PR 2016
+            eff_v13_newPR =calculate_eff(infile_puppi_v13_newPR,hist_folder,el.GetName(),el.GetName()+postfix)
 
             ##### puppi v4 middle: 20 GeV pT cut, inc sample
             eff_v4_inc_pt20 =calculate_eff(infile_puppi_v4_inc_ptCut20,hist_folder,el.GetName(),el.GetName()+postfix)
@@ -808,7 +816,7 @@ if b_DY:
             if b_2016_vs_2017_vs_2018:
                 #hists =[eff_v4_inc_pt20,eff_puppi_orig_2016_CMSSW102,eff_v4_2016tune,eff_v13,eff_v13ultimative] 
                 #legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13", "PUPPI 2016 v13ultimative"]
-                hists =[eff_puppi_orig_2016_CMSSW102,eff_chs_2016_CMSSW102,eff_v13ultimative] 
+                hists =[eff_puppi_orig_2016_CMSSW102,eff_chs_2016_CMSSW102,eff_v13_newPR] 
                 legnames = ["PUPPI default","CHS","PUPPI v13 beagle"]
 
                 ymax = 1.15
@@ -912,6 +920,10 @@ if b_DY:
             ##### puppi v13 ultimative
             purity_v13ultimative =calculate_eff(infile_puppi_v13ultimative,hist_folder,el.GetName(),el.GetName()+postfix)
 
+            ##### puppi v13 new PR
+            purity_v13_newPR =calculate_eff(infile_puppi_v13_newPR,hist_folder,el.GetName(),el.GetName()+postfix)
+
+
             ##### puppi v4 and v5
             purity_v5_middle =calculate_eff(infile_puppi_v5_middle,hist_folder,el.GetName(),el.GetName()+postfix)
             purity_v4_middle =calculate_eff(infile_puppi_v4_middle,hist_folder,el.GetName(),el.GetName()+postfix)
@@ -965,7 +977,7 @@ if b_DY:
             if b_2016_vs_2017_vs_2018:
                 #hists =[purity_v4_inc_pt20,purity_puppi_orig_2016_CMSSW102,purity_v4_2016tune,purity_v13,purity_v13ultimative] 
                 #legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13","PUPPI 2016 v13ultimative"]
-                hists =[purity_puppi_orig_2016_CMSSW102,purity_chs_2016_CMSSW102,purity_v13ultimative] 
+                hists =[purity_puppi_orig_2016_CMSSW102,purity_chs_2016_CMSSW102,purity_v13_newPR] 
                 legnames = ["PUPPI default","CHS","PUPPI v13 beagle"]
 
                 ymax = 1.1

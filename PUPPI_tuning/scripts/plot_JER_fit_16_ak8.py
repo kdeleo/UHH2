@@ -214,8 +214,8 @@ def get_reso(hists,folder):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
-                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                #projection.GetXaxis().SetRangeUser(0.5,1.5)
+                projection.GetXaxis().SetRangeUser(-10.0,10.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -262,10 +262,10 @@ def get_reso(hists,folder):
                 print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                reso.SetBinContent(bin,resolution)
-                reso.SetBinError(bin,projection.GetRMSError())
-                #reso.SetBinContent(bin,resolution_2)
-                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                #reso.SetBinContent(bin,resolution)
+                #reso.SetBinError(bin,projection.GetRMSError())
+                reso.SetBinContent(bin,resolution_2)
+                reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)
@@ -326,7 +326,7 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
         lumi = CMSPlotStyle.draw_lumi(True)
         lumi.Draw()
         
-        anti = CMSPlotStyle.draw_info("Anti-k_{T}, R=0.4,",0.7,0.87)
+        anti = CMSPlotStyle.draw_info("Anti-k_{T}, R=0.8,",0.7,0.87)
         anti.Draw()
         
         if "central" in key: 
@@ -394,9 +394,9 @@ folder_dzcut = "JER_fit_16_ak8/PUPPI_dzcut/"
 
 
 ### PUPPI v13ultimative new commit
-infile_puppi_inc_2016_v13newcommit = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit_ak8.root")
+infile_puppi_inc_2016_v13_newPR = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_newcommit_ak8.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13newcommit
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2016_v13_newPR
 
 ### Original QCD file from 2016v2 in CMSSW102
 infile_QCD_orig_2016_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_ak8.root")
