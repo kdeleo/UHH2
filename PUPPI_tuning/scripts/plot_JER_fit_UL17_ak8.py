@@ -55,8 +55,10 @@ beps = True
 def get_hists(infile_dict,hist_folder):
     hists={}
     # make list for all histogramm JetPtResponse_* based on first file
-    if infile_dict.has_key("PUPPI default"):
-        lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
+    #if infile_dict.has_key("PUPPI default"):
+    if infile_dict.has_key("PUPPI v13 beagle"):
+        #lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
+        lista = infile_dict["PUPPI v13 beagle"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -377,56 +379,56 @@ infile_dict={}
 # all variants of the charged protection included
 ###
 infile_dict_chargedProtection={}
-folder_CP = "JER_fit_UL17/ChargedPRotection/"
+folder_CP = "JER_fit_UL17_ak8/ChargedPRotection/"
 
 ###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_UL17/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_UL17_ak8/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
 ###
 infile_dict_dzcut={}
-folder_dzcut = "JER_fit_UL17/PUPPI_dzcut/"
+folder_dzcut = "JER_fit_UL17_ak8/PUPPI_dzcut/"
 
 
 
 
 ### PUPPI v13 - UL  
-infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
+infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_ak8_puppi.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017UL_v13
+infile_dict_CHSVersion["PUPPI v13 beagle UL"]=infile_puppi_inc_2017UL_v13
 
-### Original QCD file from 2017 in CMSSW106 - UL
-infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
-TH1.AddDirectory(0)
-infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
-infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
+#### Original QCD file from 2017 in CMSSW106 - UL
+#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+#TH1.AddDirectory(0)
+#infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
+#infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
 ### CHS original QCD file from 2017 in CMSSW106 - UL
-infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_ak8_chs.root")
 TH1.AddDirectory(0)
-infile_dict["CHS"]=infile_QCD_CHS
-infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
+infile_dict["CHS UL"]=infile_QCD_CHS
+infile_dict_CHSVersion["CHS UL"]=infile_QCD_CHS
 
-#### PUPPI v13 
-#infile_puppi_inc_2017_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13_newPR.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017_v13
-#
-#### Original QCD file from 2017 in CMSSW102
-#infile_QCD_orig_2017_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_puppi.root")
-#TH1.AddDirectory(0)
-#infile_dict["PUPPI default"]=infile_QCD_orig_2017_102
-#infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_102
-#
-#### CHS original QCD file from 2017 in CMSSW102
-#infile_QCD_CHS_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_chs.root")
-#TH1.AddDirectory(0)
-#infile_dict["CHS"]=infile_QCD_CHS_102
-#infile_dict_CHSVersion["CHS"]=infile_QCD_CHS_102
+### PUPPI v13 
+infile_puppi_inc_2017_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_v13_newPR_ak8.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017_v13
+
+### Original QCD file from 2017 in CMSSW102
+infile_QCD_orig_2017_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_ak8.root")
+TH1.AddDirectory(0)
+infile_dict["PUPPI default"]=infile_QCD_orig_2017_102
+infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_102
+
+### CHS original QCD file from 2017 in CMSSW102
+infile_QCD_CHS_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_ak8_chs.root")
+TH1.AddDirectory(0)
+infile_dict["CHS"]=infile_QCD_CHS_102
+infile_dict_CHSVersion["CHS"]=infile_QCD_CHS_102
 
 
 

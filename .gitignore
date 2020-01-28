@@ -19,8 +19,8 @@ VLQToHiggsPairProd/*
 ZprimeSemiLeptonic/*
 Varial
 BaconJets/*
-JECDatabase/*
-JRDatabase/*
+#JECDatabase/*
+#JRDatabase/*
 pydump.py
-Makefile.local
+#Makefile.local
 JetsTest/*
