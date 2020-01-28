@@ -214,8 +214,9 @@ def get_reso(hists,folder):
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
-                projection.GetXaxis().SetRangeUser(0.5,1.5)
+                #projection.GetXaxis().SetRangeUser(0.5,1.5)
                 #projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                projection.GetXaxis().SetRangeUser(0.0,3.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -223,12 +224,13 @@ def get_reso(hists,folder):
                 if rms !=0:
                     resolution = rms/mean
 
-                print key
-                print "mean = %.3f, rms = %.3f, resolution = %.3f " % (mean, rms, resolution)
+                #print key
+                #print "mean = %.3f, rms = %.3f, resolution = %.3f " % (mean, rms, resolution)
 
 
                 # Gaussian fit of the peaks
-                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
                 gaussian_fit.SetParameter(1, 1.0);
                 gaussian_fit.SetParameter(2, 0.1);
                 projection.Fit(gaussian_fit, "R"); 
@@ -259,13 +261,13 @@ def get_reso(hists,folder):
                 if gaussian_fit.GetParameter(2) !=0:
                     resolution_2 = gaussian_fit.GetParameter(2)/gaussian_fit.GetParameter(1)
  
-                print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
+                #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
 
 
-                reso.SetBinContent(bin,resolution)
-                reso.SetBinError(bin,projection.GetRMSError())
-                #reso.SetBinContent(bin,resolution_2)
-                #reso.SetBinError(bin,gaussian_fit.GetParError(2))
+                #reso.SetBinContent(bin,resolution)
+                #reso.SetBinError(bin,projection.GetRMSError())
+                reso.SetBinContent(bin,resolution_2)
+                reso.SetBinError(bin,gaussian_fit.GetParError(2))
                 mean_h.SetBinContent(bin,mean)
                 mean_h.SetBinError(bin,projection.GetRMSError())
                 rms_h.SetBinContent(bin,rms)

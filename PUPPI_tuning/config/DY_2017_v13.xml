@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
-          <!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles2/">
+          <!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/">
 	  <!ENTITY NEVT "-1">
 	  <!ENTITY b_Cacheable  "False">
 
@@ -29,14 +29,13 @@
  <InputData Version="MC_DY_2017v2_chs" Lumi="8156.7259" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
     &MC_DY_2017v2_chs; <InputTree Name="AnalysisTree"/>  </InputData>
 
-
             
         <UserConfig>
             <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" /> 
             <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
             <Item Name="MuonCollection" Value="slimmedMuonsUSER" /> 
             <!-- <Item Name="TauCollection" Value="slimmedTaus" /> -->
-            <Item Name="JetCollection" Value="jetsAk4CHS"/>
+            <Item Name="JetCollection" Value="jetsAk4Puppi"/>
             <Item Name="GenJetCollection" Value="slimmedGenJets" />
             <Item Name="METName" Value="slimmedMETsPuppi" />
             <Item Name="GenParticleCollection" Value="GenParticles" /> 
