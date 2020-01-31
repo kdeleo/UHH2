@@ -23,6 +23,7 @@ void Event::clear(){
     genparticles = 0;
     genjets = 0;
     pfparticles = 0;
+    puppiparticles = 0;
     met = 0;
     genmet = 0;
     genInfo = 0;

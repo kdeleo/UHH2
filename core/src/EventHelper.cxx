@@ -20,7 +20,7 @@ Event::Handle<T> declare_in_out(const std::string & branch_name, const std::stri
 
 EventHelper::EventHelper(uhh2::Context & ctx_): ctx(ctx_), event(0), pvs(false), electrons(false), muons(false), taus(false), photons(false), jets(false),
 						topjets(false), toppuppijets(false), met(false),  genmet(false), genInfo(false), gentopjets(false), 
-						genparticles(false), genjets(false), pfparticles(false), trigger(false),  L1EG_seeds(false), L1J_seeds(false), first_event_read(true){
+						genparticles(false), genjets(false), pfparticles(false), puppiparticles(false), trigger(false),  L1EG_seeds(false), L1J_seeds(false), first_event_read(true){
     h_run = declare_in_out<int>("run", "run", ctx);
     h_lumi = declare_in_out<int>("luminosityBlock", "luminosityBlock", ctx);
     h_event = declare_in_out<int>("event", "event", ctx);
@@ -59,6 +59,7 @@ IMPL_SETUP(genInfo, GenInfo)
 IMPL_SETUP(gentopjets, vector<GenTopJet>)
 IMPL_SETUP(genparticles, vector<GenParticle>)
 IMPL_SETUP(pfparticles, vector<PFParticle>)
+IMPL_SETUP(puppiparticles, vector<PuppiParticle>)
 IMPL_SETUP(genjets, vector<GenJet>)
 IMPL_SETUP(genmet, MET)
 IMPL_SETUP(L1EG_seeds, vector<L1EGamma>)
@@ -147,7 +148,12 @@ void EventHelper::event_read(){
 	  std::cout<<"Problem with pfparticles in EventHelper.cxx"<<std::endl;
 	  std::cout<<error.what();
 	}
-
+        try{
+        if(puppiparticles) event->puppiparticles = & event->get(h_puppiparticles);}
+        catch(const std::runtime_error& error){
+          std::cout<<"Problem with puppiparticles in EventHelper.cxx"<<std::endl;
+          std::cout<<error.what();
+        }
 	try{
         if(genjets) event->genjets = &event->get(h_genjets);}
 	catch(const std::runtime_error& error){

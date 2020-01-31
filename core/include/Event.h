@@ -52,6 +52,7 @@ public:
   std::vector< GenParticle >* genparticles;
   std::vector< GenJet >* genjets;
   std::vector< PFParticle>* pfparticles;
+  std::vector< PuppiParticle>* puppiparticles;
 
   /** \brief Access to trigger results.
    * 

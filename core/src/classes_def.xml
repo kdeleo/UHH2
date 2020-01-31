@@ -33,6 +33,8 @@
 <class name="std::vector<GenParticle>"/>
 <class name="PFParticle"/>
 <class name="std::vector<PFParticle>"/>
+<class name="PuppiParticle"/>
+<class name="std::vector<PuppiParticle>"/>
 <class name="source_candidate"/>
 <class name="std::vector<source_candidate>"/>
 <class name="L1EGamma"/>
