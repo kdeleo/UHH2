@@ -65,11 +65,11 @@ def get_hists(infile_dict,hist_folder):
         for el in lista:
             if "pt" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            if "_PU40" in el.GetName(): continue
+            #if "_PU40" in el.GetName(): continue
             if "_PU50" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
                #if "_PU50" in el.GetName(): 
-               #if "_PU40" in el.GetName(): 
+               if "_PU40" in el.GetName(): 
                 print el.GetName()
 
                 # read in histogram JetPtResponse_*
@@ -329,7 +329,7 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             eta.Draw()
             
         if "1p3to1p6" in key:
-            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1p6",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1.6",0.92,0.87)
             eta.Draw()
 
         if "1p6to2" in key:
@@ -375,7 +375,7 @@ folder_CP = "JER_fit_UL18_PU40/ChargedPRotection/"
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_UL18_etabins/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_UL18_etabins_PU/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
