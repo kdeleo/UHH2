@@ -106,8 +106,14 @@ EffPurityHists::EffPurityHists(Context & ctx, const string & dirname, const std:
   JetEfficiency_GenJetNPV_alljets_0to1p3 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_0to1p3", "Jet Efficiency NPV (0to1p3)",80,0,80); 
   JetEfficiency_GenJetNPV_alljets_0to1p3_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_0to1p3_matchedjet", "Jet Efficiency NPV (0to1p3)",80,0,80 ); 
 
-  JetEfficiency_GenJetNPV_alljets_1p3to2p5 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p3to2p5", "Jet Efficiency NPV (1p3to2p5)",80,0,80); 
-  JetEfficiency_GenJetNPV_alljets_1p3to2p5_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p3to2p5_matchedjet", "Jet Efficiency NPV (1p3to2p5)",80,0,80 ); 
+  JetEfficiency_GenJetNPV_alljets_1p3to1p6 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p3to1p6", "Jet Efficiency NPV (1p3to1p6)",80,0,80); 
+  JetEfficiency_GenJetNPV_alljets_1p3to1p6_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p3to1p6_matchedjet", "Jet Efficiency NPV (1p3to1p6)",80,0,80 ); 
+
+  JetEfficiency_GenJetNPV_alljets_1p6to2 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p6to2", "Jet Efficiency NPV (1p6to2)",80,0,80); 
+  JetEfficiency_GenJetNPV_alljets_1p6to2_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_1p6to2_matchedjet", "Jet Efficiency NPV (1p6to2)",80,0,80 ); 
+
+  JetEfficiency_GenJetNPV_alljets_2to2p5 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_2to2p5", "Jet Efficiency NPV (2to2p5)",80,0,80); 
+  JetEfficiency_GenJetNPV_alljets_2to2p5_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_2to2p5_matchedjet", "Jet Efficiency NPV (2to2p5)",80,0,80 ); 
 
   JetEfficiency_GenJetNPV_alljets_2p5to3 = book<TH1F>("JetEfficiency_GenJetNPV_alljets_2p5to3", "Jet Efficiency NPV (2p5to3)",80,0,80); 
   JetEfficiency_GenJetNPV_alljets_2p5to3_matchedjet = book<TH1F>("JetEfficiency_GenJetNPV_alljets_2p5to3_matchedjet", "Jet Efficiency NPV (2p5to3)",80,0,80 ); 
@@ -184,8 +190,14 @@ EffPurityHists::EffPurityHists(Context & ctx, const string & dirname, const std:
   JetPurity_RecoJetNPV_alljets_0to1p3 = book<TH1F>("JetPurity_RecoJetNPV_alljets_0to1p3", "Jet Purity NPV (0to1p3)",80,0,80); 
   JetPurity_RecoJetNPV_alljets_0to1p3_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_0to1p3_matchedjet", "Jet Purity NPV (0to1p3)",80,0,80 ); 
 
-  JetPurity_RecoJetNPV_alljets_1p3to2p5 = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p3to2p5", "Jet Purity NPV (1p3to2p5)",80,0,80); 
-  JetPurity_RecoJetNPV_alljets_1p3to2p5_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p3to2p5_matchedjet", "Jet Purity NPV (1p3to2p5)",80,0,80 ); 
+  JetPurity_RecoJetNPV_alljets_1p3to1p6 = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p3to1p6", "Jet Purity NPV (1p3to1p6)",80,0,80); 
+  JetPurity_RecoJetNPV_alljets_1p3to1p6_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p3to1p6_matchedjet", "Jet Purity NPV (1p3to1p6)",80,0,80 ); 
+
+  JetPurity_RecoJetNPV_alljets_1p6to2 = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p6to2", "Jet Purity NPV (1p6to2)",80,0,80); 
+  JetPurity_RecoJetNPV_alljets_1p6to2_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_1p6to2_matchedjet", "Jet Purity NPV (1p6to2)",80,0,80 ); 
+
+  JetPurity_RecoJetNPV_alljets_2to2p5 = book<TH1F>("JetPurity_RecoJetNPV_alljets_2to2p5", "Jet Purity NPV (2to2p5)",80,0,80); 
+  JetPurity_RecoJetNPV_alljets_2to2p5_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_2to2p5_matchedjet", "Jet Purity NPV (2to2p5)",80,0,80 ); 
 
   JetPurity_RecoJetNPV_alljets_2p5to3 = book<TH1F>("JetPurity_RecoJetNPV_alljets_2p5to3", "Jet Purity NPV (2p5to3)",80,0,80); 
   JetPurity_RecoJetNPV_alljets_2p5to3_matchedjet = book<TH1F>("JetPurity_RecoJetNPV_alljets_2p5to3_matchedjet", "Jet Purity NPV (2p5to3)",80,0,80 ); 
@@ -318,7 +330,9 @@ void EffPurityHists::fill(const Event & event){
     else JetEfficiency_GenJetPt_alljets_3to5->Fill(genp_pt,weight);
 
     if(abs(genjets_pt25->at(j).eta())<1.3) JetEfficiency_GenJetNPV_alljets_0to1p3->Fill(npvs,weight);
-    else if(abs(genjets_pt25->at(j).eta())<2.5) JetEfficiency_GenJetNPV_alljets_1p3to2p5->Fill(npvs,weight);
+    else if(abs(genjets_pt25->at(j).eta())<1.6) JetEfficiency_GenJetNPV_alljets_1p3to1p6->Fill(npvs,weight);
+    else if(abs(genjets_pt25->at(j).eta())<2.0) JetEfficiency_GenJetNPV_alljets_1p6to2->Fill(npvs,weight);
+    else if(abs(genjets_pt25->at(j).eta())<2.5) JetEfficiency_GenJetNPV_alljets_2to2p5->Fill(npvs,weight);
     else if(abs(genjets_pt25->at(j).eta())<3)JetEfficiency_GenJetNPV_alljets_2p5to3->Fill(npvs,weight);
     else JetEfficiency_GenJetNPV_alljets_3to5->Fill(npvs,weight);
 
@@ -360,7 +374,9 @@ void EffPurityHists::fill(const Event & event){
 	else JetEfficiency_GenJetPt_alljets_3to5_matchedjet->Fill(genp_pt_matched,weight);
 
 	if(abs(genjets_pt25->at(j).eta())<1.3) JetEfficiency_GenJetNPV_alljets_0to1p3_matchedjet->Fill(npvs,weight);
-	else if(abs(genjets_pt25->at(j).eta())<2.5) JetEfficiency_GenJetNPV_alljets_1p3to2p5_matchedjet->Fill(npvs,weight);
+	else if(abs(genjets_pt25->at(j).eta())<1.6) JetEfficiency_GenJetNPV_alljets_1p3to1p6_matchedjet->Fill(npvs,weight);
+	else if(abs(genjets_pt25->at(j).eta())<2.0) JetEfficiency_GenJetNPV_alljets_1p6to2_matchedjet->Fill(npvs,weight);
+	else if(abs(genjets_pt25->at(j).eta())<2.5) JetEfficiency_GenJetNPV_alljets_2to2p5_matchedjet->Fill(npvs,weight);
 	else if(abs(genjets_pt25->at(j).eta())<3)JetEfficiency_GenJetNPV_alljets_2p5to3_matchedjet->Fill(npvs,weight);
 	else JetEfficiency_GenJetNPV_alljets_3to5_matchedjet->Fill(npvs,weight);
 
@@ -489,7 +505,9 @@ void EffPurityHists::fill(const Event & event){
     }
 
     if(abs(jets_pt25->at(j).eta())<1.3) JetPurity_RecoJetNPV_alljets_0to1p3->Fill(npvs,weight);
-    else if(abs(jets_pt25->at(j).eta())<2.5) JetPurity_RecoJetNPV_alljets_1p3to2p5->Fill(npvs,weight);
+    else if(abs(jets_pt25->at(j).eta())<1.6) JetPurity_RecoJetNPV_alljets_1p3to1p6->Fill(npvs,weight);
+    else if(abs(jets_pt25->at(j).eta())<2.0) JetPurity_RecoJetNPV_alljets_1p6to2->Fill(npvs,weight);
+    else if(abs(jets_pt25->at(j).eta())<2.5) JetPurity_RecoJetNPV_alljets_2to2p5->Fill(npvs,weight);
     else if(abs(jets_pt25->at(j).eta())<3)JetPurity_RecoJetNPV_alljets_2p5to3->Fill(npvs,weight);
     else JetPurity_RecoJetNPV_alljets_3to5->Fill(npvs,weight);
     
@@ -520,7 +538,9 @@ void EffPurityHists::fill(const Event & event){
 	  }
 	
 	  if(abs(jets_pt25->at(j).eta())<1.3) JetPurity_RecoJetNPV_alljets_0to1p3_matchedjet->Fill(npvs,weight);
-	  else if(abs(jets_pt25->at(j).eta())<2.5) JetPurity_RecoJetNPV_alljets_1p3to2p5_matchedjet->Fill(npvs,weight);
+	  else if(abs(jets_pt25->at(j).eta())<1.6) JetPurity_RecoJetNPV_alljets_1p3to1p6_matchedjet->Fill(npvs,weight);
+	  else if(abs(jets_pt25->at(j).eta())<2.0) JetPurity_RecoJetNPV_alljets_1p6to2_matchedjet->Fill(npvs,weight);
+	  else if(abs(jets_pt25->at(j).eta())<2.5) JetPurity_RecoJetNPV_alljets_2to2p5_matchedjet->Fill(npvs,weight);
 	  else if(abs(jets_pt25->at(j).eta())<3)JetPurity_RecoJetNPV_alljets_2p5to3_matchedjet->Fill(npvs,weight);
 	  else JetPurity_RecoJetNPV_alljets_3to5_matchedjet->Fill(npvs,weight);
 	  break;
