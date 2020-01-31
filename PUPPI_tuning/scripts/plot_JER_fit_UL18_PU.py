@@ -65,11 +65,11 @@ def get_hists(infile_dict,hist_folder):
         for el in lista:
             if "pt" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            #if "_PU40" in el.GetName(): continue
+            if "_PU40" in el.GetName(): continue
             if "_PU50" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
                #if "_PU50" in el.GetName(): 
-               if "_PU40" in el.GetName(): 
+               #if "_PU40" in el.GetName(): 
                 print el.GetName()
 
                 # read in histogram JetPtResponse_*
@@ -305,7 +305,7 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle("response (mean)")
 
             if "Pt" in key:
-                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(30,10000)
+                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(10,10000)
             reso_hists[key][pu][reso_mean_rms].GetYaxis().SetRangeUser(ymin,ymax)
             reso_hists[key][pu][reso_mean_rms].Draw("PE same")
             leg.AddEntry(reso_hists[key][pu][reso_mean_rms],pu,"lpe")
@@ -328,8 +328,12 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             eta = CMSPlotStyle.draw_info("|#eta| < 2.5",0.92,0.87)
             eta.Draw()
             
-        if "1p3to2" in key:
-            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 2",0.92,0.87)
+        if "1p3to1p6" in key:
+            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1p6",0.92,0.87)
+            eta.Draw()
+
+        if "1p6to2" in key:
+            eta = CMSPlotStyle.draw_info("1.6 < |#eta| < 2",0.92,0.87)
             eta.Draw()
 
         if "2to2p5" in key:
@@ -371,7 +375,7 @@ folder_CP = "JER_fit_UL18_PU40/ChargedPRotection/"
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_UL18_PU40/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_UL18_etabins/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
@@ -383,18 +387,21 @@ folder_dzcut = "JER_fit_UL18_PU40/PUPPI_dzcut/"
 
 
 ### PUPPI v13 - new PR  
-infile_puppi_inc_2018UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_v13_PU40.root")
+#infile_puppi_inc_2018UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_v13_PU40.root")
+infile_puppi_inc_2018UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_v13_etabins.root")
 TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2018UL_v13
 
 ### Original QCD file from 2018 in CMSSW106
-infile_QCD_orig_2018_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_puppi_PU40.root")
+#infile_QCD_orig_2018_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_puppi_PU40.root")
+infile_QCD_orig_2018_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_puppi_etabins.root")
 TH1.AddDirectory(0)
 infile_dict["PUPPI default"]=infile_QCD_orig_2018_106
 infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2018_106
 
 ### CHS original QCD file from 2018 in CMSSW106 
-infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_chs_PU40.root")
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_chs_PU40.root")
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_chs_etabins.root")
 TH1.AddDirectory(0)
 infile_dict["CHS"]=infile_QCD_CHS
 infile_dict_CHSVersion["CHS"]=infile_QCD_CHS

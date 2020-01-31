@@ -25,10 +25,10 @@ public:
     Event::Handle<vector<GenJet>> h_mygenjets;
 
     //Jet pT scale
-    TH2F *JetPtScale_Eta0to1p3,*JetPtScale_Eta1p3to2,*JetPtScale_Eta2to2p5,*JetPtScale_Eta2p5to3,*JetPtScale_Eta3to10;
-    TH2F *JetPtResponse_Eta0to1p3,*JetPtResponse_Eta1p3to2,*JetPtResponse_Eta2to2p5,*JetPtResponse_Eta2p5to3,*JetPtResponse_Eta3to10;
-    TH2F *JetPtResponse_Eta0to1p3_PU50,*JetPtResponse_Eta1p3to2_PU50,*JetPtResponse_Eta2to2p5_PU50,*JetPtResponse_Eta2p5to3_PU50,*JetPtResponse_Eta3to10_PU50;
-    TH2F *JetPtResponse_Eta0to1p3_PU40,*JetPtResponse_Eta1p3to2_PU40,*JetPtResponse_Eta2to2p5_PU40,*JetPtResponse_Eta2p5to3_PU40,*JetPtResponse_Eta3to10_PU40;
+    TH2F *JetPtScale_Eta0to1p3,*JetPtScale_Eta1p3to1p6,*JetPtScale_Eta1p6to2,*JetPtScale_Eta2to2p5,*JetPtScale_Eta2p5to3,*JetPtScale_Eta3to10;
+    TH2F *JetPtResponse_Eta0to1p3,*JetPtResponse_Eta1p3to1p6,*JetPtResponse_Eta1p6to2,*JetPtResponse_Eta2to2p5,*JetPtResponse_Eta2p5to3,*JetPtResponse_Eta3to10;
+    TH2F *JetPtResponse_Eta0to1p3_PU50,*JetPtResponse_Eta1p3to1p6_PU50,*JetPtResponse_Eta1p6to2_PU50,*JetPtResponse_Eta2to2p5_PU50,*JetPtResponse_Eta2p5to3_PU50,*JetPtResponse_Eta3to10_PU50;
+    TH2F *JetPtResponse_Eta0to1p3_PU40,*JetPtResponse_Eta1p3to1p6_PU40,*JetPtResponse_Eta1p6to2_PU40,*JetPtResponse_Eta2to2p5_PU40,*JetPtResponse_Eta2p5to3_PU40,*JetPtResponse_Eta3to10_PU40;
     TH2F *NeutralMultiplicity_vs_mu_Eta3to5_pt17to20, *NeutralMultiplicity_vs_mu_unmatched_Eta3to5_pt17to20, *NeutralMultiplicity_vs_mu_matched_Eta3to5_pt17to20;
     TH2F *NeutralMultiplicity_vs_mu_Eta3to5_pt15to17, *NeutralMultiplicity_vs_mu_unmatched_Eta3to5_pt15to17, *NeutralMultiplicity_vs_mu_matched_Eta3to5_pt15to17;
     TH2F *NeutralMultiplicity_vs_mu_Eta3to5_pt20to23, *NeutralMultiplicity_vs_mu_unmatched_Eta3to5_pt20to23, *NeutralMultiplicity_vs_mu_matched_Eta3to5_pt20to23;

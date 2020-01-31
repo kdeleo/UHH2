@@ -236,6 +236,7 @@ def get_reso(hists):
                 # Gaussian fit of the peaks
                 #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
                 gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
+                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.5, 2.0);
                 gaussian_fit.SetParameter(1, 1.0);
                 gaussian_fit.SetParameter(2, 0.1);
                 projection.Fit(gaussian_fit, "R"); 
@@ -305,7 +306,7 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle("response (mean)")
 
             if "Pt" in key:
-                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(30,10000)
+                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(10,10000)
             reso_hists[key][pu][reso_mean_rms].GetYaxis().SetRangeUser(ymin,ymax)
             reso_hists[key][pu][reso_mean_rms].Draw("PE same")
             leg.AddEntry(reso_hists[key][pu][reso_mean_rms],pu,"lpe")
@@ -328,14 +329,17 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             eta = CMSPlotStyle.draw_info("|#eta| < 2.5",0.92,0.87)
             eta.Draw()
             
-        if "1p3to2" in key:
-            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 2",0.92,0.87)
+        if "1p3to1p6" in key:
+            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1.6",0.92,0.87)
+            eta.Draw()
+
+        if "1p6to2" in key:
+            eta = CMSPlotStyle.draw_info("1.6 < |#eta| < 2",0.92,0.87)
             eta.Draw()
 
         if "2to2p5" in key:
             eta = CMSPlotStyle.draw_info("2 < |#eta| < 2.5",0.92,0.87)
             eta.Draw()
-
 
         if "2p5to3" in key:
             eta = CMSPlotStyle.draw_info("2.5 < |#eta| < 3.0",0.92,0.87)
@@ -371,7 +375,7 @@ folder_CP = "JER_fit_UL17_PU40/ChargedPRotection/"
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_UL17_PU40/PUPPI_CHSVersions/"
+folder_CHS = "JER_fit_UL17_etabins_PU/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
@@ -383,18 +387,21 @@ folder_dzcut = "JER_fit_UL17_PU40/PUPPI_dzcut/"
 
 
 ### PUPPI v13 - new PR  
-infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
+#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
+infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_etabins.root")
 TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017UL_v13
 
 ### Original QCD file from 2017 in CMSSW106
-infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
+#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
+infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_etabins.root")
 TH1.AddDirectory(0)
 infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
 infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
 ### CHS original QCD file from 2017 in CMSSW106 
-infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_etabins.root")
 TH1.AddDirectory(0)
 infile_dict["CHS"]=infile_QCD_CHS
 infile_dict_CHSVersion["CHS"]=infile_QCD_CHS

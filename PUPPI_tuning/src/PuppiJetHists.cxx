@@ -26,14 +26,16 @@ PuppiJetHists::PuppiJetHists(Context & ctx, const string & dirname, const string
 
   ////////////////////////////////////////////////////////////////       Jet PT Scale       /////////////////////////////////////////////////////////
   JetPtScale_Eta0to1p3 = book<TH2F>("JetPtScale_Eta0to1p3", "Jet p_{T} scale (0<eta<1p3)", 100, 0, 100,200,-2,2); 
-  JetPtScale_Eta1p3to2 = book<TH2F>("JetPtScale_Eta1p3to2", "Jet p_{T} scale (1p3<eta<2)", 100, 0, 100,200,-2,2); 
+  JetPtScale_Eta1p3to1p6 = book<TH2F>("JetPtScale_Eta1p3to1p6", "Jet p_{T} scale (1p3<eta<1p6)", 100, 0, 100,200,-2,2); 
+  JetPtScale_Eta1p6to2 = book<TH2F>("JetPtScale_Eta1p6to2", "Jet p_{T} scale (1p6<eta<2)", 100, 0, 100,200,-2,2); 
   JetPtScale_Eta2to2p5 = book<TH2F>("JetPtScale_Eta2to2p5", "Jet p_{T} scale (2<eta<2p5)", 100, 0, 100,200,-2,2); 
   JetPtScale_Eta2p5to3 = book<TH2F>("JetPtScale_Eta2p5to3", "Jet p_{T} scale (2p5<eta<3)", 100, 0, 100,200,-2,2); 
   JetPtScale_Eta3to10 = book<TH2F>("JetPtScale_Eta3to10", "Jet p_{T} scale (3<eta<10)", 100, 0, 100,200,-2,2); 
 
   ////////////////////////////////////////////////////////////////       Jet PT Response       /////////////////////////////////////////////////////////
   JetPtResponse_Eta0to1p3 = book<TH2F>("JetPtResponse_Eta0to1p3", "Jet p_{T} scale (0<eta<1p3)", 2000, 0, 2000,200,-4,4); 
-  JetPtResponse_Eta1p3to2 = book<TH2F>("JetPtResponse_Eta1p3to2", "Jet p_{T} scale (1p3<eta<2)", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p3to1p6 = book<TH2F>("JetPtResponse_Eta1p3to1p6", "Jet p_{T} scale (1p3<eta<1p6)", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p6to2 = book<TH2F>("JetPtResponse_Eta1p6to2", "Jet p_{T} scale (1p6<eta<2)", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta2to2p5 = book<TH2F>("JetPtResponse_Eta2to2p5", "Jet p_{T} scale (2<eta<2p5)", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta2p5to3 = book<TH2F>("JetPtResponse_Eta2p5to3", "Jet p_{T} scale (2p5<eta<3)", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta3to10 = book<TH2F>("JetPtResponse_Eta3to10", "Jet p_{T} scale (3<eta<10)", 2000, 0, 2000,200,-4,4); 
@@ -42,14 +44,16 @@ PuppiJetHists::PuppiJetHists(Context & ctx, const string & dirname, const string
 
   ////////////////////////////////////////////////////////////////       Jet PT Response PU > 50       /////////////////////////////////////////////////////////
   JetPtResponse_Eta0to1p3_PU50 = book<TH2F>("JetPtResponse_Eta0to1p3_PU50", "Jet p_{T} scale (0<eta<1p3) PU>50", 2000, 0, 2000,200,-4,4); 
-  JetPtResponse_Eta1p3to2_PU50 = book<TH2F>("JetPtResponse_Eta1p3to2_PU50", "Jet p_{T} scale (1p3<eta<2) PU>50", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p3to1p6_PU50 = book<TH2F>("JetPtResponse_Eta1p3to1p6_PU50", "Jet p_{T} scale (1p3<eta<1p6) PU>50", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p6to2_PU50 = book<TH2F>("JetPtResponse_Eta1p6to2_PU50", "Jet p_{T} scale (1p6<eta<2) PU>50", 2000, 0, 2000,200,-4,4);
   JetPtResponse_Eta2to2p5_PU50 = book<TH2F>("JetPtResponse_Eta2to2p5_PU50", "Jet p_{T} scale (2<eta<2p5) PU>50", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta2p5to3_PU50 = book<TH2F>("JetPtResponse_Eta2p5to3_PU50", "Jet p_{T} scale (2p5<eta<3) PU>50", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta3to10_PU50= book<TH2F>("JetPtResponse_Eta3to10_PU50", "Jet p_{T} scale (3<eta<10) PU>50", 2000, 0, 2000,200,-4,4); 
 
   ////////////////////////////////////////////////////////////////       Jet PT Response PU > 40       /////////////////////////////////////////////////////////
   JetPtResponse_Eta0to1p3_PU40 = book<TH2F>("JetPtResponse_Eta0to1p3_PU40", "Jet p_{T} scale (0<eta<1p3) PU>40", 2000, 0, 2000,200,-4,4); 
-  JetPtResponse_Eta1p3to2_PU40 = book<TH2F>("JetPtResponse_Eta1p3to2_PU40", "Jet p_{T} scale (1p3<eta<2) PU>40", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p3to1p6_PU40 = book<TH2F>("JetPtResponse_Eta1p3to1p6_PU40", "Jet p_{T} scale (1p3<eta<1p6) PU>40", 2000, 0, 2000,200,-4,4); 
+  JetPtResponse_Eta1p6to2_PU40 = book<TH2F>("JetPtResponse_Eta1p6to2_PU40", "Jet p_{T} scale (1p6<eta<2) PU>40", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta2to2p5_PU40 = book<TH2F>("JetPtResponse_Eta2to2p5_PU40", "Jet p_{T} scale (2<eta<2p5) PU>40", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta2p5to3_PU40 = book<TH2F>("JetPtResponse_Eta2p5to3_PU40", "Jet p_{T} scale (2p5<eta<3) PU>40", 2000, 0, 2000,200,-4,4); 
   JetPtResponse_Eta3to10_PU40= book<TH2F>("JetPtResponse_Eta3to10_PU40", "Jet p_{T} scale (3<eta<10) PU>40", 2000, 0, 2000,200,-4,4); 
@@ -258,9 +262,12 @@ void PuppiJetHists::fill(const Event & event){
     if(0<= jet_eta && jet_eta <=1.3){
       JetPtScale_Eta0to1p3->Fill(npvs,jet_pt_scale, weight);
       JetPtResponse_Eta0to1p3->Fill(genp_pt,jet_pt_response, weight);
-    }else if(1.3<= jet_eta && jet_eta <=2.0){
-      JetPtScale_Eta1p3to2->Fill(npvs,jet_pt_scale, weight);
-      JetPtResponse_Eta1p3to2->Fill(genp_pt,jet_pt_response, weight);
+    }else if(1.3<= jet_eta && jet_eta <=1.6){
+      JetPtScale_Eta1p3to1p6->Fill(npvs,jet_pt_scale, weight);
+      JetPtResponse_Eta1p3to1p6->Fill(genp_pt,jet_pt_response, weight);
+    }else if(1.6<= jet_eta && jet_eta <=2.0){
+      JetPtScale_Eta1p6to2->Fill(npvs,jet_pt_scale, weight);
+      JetPtResponse_Eta1p6to2->Fill(genp_pt,jet_pt_response, weight);
     }else if(2.0<= jet_eta && jet_eta <=2.5){
       JetPtScale_Eta2to2p5->Fill(npvs,jet_pt_scale, weight);
       JetPtResponse_Eta2to2p5->Fill(genp_pt,jet_pt_response, weight);
@@ -279,8 +286,10 @@ void PuppiJetHists::fill(const Event & event){
     if(trueinteraction>=50){
        if(0<= jet_eta && jet_eta <=1.3){
          JetPtResponse_Eta0to1p3_PU50->Fill(genp_pt,jet_pt_response, weight);
-       }else if(1.3<= jet_eta && jet_eta <=2.0){
-         JetPtResponse_Eta1p3to2_PU50->Fill(genp_pt,jet_pt_response, weight);
+       }else if(1.3<= jet_eta && jet_eta <=1.6){
+         JetPtResponse_Eta1p3to1p6_PU50->Fill(genp_pt,jet_pt_response, weight);
+       }else if(1.6<= jet_eta && jet_eta <=2.0){
+         JetPtResponse_Eta1p6to2_PU50->Fill(genp_pt,jet_pt_response, weight);
        }else if(2.0<= jet_eta && jet_eta <=2.5){
          JetPtResponse_Eta2to2p5_PU50->Fill(genp_pt,jet_pt_response, weight);
        }else if(2.5<= jet_eta && jet_eta <=3.0){
@@ -295,8 +304,10 @@ void PuppiJetHists::fill(const Event & event){
     if(trueinteraction>=40){
        if(0<= jet_eta && jet_eta <=1.3){
          JetPtResponse_Eta0to1p3_PU40->Fill(genp_pt,jet_pt_response, weight);
-       }else if(1.3<= jet_eta && jet_eta <=2.0){
-         JetPtResponse_Eta1p3to2_PU40->Fill(genp_pt,jet_pt_response, weight);
+       }else if(1.3<= jet_eta && jet_eta <=1.6){
+         JetPtResponse_Eta1p3to1p6_PU40->Fill(genp_pt,jet_pt_response, weight);
+       }else if(1.6<= jet_eta && jet_eta <=2.0){
+         JetPtResponse_Eta1p6to2_PU40->Fill(genp_pt,jet_pt_response, weight);
        }else if(2.0<= jet_eta && jet_eta <=2.5){
          JetPtResponse_Eta2to2p5_PU40->Fill(genp_pt,jet_pt_response, weight);
        }else if(2.5<= jet_eta && jet_eta <=3.0){
