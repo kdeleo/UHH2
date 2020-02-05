@@ -16,13 +16,12 @@ ModuleRunner = ModuleRunner(path_MLDIR, outpath)
 
 # ---- Macro for ML inputs preparation ----
 #names of the process, e.g part after uhh2.AnalysisModuleRunner. in the input file name
-procnames = ['QCD_HT500to700_2017v2']
+procnames = ['DY', 'Diboson', 'QCD', 'ST', 'TTbar', 'WJets']
 #name of branches to be skipped in conversion
 ## exact names
-unwanted_exact_tags = ['Mttbar', 'NPV', 'event', 'isRealData', 'luminosityBlock', 'met_pt', 'passEcalBadCalib', 'rec_chi2','rho', 'run', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'year']
+unwanted_exact_tags = ['event', 'isRealData', 'luminosityBlock', 'passEcalBadCalib','rho', 'run', 'year', 'genInfo']
 ## partial names to exclude common set of variables at once
-unwanted_tags = ['ak4jet1_', 'ak8jet1_', 'beamspot_', 'weight_pu', 'prefiringWeight', 'trigger', 'gen', 'jets', 'slimmed', 'm_', 'offlineSlimmedPrimaryVertices_', 'GenParticles_',
-                  'lep1_', 'weight_']
+unwanted_tags = ['beamspot_', 'prefiringWeight', 'trigger', 'slimmed', 'offlineSlimmedPrimaryVertices_', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'genjetsAk8SubstructureSoftDrop', 'jetsAk4Puppi', 'jetsAk8CHSSubstructure_SoftDropCHS', 'jetsAk8PuppiSubstructure_SoftDropPuppi', 'm_shifted', 'm_uncorr', 'm_raw', 'm_']
 
 syst_vars = ['NOMINAL']
 for syst_var in syst_vars:
