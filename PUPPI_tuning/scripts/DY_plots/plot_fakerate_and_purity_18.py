@@ -689,7 +689,8 @@ if b_DY:
     TH1.AddDirectory(0)
 
     ############ puppi v13 newPR 2018
-    infile_puppi_v13_newPR_18 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_2/uhh2.AnalysisModuleRunner.MC.MC_DY_2018_v13.root")
+    #infile_puppi_v13_newPR_18 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_2/uhh2.AnalysisModuleRunner.MC.MC_DY_2018_v13.root")
+    infile_puppi_v13_newPR_18 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_3/uhh2.AnalysisModuleRunner.MC.MC_DY_2018_v13_PR.root")
     TH1.AddDirectory(0)
 
 
