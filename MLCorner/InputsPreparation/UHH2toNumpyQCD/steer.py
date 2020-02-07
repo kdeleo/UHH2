@@ -21,7 +21,7 @@ procnames = ['DY', 'Diboson', 'QCD', 'ST', 'TTbar', 'WJets']
 ## exact names
 unwanted_exact_tags = ['event', 'isRealData', 'luminosityBlock', 'passEcalBadCalib','rho', 'run', 'year', 'genInfo']
 ## partial names to exclude common set of variables at once
-unwanted_tags = ['beamspot_', 'prefiringWeight', 'trigger', 'slimmed', 'offlineSlimmedPrimaryVertices_', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'genjetsAk8SubstructureSoftDrop', 'jetsAk4Puppi', 'jetsAk8CHSSubstructure_SoftDropCHS', 'jetsAk8PuppiSubstructure_SoftDropPuppi', 'm_shifted', 'm_uncorr', 'm_raw', 'm_']
+unwanted_tags = ['beamspot_', 'prefiringWeight', 'trigger', 'slimmed', 'offlineSlimmedPrimaryVertices_', 'GenParticles', 'offlineSlimmedPrimaryVertices', 'genjetsAk8SubstructureSoftDrop', 'jetsAk4Puppi', 'jetsAk8CHSSubstructure_SoftDropCHS', 'jetsAk8PuppiSubstructure_SoftDropPuppi', 'm_']
 
 syst_vars = ['NOMINAL']
 for syst_var in syst_vars:
