@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+
+<!ENTITY NEVT "-1">
+<!ENTITY b_Cacheable "False">
+
+<!ENTITY QCD_2018UL_wpt                               SYSTEM "/nfs/dust/cms/user/deleokse/RunII_106/CMSSW_10_6_8/src/UHH2/PUPPI/config/ul2018_test.xml">
+<!--
+<!ENTITY QCD_2017UL_wpt                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2017UL/QCD_newPR/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8.xml">
+<!ENTITY QCD_2018UL_wpt                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2018UL/QCD_newPR/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8.xml">
+-->
+]>
+
+
+<!--
+<ConfigParse NEventsBreak="0" LastBreak="0" FileSplit="20" AutoResubmit="100"/>
+<ConfigSGE RAM="1" DISK="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_puppi_wvspt"/>
+-->
+
+
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2PUPPI"/>
+    <Package Name="SUHH2PUPPI.par" />
+
+    <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="1" >
+
+<!--
+     <InputData Version="QCD_2017UL_wpt" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2017UL_wpt; <InputTree Name="AnalysisTree"/>  </InputData>
+-->
+     <InputData Version="QCD_2018UL_wpt" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2018UL_wpt; <InputTree Name="AnalysisTree"/>  </InputData>
+
+        <UserConfig>
+
+            <Item Name="TopJetCollection" Value="jetsAk8CHSSubstructure_SoftDropCHS" />
+            <Item Name="TopPuppiJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
+            <Item Name="GenTopJetCollection" Value="genjetsAk8SubstructureSoftDrop" />
+            <Item Name="usePuppiWeightJets" Value="true" />
+            <Item Name="usePuppiWeightTopJets" Value="true" />  
+            <Item Name="PuppiParticleCollection" Value="packedPFCandidates" />
+
+            <Item Name="readTrigger" Value="false" />
+
+            <Item Name="AnalysisModule" Value="ModuleJetConstituents_wvspt" />
+            <Item Name="use_sframe_weight" Value="false" />
+       
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>
