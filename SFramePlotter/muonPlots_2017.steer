@@ -1,18 +1,17 @@
 SteerPlotter(){
   
   // steering for the plotter
-  fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_0802/muon/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
-  fInputFiles    = "MC.WJetsToLNu_*_2017v2_B.root, MC.WJetsToLNu_*_2017v2_C.root, MC.WJetsToLNu_*_2017v2_L.root, MC.TTTo*_2017v2.root, MC.ST_t-channel_*_2017v2.root, MC.ST_tW_*_2017v2.root, MC.QCD_*_2017v2.root, MC.Diboson_*_2017v2.root, MC.DYJetsToLL_*_2017v2.root"; // name of the input files (second part)
-  fSampleNames   = "      WJets_b, WJets_c, WJets_l, TTbar, ST_t-channel, ST_tW, QCD, Diboson, DY"; // name of chains to be plotted
-  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
-  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples 
-  fHistColors =  "        416, 418, 810, 400, 401, 867, 797, 800, 799";   // the colors of the histograms, negative numbers mean no filling
-  fHistMarkers = "        0, 0, 0, 0, 0, 0, 0, 0, 0";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
+  fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2102/muon/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
+  fInputFiles    = "MC.WJetsToLNu_*.root, MC.TTTo*_2017v2.root, MC.ST_*.root, MC.DYJetsToLL_*_2017v2.root"; // name of the input files (second part)
+  fSampleNames   = "      WJets, TTbar, ST, DY"; // name of chains to be plotted
+  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
+  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples 
+  fHistColors =  "        416, 418, 810, 400";   // the colors of the histograms, negative numbers mean no filling
+  fHistMarkers = "        0, 0, 0, 0";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
 
-  fSamplesToStack = "QCD, ST_t-channel, ST_tW, TTTo, WJetsToLNu_b, WJetsToLNu_c, WJetsToLNu_l, Diboson, DY"; // the names of chains which you would like to stack (same as in input filenames)
+  fSamplesToStack = "ST,TTTo, WJetsToLNu, DYJetsToLL"; // the names of chains which you would like to stack (same as in input filenames)
 
-// fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZprimeSemiLeptonic_2017/muon/SingleEPS/Histo.ps";
- fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_0802/muon/Histo.ps";
+ fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2102/muon/Histo.ps";
   
   bRatioPlot = true;   // plot ratio histograms?
   bZScoreInRatio = false;   // plot z-score instead of usual ratio
