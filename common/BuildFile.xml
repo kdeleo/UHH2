@@ -1,6 +1,9 @@
 <use name="root" />
 <use name="rootmath" />
 <use name="boost" />
+<use name="tensorflow" />
+<use name="tensorflow-cc" />
+<use name="protobuf" />
 <use name="LHAPDF" />
 <use name="UHH2/core" />
 <use name="UHH2/JetMETObjects" />
