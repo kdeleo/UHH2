@@ -2,16 +2,14 @@ SteerPlotter(){
   
   // steering for the plotter
   fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2402_NN/muon/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
-  //fInputFiles    = "MC.TTTo*_2017v2.root, MC.WJetsToLNu_*.root, MC.ST_*.root, MC.DYJetsToLL_*_2017v2.root"; // name of the input files (second part)
-  fInputFiles    = "MC.ST_*.root, MC.DYJetsToLL_*_2017v2.root"; // name of the input files (second part)
-  fSampleNames   = "      ST, DY"; // name of chains to be plotted
-  fSamplesWeight = "       1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
-  fSamplesUnc  = "         0.0, 0.0"; // normalisation uncertainty of individual samples 
-  fHistColors =  "         860, 400";   // the colors of the histograms, negative numbers mean no filling
-  fHistMarkers = "           0, 0";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
+  fInputFiles    = "MC.TTTo_2017v2.root, MC.WJetsToLNu_.root, MC.ST_.root, MC.DYJetsToLL__2017v2.root"; // name of the input files (second part)
+  fSampleNames   = "      TTbar, WJets, ST, DY"; // name of chains to be plotted
+  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
+  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples 
+  fHistColors =  "        810, 416, 860, 400";   // the colors of the histograms, negative numbers mean no filling
+  fHistMarkers = "        0, 0, 0, 0";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
 
-  //fSamplesToStack = "ST,TTTo, WJetsToLNu, DYJetsToLL"; // the names of chains which you would like to stack (same as in input filenames)
-  fSamplesToStack = "ST, DYJetsToLL"; // the names of chains which you would like to stack (same as in input filenames)
+  fSamplesToStack = "ST,TTTo, WJetsToLNu, DYJetsToLL"; // the names of chains which you would like to stack (same as in input filenames)
 
   //fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2402_NN/muon/Histo.ps";
   fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2402_NN/muon/SingleEPS/Histo.ps";
