@@ -65,11 +65,15 @@ def get_hists(infile_dict,hist_folder):
         for el in lista:
             if "pt" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            if "_PU50" in el.GetName(): continue
-            #if "_PU40" in el.GetName(): continue
+            if "_PU10to20" in el.GetName(): continue
+            if "_PU30to40" in el.GetName(): continue
+            if "_PU40to50" in el.GetName(): continue
+            #if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
-               #if "_PU50" in el.GetName(): 
-               if "_PU40" in el.GetName(): 
+               #if "_PU10to20" in el.GetName(): 
+               #if "_PU30to40" in el.GetName(): 
+               #if "_PU40to50" in el.GetName(): 
+               if "_PU50to70" in el.GetName(): 
                 print el.GetName()
 
                 # read in histogram JetPtResponse_*
@@ -81,8 +85,8 @@ def get_hists(infile_dict,hist_folder):
 
 # plots the different response histograms for each 10th bin
 def plot_control(hists, folder):
-    markers = [21,22,20,34,28,20,20,20,20,20,20]
-    colors = [(kAzure-4), kRed, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+    markers = [20,21,22,20,34,28,20,20,20,20,20,20]
+    colors = [kBlack,kAzure-4,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -375,7 +379,7 @@ folder_CP = "JER_fit_UL17_PU40/ChargedPRotection/"
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit_UL17_etabins_PU/PUPPI_CHSVersions/"
+folder_CHS = "JER_UL17/PUPPI_CHSVersions/"
 
 ###
 # all variants of the dzcut true/false included
@@ -388,20 +392,26 @@ folder_dzcut = "JER_fit_UL17_PU40/PUPPI_dzcut/"
 
 ### PUPPI v13 - new PR  
 #infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
-infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_etabins.root")
+#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
+#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
+infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
 TH1.AddDirectory(0)
 infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017UL_v13
 
 ### Original QCD file from 2017 in CMSSW106
 #infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
-infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_etabins.root")
+#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
 TH1.AddDirectory(0)
 infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
 infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
 ### CHS original QCD file from 2017 in CMSSW106 
 #infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
-infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_etabins.root")
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
 TH1.AddDirectory(0)
 infile_dict["CHS"]=infile_QCD_CHS
 infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
