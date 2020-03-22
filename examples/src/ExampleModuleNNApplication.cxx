@@ -36,12 +36,12 @@ public:
   explicit NeuralNetworkModule(uhh2::Context&, const std::string & ModelName, const std::string& ConfigName);
   virtual void CreateInputs(uhh2::Event & event) override;
 protected:
-  uhh2::Event::Handle<std::vector<TopJet> > h_topjets;
+  uhh2::Event::Handle<float> h_JetLep_pt;
 };
 
 
 NeuralNetworkModule::NeuralNetworkModule(Context& ctx, const std::string & ModelName, const std::string& ConfigName): NeuralNetworkBase(ctx, ModelName, ConfigName){
-    h_topjets = ctx.get_handle<std::vector<TopJet>>("toppuppijets");
+    h_JetLep_pt = ctx.get_handle<float> ("JetLep_pt");
 }
 
 
@@ -50,14 +50,7 @@ void NeuralNetworkModule::CreateInputs(Event & event){
   NNoutputs.clear();
 
   NNInputs.push_back( tensorflow::Tensor(tensorflow::DT_FLOAT, {1, 8}));
-  NNInputs.at(0).tensor<float, 2>()(0,0) = event.get(h_topjets).at(0).pt();
-  NNInputs.at(0).tensor<float, 2>()(0,1) = event.get(h_topjets).at(0).eta();
-  NNInputs.at(0).tensor<float, 2>()(0,2) = event.get(h_topjets).at(0).phi();
-  NNInputs.at(0).tensor<float, 2>()(0,3) = event.get(h_topjets).at(0).energy();
-  NNInputs.at(0).tensor<float, 2>()(0,4) = event.get(h_topjets).at(0).tau1_groomed();
-  NNInputs.at(0).tensor<float, 2>()(0,5) = event.get(h_topjets).at(0).tau2_groomed();
-  NNInputs.at(0).tensor<float, 2>()(0,6) = event.get(h_topjets).at(0).tau3_groomed();
-  NNInputs.at(0).tensor<float, 2>()(0,7) = event.get(h_topjets).at(0).tau4_groomed();
+  NNInputs.at(0).tensor<float, 2>()(0,0) = event.get(h_JetLep_pt);
 
   if (NNInputs.size()!=LayerInputs.size()) throw logic_error("NeuralNetworkModule.cxx: Create a number of inputs diffetent wrt. LayerInputs.size()="+to_string(LayerInputs.size()));
 }
@@ -71,7 +64,7 @@ public:
 
 protected:
 
-  Event::Handle<std::vector<TopJet> > h_topjets;
+  Event::Handle<float> h_JetLep_pt;
   Event::Handle<std::vector<tensorflow::Tensor> > h_NNoutput;
   Event::Handle<double> h_NNoutput1;
 
@@ -83,10 +76,11 @@ protected:
 
 ExampleModuleNNApplication::ExampleModuleNNApplication(uhh2::Context& ctx){
 
-  h_topjets = ctx.get_handle<std::vector<TopJet>>("toppuppijets");
+  h_JetLep_pt = ctx.get_handle<float>("JetLep_pt");
   h_NNoutput = ctx.get_handle<std::vector<tensorflow::Tensor>>("NNoutput");
   h_NNoutput1 = ctx.declare_event_output<double>("NNoutput1");
-  NNModule.reset( new NeuralNetworkModule(ctx, "./mymodel.pb", "./mymodel.config.pbtxt"));
+//  NNModule.reset( new NeuralNetworkModule(ctx, "./mymodel.pb", "./mymodel.config.pbtxt"));
+  NNModule.reset( new NeuralNetworkModule(ctx, "../../ZprimeSemiLeptonic/KeranNN/ML_test/model.pb", "../../ZprimeSemiLeptonic/KeranNN/ML_test/model.config.pbtxt"));
 
 }
 
