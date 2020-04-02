@@ -1,7 +1,7 @@
 SteerPlotter(){
   
   // steering for the plotter
-  fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2903_UseDNN/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
+  fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_0104_UseDNN/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
   fInputFiles    = "MC.TTbar.root, MC.WJets_DY.root, MC.ST.root"; // name of the input files (second part)
   fSampleNames   = "      TTbar, WJets_DY, ST"; // name of chains to be plotted
   fSamplesWeight = "      1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
@@ -11,7 +11,7 @@ SteerPlotter(){
 
   fSamplesToStack = "ST,TTbar, WJets_DY"; // the names of chains which you would like to stack (same as in input filenames)
 
-  fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_2903_UseDNN/Histo.ps";
+  fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_2017v2_0104_UseDNN/Histo.ps";
   
   bRatioPlot = false;   // plot ratio histograms?
   bZScoreInRatio = false;   // plot z-score instead of usual ratio
