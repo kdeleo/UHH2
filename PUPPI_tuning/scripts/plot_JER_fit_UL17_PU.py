@@ -64,16 +64,22 @@ def get_hists(infile_dict,hist_folder):
         print infile
         for el in lista:
             if "pt" in el.GetName(): continue
+            #if "Eta0to1p3" in el.GetName(): continue
+            #if "Eta1p3to1p6" in el.GetName(): continue
+            #if "Eta1p6to2" in el.GetName(): continue
+            #if "Eta2to2p5" in el.GetName(): continue
+            #if "Eta2p5to3" in el.GetName(): continue
+            #if "Eta3to10" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            if "_PU10to20" in el.GetName(): continue
-            if "_PU30to40" in el.GetName(): continue
-            if "_PU40to50" in el.GetName(): continue
+            #if "_PU10to20" in el.GetName(): continue
+            #if "_PU30to40" in el.GetName(): continue
+            #if "_PU40to50" in el.GetName(): continue
             #if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
                #if "_PU10to20" in el.GetName(): 
                #if "_PU30to40" in el.GetName(): 
                #if "_PU40to50" in el.GetName(): 
-               if "_PU50to70" in el.GetName(): 
+               #if "_PU50to70" in el.GetName(): 
                 print el.GetName()
 
                 # read in histogram JetPtResponse_*
@@ -85,8 +91,8 @@ def get_hists(infile_dict,hist_folder):
 
 # plots the different response histograms for each 10th bin
 def plot_control(hists, folder):
-    markers = [20,21,22,20,34,28,20,20,20,20,20,20]
-    colors = [kBlack,kAzure-4,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+    markers = [34,21,20,22,34,34,28,20,20,20,20,20,20,20]
+    colors = [kOrange-3,kAzure-4,kBlack,kRed,kOrange-3,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -99,7 +105,8 @@ def plot_control(hists, folder):
 #                if bin%100 != 0: continue
                 #if bin != 500: continue
                 if bin%10 !=0: continue
-                if bin>100: continue
+                #if bin>100: continue
+                if bin!=40: continue
 
                 # plot for each pT bin the distribution and save in folder+"/control/"
                 projection = hist.ProjectionY("_y",bin,bin+1)
@@ -221,7 +228,8 @@ def get_reso(hists):
             for bin in range(0,hist.GetNbinsX()+1):
                 #if bin != 40 : continue
                 if bin%10 : continue
-                if bin>100 and bin%30: continue
+                #if bin>100 and bin%30: continue
+                if bin!= 40: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
                 #projection.GetXaxis().SetRangeUser(0.5,1.5)
                 #projection.GetXaxis().SetRangeUser(-10.0,10.0)
@@ -266,8 +274,10 @@ def get_reso(hists):
                 #reso.SetBinError(bin,projection.GetRMSError())
                 reso.SetBinContent(bin,resolution_2)
                 reso.SetBinError(bin,gaussian_fit.GetParError(2))
-                mean_h.SetBinContent(bin,mean)
-                mean_h.SetBinError(bin,projection.GetRMSError())
+                #mean_h.SetBinContent(bin,mean)
+                #mean_h.SetBinError(bin,projection.GetRMSError())
+                mean_h.SetBinContent(bin,gaussian_fit.GetParameter(1))
+                mean_h.SetBinError(bin,gaussian_fit.GetParError(1))
                 rms_h.SetBinContent(bin,rms)
     
             if not reso_hists.has_key(key): reso_hists[key] = {}
@@ -283,8 +293,8 @@ def get_reso(hists):
 #plots the resolution for the different hists
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
-    markers = [22,21,20,34,28,20,20,20,20,20,20]
-    colors = [kRed,(kAzure-4),kBlack,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
+    markers = [20,22,21,34,28,20,20,20,20,20,20]
+    colors = [kBlack,kRed,kAzure-4,kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -364,7 +374,10 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             c.SetLogy()
             
         c.Print(folder + name+"_"+key+".eps")
-        c.Print(folder + name+"_"+key+".pdf")
+        #c.Print(folder + name+"_"+key+".pdf")
+
+
+
 
 #default
 infile_dict={}
@@ -389,14 +402,19 @@ folder_dzcut = "JER_fit_UL17_PU40/PUPPI_dzcut/"
 
 
 
-
-### PUPPI v13 - new PR  
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
-infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
+### PUPPI v13 tune - dzcut for eta > 2.4  
+infile_puppi_inc_2017UL_dzeta2p4 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_dzeta2p4.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 beagle"]=infile_puppi_inc_2017UL_v13
+infile_dict_CHSVersion["PUPPI v14"]=infile_puppi_inc_2017UL_dzeta2p4
+
+
+#### PUPPI v13 - new PR  
+##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
+##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
+##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
+#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2017UL_v13
 
 ### Original QCD file from 2017 in CMSSW106
 #infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
@@ -407,14 +425,14 @@ TH1.AddDirectory(0)
 infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
 infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
-### CHS original QCD file from 2017 in CMSSW106 
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-TH1.AddDirectory(0)
-infile_dict["CHS"]=infile_QCD_CHS
-infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
+#### CHS original QCD file from 2017 in CMSSW106 
+##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
+##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+#TH1.AddDirectory(0)
+#infile_dict["CHS"]=infile_QCD_CHS
+#infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
 
 
 
@@ -440,6 +458,7 @@ hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
 
 reso_hists_CHS = get_reso(hists_CHS)
 plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)
+plot_reso(reso_hists_CHS,folder_CHS,"mean","mean",0.8,1.4,False)
 plot_control(hists_CHS,folder_CHS)
 
 

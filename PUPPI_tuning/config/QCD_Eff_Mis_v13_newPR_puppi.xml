@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
 
-<!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis//PUPPI_tuning/rootfilesUL_studies/">
+<!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis//PUPPI_tuning/rootfilesUL_v14/">
 <!ENTITY NEVT "-1">
 <!ENTITY b_Cacheable "False">
 

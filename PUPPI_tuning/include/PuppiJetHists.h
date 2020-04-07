@@ -27,6 +27,7 @@ public:
     //Jet pT scale
     TH2F *JetPtScale_Eta0to1p3,*JetPtScale_Eta1p3to1p6,*JetPtScale_Eta1p6to2,*JetPtScale_Eta2to2p5,*JetPtScale_Eta2p5to3,*JetPtScale_Eta3to10;
     TH2F *JetPtResponse_Eta0to1p3,*JetPtResponse_Eta1p3to1p6,*JetPtResponse_Eta1p6to2,*JetPtResponse_Eta2to2p5,*JetPtResponse_Eta2p5to3,*JetPtResponse_Eta3to10;
+    TH2F *JetPtResponse_Eta0to1p3_PU0to10,*JetPtResponse_Eta1p3to1p6_PU0to10,*JetPtResponse_Eta1p6to2_PU0to10,*JetPtResponse_Eta2to2p5_PU0to10,*JetPtResponse_Eta2p5to3_PU0to10,*JetPtResponse_Eta3to10_PU0to10;
     TH2F *JetPtResponse_Eta0to1p3_PU10to20,*JetPtResponse_Eta1p3to1p6_PU10to20,*JetPtResponse_Eta1p6to2_PU10to20,*JetPtResponse_Eta2to2p5_PU10to20,*JetPtResponse_Eta2p5to3_PU10to20,*JetPtResponse_Eta3to10_PU10to20;
     TH2F *JetPtResponse_Eta0to1p3_PU30to40,*JetPtResponse_Eta1p3to1p6_PU30to40,*JetPtResponse_Eta1p6to2_PU30to40,*JetPtResponse_Eta2to2p5_PU30to40,*JetPtResponse_Eta2p5to3_PU30to40,*JetPtResponse_Eta3to10_PU30to40;
     TH2F *JetPtResponse_Eta0to1p3_PU50to70,*JetPtResponse_Eta1p3to1p6_PU50to70,*JetPtResponse_Eta1p6to2_PU50to70,*JetPtResponse_Eta2to2p5_PU50to70,*JetPtResponse_Eta2p5to3_PU50to70,*JetPtResponse_Eta3to10_PU50to70;

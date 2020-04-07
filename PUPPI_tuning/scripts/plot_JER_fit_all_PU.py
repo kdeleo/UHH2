@@ -55,10 +55,8 @@ beps = True
 def get_hists(infile_dict,hist_folder):
     hists={}
     # make list for all histogramm JetPtResponse_* based on first file
-    #if infile_dict.has_key("PUPPI default 2017"):
-    #    lista = infile_dict["PUPPI default 2017"].Get(hist_folder).GetListOfKeys()
-    if infile_dict.has_key("CHS 2017"):
-        lista = infile_dict["CHS 2017"].Get(hist_folder).GetListOfKeys()
+    if infile_dict.has_key("PUPPI 2017"):
+        lista = infile_dict["PUPPI 2017"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -95,7 +93,7 @@ def plot_control(hists, folder):
            
             for bin in range(0,hist.GetNbinsX()+1):
 #                if bin%100 != 0: continue
-                #if bin != 500: continue
+                if bin != 20: continue
                 if bin%10 !=0: continue
                 if bin>100: continue
 
@@ -133,8 +131,7 @@ def plot_control(hists, folder):
     print "============= JER scale"
     for key in hist_dict:
         print "####################3 new key " + key
-        #if not "PUPPI_default_2017" in key: continue
-        if not "CHS_2017" in key: continue
+        if not "PUPPI_2017" in key: continue
         splitted = key.split("_")
         c1 = TCanvas()
         leg = TLegend(0.5,0.5,0.9,0.9,"","brNDC")        
@@ -205,7 +202,7 @@ def extratext(text,x,y):
 
 
 # calculate the resolution
-def get_reso(hists):
+def get_reso(hists,folder):
     reso_hists = {}
     print "get mean and rms"
 
@@ -218,13 +215,13 @@ def get_reso(hists):
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
            
             for bin in range(0,hist.GetNbinsX()+1):
-                #if bin != 40 : continue
+                if bin != 20 : continue
                 if bin%10 : continue
                 if bin>100 and bin%30: continue
                 projection = hist.ProjectionY("_y",bin,bin+1)
                 #projection.GetXaxis().SetRangeUser(0.5,1.5)
-                projection.GetXaxis().SetRangeUser(-10.0,10.0)
-                #projection.GetXaxis().SetRangeUser(0.0,3.0)
+                #projection.GetXaxis().SetRangeUser(-10.0,10.0)
+                projection.GetXaxis().SetRangeUser(0.0,3.0)
                 mean = projection.GetMean()
                 rms = projection.GetRMS()
 
@@ -237,8 +234,8 @@ def get_reso(hists):
 
 
                 # Gaussian fit of the peaks
-                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
-                gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
                 #gaussian_fit = TF1("gaussian_fit", "gaus", 0.5, 2.0);
                 gaussian_fit.SetParameter(1, 1.0);
                 gaussian_fit.SetParameter(2, 0.1);
@@ -253,6 +250,17 @@ def get_reso(hists):
                     gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
                     gaussian_fit.SetParameter(2, gaussian_fit.GetParameter(2));
                     projection.Fit(gaussian_fit,"R");
+
+                c1 = TCanvas() 
+                projection.Draw()
+                text = CMSPlotStyle.draw_info("Chi2/NDF %.2f"%(gaussian_fit.GetChisquare()/gaussian_fit.GetNDF()),0.92,0.87)
+                text.Draw()              
+                text2 = CMSPlotStyle.draw_info("reso %.2f"%(gaussian_fit.GetParameter(2)),0.92,0.7)
+                text2.Draw()
+                text3 = CMSPlotStyle.draw_info("rms %.2f"%(rms),0.92,0.5)
+                text3.Draw()
+                name = pu.replace(" ","_")
+                c1.Print(folder + "gaussian"+"_"+key+"_"+name+"_"+str(bin)+".eps")
 
                 resolution_2 = 0
                 if gaussian_fit.GetParameter(2) !=0:
@@ -283,7 +291,7 @@ def get_reso(hists):
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
     markers = [20,21,22,34,5,20,20,20,20,20,20,22,21,34,28,20]
-    colors = [kBlack,(kAzure-4),kOrange-3,kMagenta-7,kRed,kRed,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue,kBlack,kSpring,kRed] 
+    colors = [(kAzure-4), kRed, kBlack,kBlack,(kAzure-4),kOrange-3,kMagenta-7,kRed,kRed,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue,kBlack,kSpring,kRed] 
 
     for key in reso_hists:
         c = TCanvas()
@@ -363,55 +371,42 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             c.SetLogy()
             
         c.Print(folder + name+"_"+key+".eps")
-        c.Print(folder + name+"_"+key+".pdf")
+        #c.Print(folder + name+"_"+key+".pdf")
 
 #default
 infile_dict={}
 
 ###
-# all variants of the charged protection included
-###
-infile_dict_chargedProtection={}
-folder_CP = "JER_fit_UL17_PU40/ChargedPRotection/"
-
-###
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_fit/PUPPI_CHSVersions/"
-
-###
-# all variants of the dzcut true/false included
-###
-infile_dict_dzcut={}
-folder_dzcut = "JER_fit_UL17_PU40/PUPPI_dzcut/"
+folder_CHS = "JER_fit_all/"
 
 
 
-### PUPPI v13 16
-infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 2016"]=infile_puppi_inc_2016_v13
-
-
-### PUPPI v13 UL18
-infile_puppi_inc_2018UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 UL2018"]=infile_puppi_inc_2018UL_v13
-
-
-### PUPPI v13 - new PR UL17  
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
-infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v13 UL2017"]=infile_puppi_inc_2017UL_v13
-
-#### Original QCD file from 2017 in CMSSW106
-##infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
-#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+#### PUPPI v13 16
+#infile_puppi_inc_2016_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2016v2_v13.root")
 #TH1.AddDirectory(0)
-#infile_dict["PUPPI default UL2017"]=infile_QCD_orig_2017_106
-#infile_dict_CHSVersion["PUPPI default UL2017"]=infile_QCD_orig_2017_106
+#infile_dict_CHSVersion["PUPPI v13 2016"]=infile_puppi_inc_2016_v13
+#
+#
+#### PUPPI v13 UL18
+#infile_puppi_inc_2018UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13 UL2018"]=infile_puppi_inc_2018UL_v13
+#
+#
+#### PUPPI v13 - new PR UL17  
+##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
+#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI v13 UL2017"]=infile_puppi_inc_2017UL_v13
+#
+### Original QCD file from 2017 in CMSSW106
+infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+TH1.AddDirectory(0)
+infile_dict["PUPPI UL2017"]=infile_QCD_orig_2017_106
+infile_dict_CHSVersion["PUPPI UL2017"]=infile_QCD_orig_2017_106
 
 #### CHS original QCD file from 2017 in CMSSW106 
 ##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
@@ -427,11 +422,11 @@ infile_dict_CHSVersion["PUPPI v13 UL2017"]=infile_puppi_inc_2017UL_v13
 #infile_dict_CHSVersion["PUPPI UL2018"]=infile_QCD_orig_2018_106
 #
 #
-### QCD file from 2017 in CMSSW102
-#infile_QCD_orig_2017_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_puppi.root")
-#TH1.AddDirectory(0)
-#infile_dict["PUPPI default 2017"]=infile_QCD_orig_2017_102
-#infile_dict_CHSVersion["PUPPI default 2017"]=infile_QCD_orig_2017_102
+## QCD file from 2017 in CMSSW102
+infile_QCD_orig_2017_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_puppi.root")
+TH1.AddDirectory(0)
+infile_dict["PUPPI 2017"]=infile_QCD_orig_2017_102
+infile_dict_CHSVersion["PUPPI 2017"]=infile_QCD_orig_2017_102
 
 
 ### PUPPI v13 2017 in CMSSW102
@@ -441,11 +436,11 @@ infile_dict_CHSVersion["PUPPI v13 UL2017"]=infile_puppi_inc_2017UL_v13
 #infile_dict_CHSVersion["PUPPI v13 2017"]=infile_QCD_v13_2017_102
 
 
-#### QCD file from 2018 in CMSSW102
-#infile_QCD_orig_2018_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2018_puppi.root")
-#TH1.AddDirectory(0)
-#infile_dict["PUPPI default 2018"]=infile_QCD_orig_2018_102
-#infile_dict_CHSVersion["PUPPI default 2018"]=infile_QCD_orig_2018_102
+### QCD file from 2018 in CMSSW102
+infile_QCD_orig_2018_102 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2018_puppi.root")
+TH1.AddDirectory(0)
+infile_dict["PUPPI 2018"]=infile_QCD_orig_2018_102
+infile_dict_CHSVersion["PUPPI 2018"]=infile_QCD_orig_2018_102
 
 #### CHS original QCD file from 2018 in CMSSW106 
 #infile_QCD_CHS_UL18 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2018UL_chs.root")
@@ -453,11 +448,11 @@ infile_dict_CHSVersion["PUPPI v13 UL2017"]=infile_puppi_inc_2017UL_v13
 #infile_dict["CHS UL2018"]=infile_QCD_CHS_UL18
 #infile_dict_CHSVersion["CHS UL2018"]=infile_QCD_CHS_UL18
 
-### CHS original QCD file from 2017 in CMSSW102 
-infile_QCD_CHS_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_chs.root")
-TH1.AddDirectory(0)
-infile_dict["CHS 2017"]=infile_QCD_CHS_17
-infile_dict_CHSVersion["CHS 2017"]=infile_QCD_CHS_17
+#### CHS original QCD file from 2017 in CMSSW102 
+#infile_QCD_CHS_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2017v2_chs.root")
+#TH1.AddDirectory(0)
+#infile_dict["CHS 2017"]=infile_QCD_CHS_17
+#infile_dict_CHSVersion["CHS 2017"]=infile_QCD_CHS_17
 
 #### CHS original QCD file from 2018 in CMSSW102 
 #infile_QCD_CHS_18 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles3/uhh2.AnalysisModuleRunner.MC.QCD_2018_chs.root")
@@ -473,17 +468,10 @@ infile_dict_CHSVersion["CHS 2017"]=infile_QCD_CHS_17
 ###
 # QCD CHS vs PUPPI
 hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
+#hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8")
 
-reso_hists_CHS = get_reso(hists_CHS)
-plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)
+reso_hists_CHS = get_reso(hists_CHS,folder_CHS)
+plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.6,True)
 plot_control(hists_CHS,folder_CHS)
 
 
-# ###
-# # dzcut
-# ###
-# # QCD CHS vs PUPPI
-# hists_dzcut = get_hists(infile_dict_dzcut,"puppi_jet_pt_8_wJEC")
-
-# reso_hists_dzcut = get_reso(hists_dzcut)
-# plot_reso(reso_hists_dzcut,folder_dzcut,"reso","resolution",0.05,0.4,True)
