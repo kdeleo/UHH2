@@ -14,7 +14,6 @@ using namespace uhh2;
 
 
  void correct_jet(FactorizedJetCorrector & corrector, Jet & jet, const Event & event, JetCorrectionUncertainty* jec_unc, int jec_unc_direction){
-cout <<"starting correct_jet()" << endl;
     auto factor_raw = jet.JEC_factor_raw();
     corrector.setJetPt(jet.pt() * factor_raw);
     corrector.setJetEta(jet.eta());
@@ -25,7 +24,7 @@ cout <<"starting correct_jet()" << endl;
     auto correctionfactors = corrector.getSubCorrections();
     auto correctionfactor_L1  = correctionfactors.front();
     auto correctionfactor = correctionfactors.back();
-cout << "jet: " << jet.pt()* factor_raw << " " << jet.pt() << " " << jet.eta() << " " << correctionfactor << endl;
+
     LorentzVector jet_v4_corrected = jet.v4() * (factor_raw *correctionfactor);
 
     if(jec_unc_direction!=0){
@@ -53,7 +52,7 @@ cout << "jet: " << jet.pt()* factor_raw << " " << jet.pt() << " " << jet.eta() <
       }
     }
 
-cout << "setting jet pt to " << jet_v4_corrected.pt() << endl;
+
     jet.set_v4(jet_v4_corrected);
     jet.set_JEC_factor_raw(1. / correctionfactor);
     jet.set_JEC_L1factor_raw(correctionfactor_L1);
@@ -67,9 +66,7 @@ namespace {
 // dealing with jet energy corrections here:
 std::unique_ptr<FactorizedJetCorrector> build_corrector(const std::vector<std::string> & filenames){
     std::vector<JetCorrectorParameters> pars;
-//cout << "Build_corrector()" << endl;
     for(const auto & filename : filenames){
-//cout << "--- " << filename << endl;
         pars.emplace_back(locate_file(filename));
     }
     return uhh2::make_unique<FactorizedJetCorrector>(pars);
