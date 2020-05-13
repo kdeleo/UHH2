@@ -16,7 +16,7 @@ ModuleRunner = ModuleRunner(path_MLDIR, outpath)
 
 # ---- Macro for ML inputs preparation ----
 #names of the process, e.g part after uhh2.AnalysisModuleRunner. in the input file name
-procnames = ['TTbar', 'ST', 'WJets', 'DY', 'Zprime']
+procnames = ['TTbar', 'ST', 'WJets_1', 'WJets_2','WJets_3', 'DY']
 #procnames = ['ZprimeToTTJet_M1000_2017v2', 'ZprimeToTT_M1000_W100_2017v2', 'ZprimeToTT_M3000_W900_2017v2']
 #name of branches to be skipped in conversion
 ## exact names
