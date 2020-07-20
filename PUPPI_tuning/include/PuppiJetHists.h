@@ -24,6 +24,12 @@ public:
     Event::Handle<vector<Jet>> h_myjets;
     Event::Handle<vector<GenJet>> h_mygenjets;
 
+
+    TH1F *JetEta;
+    TH1F *JetPt_Eta0to1p3,*JetPt_Eta1p3to1p6,*JetPt_Eta1p6to2,*JetPt_Eta2to2p5,*JetPt_Eta2p5to3,*JetPt_Eta3to10;
+    TH1F *JetMass_Eta0to1p3,*JetMass_Eta1p3to1p6,*JetMass_Eta1p6to2,*JetMass_Eta2to2p5,*JetMass_Eta2p5to3,*JetMass_Eta3to10;
+    TH1F *JetNumber_Eta0to1p3,*JetNumber_Eta1p3to1p6,*JetNumber_Eta1p6to2,*JetNumber_Eta2to2p5,*JetNumber_Eta2p5to3,*JetNumber_Eta3to10;
+
     //Jet pT scale
     TH2F *JetPtScale_Eta0to1p3,*JetPtScale_Eta1p3to1p6,*JetPtScale_Eta1p6to2,*JetPtScale_Eta2to2p5,*JetPtScale_Eta2p5to3,*JetPtScale_Eta3to10;
     TH2F *JetPtResponse_Eta0to1p3,*JetPtResponse_Eta1p3to1p6,*JetPtResponse_Eta1p6to2,*JetPtResponse_Eta2to2p5,*JetPtResponse_Eta2p5to3,*JetPtResponse_Eta3to10;

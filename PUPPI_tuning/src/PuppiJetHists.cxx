@@ -24,6 +24,36 @@ PuppiJetHists::PuppiJetHists(Context & ctx, const string & dirname, const string
     h_mygenjets = ctx.get_handle<std::vector<GenJet> >("gen"+collection);
   }
 
+  ////////////////////////////////////////////////////////////////       Jet Number Bins Eta       /////////////////////////////////////////////////////////
+  JetNumber_Eta0to1p3   = book<TH1F>("JetNumber_Eta0to1p3", "Number of jets (0<eta<1p3)", 21, -.5, 20.5);
+  JetNumber_Eta1p3to1p6 = book<TH1F>("JetNumber_Eta1p3to1p6", "Number of jets (1p3<eta<1p6)", 21, -.5, 20.5);
+  JetNumber_Eta1p6to2   = book<TH1F>("JetNumber_Eta1p6to2", "Number of jets (1p6<eta<2)", 21, -.5, 20.5);
+  JetNumber_Eta2to2p5   = book<TH1F>("JetNumber_Eta2to2p5", "Number of jets (2<eta<2p5)", 21, -.5, 20.5);
+  JetNumber_Eta2p5to3   = book<TH1F>("JetNumber_Eta2p5to3", "Number of jets (2p5<eta<3)", 21, -.5, 20.5);
+  JetNumber_Eta3to10    = book<TH1F>("JetNumber_Eta3to10", "Number of jets (3<eta<10)", 21, -.5, 20.5);
+
+  ////////////////////////////////////////////////////////////////       Jet Pt Bins Eta       /////////////////////////////////////////////////////////
+  JetPt_Eta0to1p3   = book<TH1F>("JetPt_Eta0to1p3", "pt jets (0<eta<1p3)", 150, 0.0, 1500.0);
+  JetPt_Eta1p3to1p6 = book<TH1F>("JetPt_Eta1p3to1p6", "pt jets (1p3<eta<1p6)", 150, 0.0, 1500.0);
+  JetPt_Eta1p6to2   = book<TH1F>("JetPt_Eta1p6to2", "pt jets (1p6<eta<2)", 150, 0.0, 1500.0);
+  JetPt_Eta2to2p5   = book<TH1F>("JetPt_Eta2to2p5", "pt jets (2<eta<2p5)", 150, 0.0, 1500.0);
+  JetPt_Eta2p5to3   = book<TH1F>("JetPt_Eta2p5to3", "pt jets (2p5<eta<3)", 150, 0.0, 1500.0);
+  JetPt_Eta3to10    = book<TH1F>("JetPt_Eta3to10", "pt jets (3<eta<10)", 150, 0.0, 1500.0);
+
+
+  ////////////////////////////////////////////////////////////////       Jet Eta Bins Eta       /////////////////////////////////////////////////////////
+  JetEta   = book<TH1F>("JetEta", "eta jets", 100,-5,5);
+
+
+  ////////////////////////////////////////////////////////////////       Jet Mass Bins Eta       /////////////////////////////////////////////////////////
+  JetMass_Eta0to1p3   = book<TH1F>("JetMass_Eta0to1p3", "mass jets (0<eta<1p3)", 150, 0.0, 300.0);
+  JetMass_Eta1p3to1p6 = book<TH1F>("JetMass_Eta1p3to1p6", "mass jets (1p3<eta<1p6)", 150, 0.0, 300.0);
+  JetMass_Eta1p6to2   = book<TH1F>("JetMass_Eta1p6to2", "mass jets (1p6<eta<2)", 150, 0.0, 300.0);
+  JetMass_Eta2to2p5   = book<TH1F>("JetMass_Eta2to2p5", "mass jets (2<eta<2p5)", 150, 0.0, 300.0);
+  JetMass_Eta2p5to3   = book<TH1F>("JetMass_Eta2p5to3", "mass jets (2p5<eta<3)", 150, 0.0, 300.0);
+  JetMass_Eta3to10    = book<TH1F>("JetMass_Eta3to10", "mass jets (3<eta<10)", 150, 0.0, 300.0);
+
+
   ////////////////////////////////////////////////////////////////       Jet PT Scale       /////////////////////////////////////////////////////////
   JetPtScale_Eta0to1p3 = book<TH2F>("JetPtScale_Eta0to1p3", "Jet p_{T} scale (0<eta<1p3)", 100, 0, 100,200,-2,2); 
   JetPtScale_Eta1p3to1p6 = book<TH2F>("JetPtScale_Eta1p3to1p6", "Jet p_{T} scale (1p3<eta<1p6)", 100, 0, 100,200,-2,2); 
@@ -263,6 +293,8 @@ void PuppiJetHists::fill(const Event & event){
   double npvs = event.pvs->size();
   double trueinteraction = event.genInfo->pileup_TrueNumInteractions();
 
+
+
   ////////////////////////////////////////   Jet pt scale    /////////////////////////////////////////
   double genp_pt=0;
 
@@ -271,6 +303,41 @@ void PuppiJetHists::fill(const Event & event){
 
     double jet_eta = abs(jets.at(i).eta());
     double jet_pt = jets.at(i).pt();
+    double jet_mass = jets.at(i).v4().M();
+    double jet_number = jets.size();
+
+    JetEta ->Fill(jets.at(i).eta(), weight); 
+
+    if(0<= jet_eta && jet_eta <=1.3){
+    JetPt_Eta0to1p3 ->Fill(jet_pt, weight); 
+    JetMass_Eta0to1p3 ->Fill(jet_mass, weight); 
+    JetNumber_Eta0to1p3 ->Fill(jet_number, weight);
+
+    }else if(1.3<= jet_eta && jet_eta <=1.6){
+    JetPt_Eta1p3to1p6 ->Fill(jet_pt, weight); 
+    JetMass_Eta1p3to1p6 ->Fill(jet_mass, weight); 
+    JetNumber_Eta1p3to1p6 ->Fill(jet_number, weight);
+
+    }else if(1.6<= jet_eta && jet_eta <=2.0){
+    JetPt_Eta1p6to2 ->Fill(jet_pt, weight); 
+    JetMass_Eta1p6to2 ->Fill(jet_mass, weight); 
+    JetNumber_Eta1p6to2 ->Fill(jet_number, weight);
+
+    }else if(2.0<= jet_eta && jet_eta <=2.5){
+    JetPt_Eta2to2p5 ->Fill(jet_pt, weight); 
+    JetMass_Eta2to2p5 ->Fill(jet_mass, weight); 
+    JetNumber_Eta2to2p5 ->Fill(jet_number, weight);
+
+    }else if(2.5<= jet_eta && jet_eta <=3.0){
+    JetPt_Eta2p5to3 ->Fill(jet_pt, weight); 
+    JetMass_Eta2p5to3 ->Fill(jet_mass, weight); 
+    JetNumber_Eta2p5to3 ->Fill(jet_number, weight);
+
+    }else if(3.0<= jet_eta){
+    JetPt_Eta3to10 ->Fill(jet_pt, weight); 
+    JetMass_Eta3to10 ->Fill(jet_mass, weight); 
+    JetNumber_Eta3to10 ->Fill(jet_number, weight);
+    }
 
     genp_pt=-1;
     //do matching to calculate jet pt scale
@@ -538,7 +605,6 @@ void PuppiJetHists::fill(const Event & event){
       }
 
     }
-
 
 
 

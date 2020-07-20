@@ -595,6 +595,8 @@ JetResolutionSmearer::JetResolutionSmearer(uhh2::Context & ctx){
     version = "Fall17_V3";
   } else if (year == Year::is2018) {
     version = "Autumn18_V7";
+  }  else if (year == Year::is2017UL) {
+    version = "Summer19UL17_JRV2";
   } else {
     throw runtime_error("Cannot find suitable jet resolution file & scale factors for this year for JetResolutionSmearer");
   }

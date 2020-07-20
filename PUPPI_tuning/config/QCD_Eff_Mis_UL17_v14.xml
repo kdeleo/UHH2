@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JobConfiguration PUBLIC "" "JobConfig.dtd"[
+
+<!ENTITY SELdir "/nfs/dust/cms/user/deleokse/analysis//PUPPI_tuning/rootfilesUL_JECsV5_ptclip8/">
+<!ENTITY NEVT "-1">
+<!ENTITY b_Cacheable "False">
+
+
+<!ENTITY QCD_2017UL_v14                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2017UL/QCD_dzcutforetag2p4/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8.xml">
+<!--<!ENTITY QCD_2017UL_v13                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2017UL/QCD_newPR/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8.xml">-->
+<!--<!ENTITY QCD_2018UL_puppi                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2018UL/QCD_newPR/QCD_Pt-15to7000_TuneCP5_Flat2018_13TeV_pythia8.xml">-->
+
+]>
+
+<!--
+<ConfigParse NEventsBreak="0" FileSplit="20" />
+<ConfigSGE RAM ="1" DISK ="2" Mail="ksenia.de.leo@desy.de" Notification="as" Workdir="workdir_QCD_PUPPI_EFF_Mis_v14"/>
+-->
+
+
+<JobConfiguration JobName="ExampleCycleJob" OutputLevel="INFO">
+    <Library Name="libSUHH2Puppi"/>
+    <Package Name="SUHH2Puppi.par" />
+
+   <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="&SELdir;/" PostFix="" TargetLumi="35867.059983" >
+
+     <InputData Version="QCD_2017UL_v14" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2017UL_v14; <InputTree Name="AnalysisTree"/>  </InputData>
+<!--
+     <InputData Version="QCD_2018UL_puppi" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &QCD_2018UL_puppi; <InputTree Name="AnalysisTree"/>  </InputData>
+-->
+ 
+        <UserConfig>
+            <!-- define which collections to read from the input. Only specify what you need to save I/O time -->
+            <Item Name="PrimaryVertexCollection" Value="offlineSlimmedPrimaryVertices" /> 
+            <Item Name="ElectronCollection" Value="slimmedElectronsUSER" />
+            <Item Name="MuonCollection" Value="slimmedMuonsUSER" /> 
+            <!-- <Item Name="TauCollection" Value="slimmedTaus" /> -->
+            <!--<Item Name="JetCollection" Value="patJetsAK4PFPUPPI" />-->
+            <Item Name="JetCollection" Value="patJetsAk4PuppiJets" />
+            <!--<Item Name="JetCollection" Value="jetsAk4CHS" />-->
+            <!--<Item Name="JetCollection" Value="jetsAk4Puppi" />-->
+            <Item Name="TopJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
+            <Item Name="GenJetCollection" Value="slimmedGenJets" />
+            <Item Name="METName" Value="slimmedMETsPuppi" />
+            <Item Name="GenParticleCollection" Value="GenParticles" /> 
+                        
+            <!-- the class name of the AnalysisModule subclasses to run: -->
+            <Item Name="AnalysisModule" Value="QCDEffPurityModule" /> 
+            
+            <!-- tell AnalysisModuleRunner NOT to use the MC event weight from SFrame; rather let
+                 MCLumiWeight (called via CommonModules) calculate the MC event weight. The MC
+                 event weight assigned by MCLumiWeight is InputData.Lumi / Cycle.TargetLumi. -->
+            <Item Name="use_sframe_weight" Value="false" />
+            
+            <!-- configuration for MCPileupReweight (run as part of CommonModules): -->
+            <Item Name="pileup_directory" Value="" />
+            
+            <!-- Some test configuration; see PuppiModule.cxx for how to access it: -->
+            <Item Name="TestKey" Value="TestKeyValue" />
+            <Item Name="debug" Value="false" />
+	    <Item Name="pTCut" Value="30" />
+
+        </UserConfig>
+    </Cycle>
+</JobConfiguration>

@@ -131,6 +131,7 @@ private:
     std::string jec_tag_2016, jec_ver_2016;
     std::string jec_tag_2017, jec_ver_2017;
     std::string jec_tag_2018, jec_ver_2018;
+    std::string jec_tag_2017UL, jec_ver_2017UL;
     std::string jec_jet_coll;
 
     std::unique_ptr<Selection> lumi_selection;

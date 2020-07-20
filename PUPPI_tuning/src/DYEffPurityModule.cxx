@@ -67,6 +67,7 @@ namespace uhh2examples {
 
     std::unique_ptr<CommonModules> common; // implemented year dependent in common modules
 
+
     ///////////////////////////    Selections    /////////////////////////////////  
 
     std::unique_ptr<uhh2::AndSelection> lep2_sel; //selectes depending on the channel two leptons and veto the other 
@@ -140,7 +141,11 @@ namespace uhh2examples {
     common->disable_pvfilter(); //no pvfilter applied
     common->disable_jetpfidfilter(); //no jet ID applied to measure eff and purity without the effect of JetID
     common->switch_jetPtSorter();
+    common->disable_jersmear(); // no jer smearing (not yet in UL)
+//    common->disable_jec(); // no jecs (not yet in UL)
     common->init(ctx);
+
+
 
     ///////////////////////////    Selections    /////////////////////////////////  
     lep2_sel.reset(new uhh2::AndSelection(ctx));
@@ -201,7 +206,7 @@ namespace uhh2examples {
       std::cout<<" ====================    New Event   ===================="<< "muons  "<<event.muons->size()<< "  electrons  "<<event.electrons->size()<<std::endl;
       std::cout<<" "<<std::endl;
     }
-
+ 
     ///////////////////    quark gluon comparison  /////////////
     QuarkGluonHandelMaker->process(event);
 
@@ -223,7 +228,12 @@ namespace uhh2examples {
     h_jet_input->fill(event);
     h_DY_input->fill(event);
 
+
+    //apply JEC
+    common->process(event);
+
     ///////////////////////////////////////////////////      Cleaner    //////////////////////////////////////////
+
     if(berror) std::cout<<"cleaner"<<std::endl;
     muo_cleaner->process(event);
     ele_cleaner->process(event);
@@ -242,8 +252,6 @@ namespace uhh2examples {
     //remove reco&gen jets that overlap with leptons
     jetmuonOverlapRemoval->process(event);
     if(berror) std::cout<<"correction and removal"<<std::endl;
-    //apply JEC
-    common->process(event);
 
     //apply PUJetID and split into PU enriched and LV enriched
     if(filename.Contains("CHS"))PUJetID_sel->process(event);

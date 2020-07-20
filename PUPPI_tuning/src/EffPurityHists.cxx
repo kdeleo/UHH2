@@ -224,14 +224,14 @@ EffPurityHists::EffPurityHists(Context & ctx, const string & dirname, const std:
   pT_genjets = book<TH1F>("pT_genjets","pT of Genjets",2000,0,2000); //before cleaning
   pT_recojets = book<TH1F>("pT_recojets","pT of Recojets",2000,0,2000); //before cleaning
 
-  eta_genjets = book<TH1F>("eta_genjets","eta of Genjets",20,-10,10); //before cleaning
-  eta_recojets = book<TH1F>("eta_recojets","eta of Recojets",20,-10,10); //before cleaning
+  eta_genjets = book<TH1F>("eta_genjets","eta of Genjets",200,-10,10); //before cleaning
+  eta_recojets = book<TH1F>("eta_recojets","eta of Recojets",200,-10,10); //before cleaning
 
   pT_genjets_firstjet = book<TH1F>("pT_genjets_firstjet","pT of Genjets",2000,0,2000); //before cleaning
   pT_recojets_firstjet = book<TH1F>("pT_recojets_firstjet","pT of Recojets",2000,0,2000); //before cleaning
 
-  eta_genjets_firstjet = book<TH1F>("eta_genjets_firstjet","eta of Genjets",20,-10,10); //before cleaning
-  eta_recojets_firstjet = book<TH1F>("eta_recojets_firstjet","Eta of Recojets",20,-10,10); //before cleaning
+  eta_genjets_firstjet = book<TH1F>("eta_genjets_firstjet","eta of Genjets",200,-10,10); //before cleaning
+  eta_recojets_firstjet = book<TH1F>("eta_recojets_firstjet","Eta of Recojets",200,-10,10); //before cleaning
 
   pT_eff_recojets = book<TH1F>("pT_eff_recojets","pT of Recojets during eff calculation",2000,0,2000); // pT of the matched reco jets to genrator jets, should be below the pT of generator jets in eff
   pT_purity_genjets = book<TH1F>("pT_purity_genjets","pT of Genjets during purity calculation",2000,0,2000); // pT of matched gen jets to reco jets, should be below the pT of reco jets in purity
