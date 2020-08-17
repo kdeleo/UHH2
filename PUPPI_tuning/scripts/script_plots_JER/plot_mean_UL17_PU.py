@@ -57,8 +57,12 @@ def get_hists(infile_dict,hist_folder):
     # make list for all histogramm JetPtResponse_* based on first file
     #if infile_dict.has_key("PUPPI default"):
     #    lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
-    if infile_dict.has_key("PUPPI v14"):
-        lista = infile_dict["PUPPI v14"].Get(hist_folder).GetListOfKeys()
+    if infile_dict.has_key("PUPPI Laurent tune"):
+        lista = infile_dict["PUPPI Laurent tune"].Get(hist_folder).GetListOfKeys()
+    #if infile_dict.has_key("PUPPI chihuahua"):
+    #    lista = infile_dict["PUPPI chihuahua"].Get(hist_folder).GetListOfKeys()
+    #if infile_dict.has_key("CHS"):
+    #    lista = infile_dict["CHS"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -66,18 +70,20 @@ def get_hists(infile_dict,hist_folder):
         print infile
         for el in lista:
             if "pt" in el.GetName(): continue
-            if "Eta0to1p3" in el.GetName(): continue
+            #if "Eta0to1p3" in el.GetName(): continue
             if "Eta1p3to1p6" in el.GetName(): continue
             if "Eta1p6to2" in el.GetName(): continue
             if "Eta2to2p5" in el.GetName(): continue
-            #if "Eta2p5to3" in el.GetName(): continue
+            if "Eta2p5to3" in el.GetName(): continue
             if "Eta3to10" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
+            #if "_PU0to10" in el.GetName(): continue
             #if "_PU10to20" in el.GetName(): continue
             #if "_PU30to40" in el.GetName(): continue
             #if "_PU40to50" in el.GetName(): continue
             #if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
+               #if "_PU0to10" in el.GetName():
                #if "_PU10to20" in el.GetName(): 
                #if "_PU30to40" in el.GetName(): 
                #if "_PU40to50" in el.GetName(): 
@@ -117,6 +123,9 @@ def get_reso(hists):
             reso = TH1F("reso","Resolution",hist.GetNbinsX(),0,hist.GetNbinsX())
             mean_h = TH1F("mean_h","Mean",hist.GetNbinsX(),0,hist.GetNbinsX())
             mean_h2 = TH1F("mean_h2","Mean",7,0,70)
+            mean_h3 = TH1F("mean_h3","Mean",7,0,70)
+            mean_h4 = TH1F("mean_h4","Mean",7,0,70)
+            mean_h5 = TH1F("mean_h5","Mean",7,0,70)
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
            
             for bin in range(0,hist.GetNbinsX()+1):
@@ -140,8 +149,8 @@ def get_reso(hists):
 
 
                 # Gaussian fit of the peaks
-                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
-                gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
                 #gaussian_fit = TF1("gaussian_fit", "gaus", 0.5, 2.0);
                 gaussian_fit.SetParameter(1, 1.0);
                 gaussian_fit.SetParameter(2, 0.1);
@@ -162,7 +171,7 @@ def get_reso(hists):
                     resolution_2 = gaussian_fit.GetParameter(2)/gaussian_fit.GetParameter(1)
  
                 #print "mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
-                print "name %s, mean gaussian = %.3f, rms gaussian = %.3f, resolution gaussian = %.3f " % (hist, gaussian_fit.GetParameter(1), gaussian_fit.GetParameter(2), resolution_2) 
+                print "hist %s, name %s, mean gaussian = %.3f, error mean = %.3f" % (hist, pu, gaussian_fit.GetParameter(1), gaussian_fit.GetParError(1)) 
 
                 #reso.SetBinContent(bin,resolution)
                 #reso.SetBinError(bin,projection.GetRMSError())
@@ -177,33 +186,120 @@ def get_reso(hists):
             if not reso_hists.has_key(key): reso_hists[key] = {}
             if not reso_hists[key].has_key(pu): reso_hists[key][pu] = {}
 
+##########################
+# eta>3
+            ## Laurent
+            #mean_h2.SetBinContent(1,1.02495e+00)
+            #mean_h2.SetBinError(1,4.67297e-03)
+            #mean_h2.SetBinContent(2,1.01955e+00)
+            #mean_h2.SetBinError(2,5.26348e-03)
+            #mean_h2.SetBinContent(4,1.00651e+00)
+            #mean_h2.SetBinError(4,5.55219e-03)
+            #mean_h2.SetBinContent(5,1.01961e+00)
+            #mean_h2.SetBinError(5,5.92604e-03)
+            #mean_h2.SetBinContent(6,9.91380e-01)
+            #mean_h2.SetBinError(6,4.72386e-03)
 
-            mean_h2.SetBinContent(2,1.05496)
-	    mean_h2.SetBinError(2,7.43237e-03)
-            mean_h2.SetBinContent(4,1.07251)
-	    mean_h2.SetBinError(4,8.98457e-03)
-            mean_h2.SetBinContent(5,1.10232)
-	    mean_h2.SetBinError(5,8.57299e-03)
-            mean_h2.SetBinContent(6,1.09537)
-	    mean_h2.SetBinError(6,7.00515e-03)
+            ## v14
+            #mean_h3.SetBinContent(1,1.02622e+00)
+            #mean_h3.SetBinError(1,4.72363e-03)
+            #mean_h3.SetBinContent(2,1.01909e+00)
+            #mean_h3.SetBinError(2,5.61196e-03)
+            #mean_h3.SetBinContent(4,1.00662e+00)
+            #mean_h3.SetBinError(4,5.72731e-03)
+            #mean_h3.SetBinContent(5,1.02128e+00)
+            #mean_h3.SetBinError(5,5.95801e-03)
+            #mean_h3.SetBinContent(6,9.94728e-01)
+            #mean_h3.SetBinError(6,4.90360e-03)
 
 
-            #mean_h2.SetBinContent(2,1.10266)
-	    #mean_h2.SetBinError(2,5.76668e-03)
-            #mean_h2.SetBinContent(4,1.17156)
-	    #mean_h2.SetBinError(4,6.17766e-03)
-            #mean_h2.SetBinContent(5,1.20085)
-	    #mean_h2.SetBinError(5,7.78242e-03)
-            #mean_h2.SetBinContent(6,1.23781)
-	    #mean_h2.SetBinError(6,5.87371e-03)
+            ## chs 
+            #mean_h4.SetBinContent(1,1.00577e+00)
+            #mean_h4.SetBinError(1,4.61438e-03)
+            #mean_h4.SetBinContent(2,1.00106e+00)
+            #mean_h4.SetBinError(2,4.79820e-03)
+            #mean_h4.SetBinContent(4,1.00093e+00)
+            #mean_h4.SetBinError(4,4.66845e-03)
+            #mean_h4.SetBinContent(5,1.00429e+00)
+            #mean_h4.SetBinError(5,5.08619e-03)
+            #mean_h4.SetBinContent(6,9.98131e-01)
+            #mean_h4.SetBinError(6,3.62306e-03)
+
+
+            ## default 
+            #mean_h5.SetBinContent(1,1.02921e+00)
+            #mean_h5.SetBinError(1,4.54503e-03)
+            #mean_h5.SetBinContent(2,1.02687e+00)
+            #mean_h5.SetBinError(2,5.33209e-03)
+            #mean_h5.SetBinContent(4,1.01417e+00)
+            #mean_h5.SetBinError(4,5.54822e-03)
+            #mean_h5.SetBinContent(5,1.02738e+00)
+            #mean_h5.SetBinError(5,5.81745e-03)
+            #mean_h5.SetBinContent(6,1.00350e+00)
+            #mean_h5.SetBinError(6,4.49906e-03)
+#####################
+# eta<1.3
+
+            ## Laurent
+            mean_h2.SetBinContent(1,1.02336e+00)
+            mean_h2.SetBinError(1,2.19690e-03)
+            mean_h2.SetBinContent(2,1.04287e+00)
+            mean_h2.SetBinError(2,2.68050e-03)
+            mean_h2.SetBinContent(4,1.05171e+00)
+            mean_h2.SetBinError(4,2.87830e-03)
+            mean_h2.SetBinContent(5,1.04649e+00)
+            mean_h2.SetBinError(5,2.97211e-03)
+            mean_h2.SetBinContent(6,1.03699e+00)
+            mean_h2.SetBinError(6,2.20863e-03)
+
+            # v14
+            mean_h3.SetBinContent(1,1.02363e+00)
+            mean_h3.SetBinError(1,2.32533e-03)
+            mean_h3.SetBinContent(2,1.04150e+00)
+            mean_h3.SetBinError(2,2.67250e-03)
+            mean_h3.SetBinContent(4,1.05238e+00)
+            mean_h3.SetBinError(4,3.01331e-03)
+            mean_h3.SetBinContent(5,1.04820e+00)
+            mean_h3.SetBinError(5,3.06999e-03)
+            mean_h3.SetBinContent(6,1.03119e+00)
+            mean_h3.SetBinError(6,2.28794e-03)
+
+
+            # chs 
+            mean_h4.SetBinContent(1,1.00045e+00)
+            mean_h4.SetBinError(1,1.84734e-03)
+            mean_h4.SetBinContent(2,1.00366e+00)
+            mean_h4.SetBinError(2,2.55212e-03)
+            mean_h4.SetBinContent(4,1.00113e+00)
+            mean_h4.SetBinError(4,2.41436e-03)
+            mean_h4.SetBinContent(5,9.99876e-01)
+            mean_h4.SetBinError(5,2.61386e-03)
+            mean_h4.SetBinContent(6,9.98554e-01)
+            mean_h4.SetBinError(6,2.10159e-03)
+
+
+            # default 
+            mean_h5.SetBinContent(1,1.01893e+00)
+            mean_h5.SetBinError(1,2.15206e-03)
+            mean_h5.SetBinContent(2,1.02890e+00)
+            mean_h5.SetBinError(2,2.47204e-03)
+            mean_h5.SetBinContent(4,1.03725e+00)
+            mean_h5.SetBinError(4,2.72537e-03)
+            mean_h5.SetBinContent(5,1.03004e+00)
+            mean_h5.SetBinError(5,2.84317e-03)
+            mean_h5.SetBinContent(6,1.01539e+00)
+            mean_h5.SetBinError(6,2.26061e-03)
+
 
             reso_hists[key][pu]["reso"] = reso
             reso_hists[key][pu]["mean"] = mean_h
-            reso_hists[key][pu]["mean2"] = mean_h2
             reso_hists[key][pu]["rms"] = rms_h
 
+        reso_hists[key]["PUPPI Laurent tune"]["mean2"] = mean_h2
+        reso_hists[key]["PUPPI chihuahua"]["mean2"] = mean_h3
+        reso_hists[key]["PUPPI default"]["mean2"] = mean_h5
+        reso_hists[key]["CHS"]["mean2"] = mean_h4
     return reso_hists
-
 
 
 #plots the resolution for the different hists
@@ -221,11 +317,27 @@ def plot_mean(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
 
         i=0
         jj=0
-        for pu in reso_hists[key]:
+        for pu in sorted(reso_hists[key]):
             #if i == 2 or i==4: i+=1
-            reso_hists[key][pu][reso_mean_rms].SetLineColor(colors[i])
-            reso_hists[key][pu][reso_mean_rms].SetMarkerColor(colors[i])
-            reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(markers[jj])
+            #reso_hists[key][pu][reso_mean_rms].SetLineColor(colors[i])
+            #reso_hists[key][pu][reso_mean_rms].SetMarkerColor(colors[i])
+            #reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(markers[jj])
+            if "CHS" in pu:
+              reso_hists[key][pu][reso_mean_rms].SetLineColor(kRed)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerColor(kRed)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(22)
+            if "PUPPI default" in pu:
+              reso_hists[key][pu][reso_mean_rms].SetLineColor(kAzure-4)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerColor(kAzure-4)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(21)
+            if "PUPPI Laurent tune" in pu:
+              reso_hists[key][pu][reso_mean_rms].SetLineColor(kOrange-3)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerColor(kOrange-3)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(34)
+            if "PUPPI chihuahua" in pu:
+              reso_hists[key][pu][reso_mean_rms].SetLineColor(kBlack)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerColor(kBlack)
+              reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(20)
             reso_hists[key][pu][reso_mean_rms].SetMarkerSize(1.2)
             reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitle("NPV")
             reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle(name)
@@ -296,42 +408,31 @@ infile_dict={}
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "JER_UL17/PUPPI_CHSVersions/"
+folder_CHS = "Laurent_JER_UL17_v14/mean_npv/"
 
 
 
-### PUPPI v13 tune - dzcut for eta > 2.4  
-infile_puppi_inc_2017UL_dzeta2p4 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_dzeta2p4.root")
+### Original QCD file from 2017 in CMSSW106
+infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v14"]=infile_puppi_inc_2017UL_dzeta2p4
+infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
+infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
+### CHS original QCD file from 2017 in CMSSW106 
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+TH1.AddDirectory(0)
+infile_dict["CHS"]=infile_QCD_CHS
+infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
 
-#### PUPPI v13 - new PR  
-##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13_PU40.root")
-##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
-##infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL.root")
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2017UL_v13
+### PUPPI v14  
+infile_puppi_inc_2017UL_v14 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI chihuahua"]=infile_puppi_inc_2017UL_v14
 
-#### Original QCD file from 2017 in CMSSW106
-##infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi_PU40.root")
-##infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
-##infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
-#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
-#TH1.AddDirectory(0)
-#infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
-#infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
-
-#### CHS original QCD file from 2017 in CMSSW106 
-##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs_PU40.root")
-##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-##infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_PU40to50/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_studies/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-#TH1.AddDirectory(0)
-#infile_dict["CHS"]=infile_QCD_CHS
-#infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
-
+### PUPPI v14 - Laurent tune 
+infile_puppi_inc_2017UL_v14_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14_Laurent.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI Laurent tune"]=infile_puppi_inc_2017UL_v14_Laurent
 
 
 

@@ -40,9 +40,11 @@ gStyle.SetOptStat(0)
 gStyle.SetPaintTextFormat("2.3f")
 
 #colors = [kBlue,kRed,kBlack,kGreen,kOrange]
+colors = [kOrange-3,kRed,kAzure-4,kBlack, kRed, kMagenta,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+markers = [34,22,21,20,20,24,20,22,21,34,24,20,20,20,20,20,20]
 
 berror = False
-folder = "koasta/MET/"
+folder = "koasta_Laurent/MET/"
 beps = True
 
 def calculate_ratio(infile,key):
@@ -83,17 +85,18 @@ def plot_MET_ratio(file_dict,folder,filenamebase):
         calculate_ratio(file_dict[key],key)
     
         ratio_histo = hist_dict[key+"_ratio"]
-        leg.AddEntry(hist_dict[key+"_ratio"],key,"L")
+        leg.AddEntry(hist_dict[key+"_ratio"],key,"LP")
     #set up histo
         ratio_histo.GetXaxis().SetTitle("q_{T} [GeV]")
         ratio_histo.GetYaxis().SetTitle("-<u_{||}>/<q_{T}>")
         ratio_histo.GetYaxis().SetRangeUser(0,1.1)
         
-        ratio_histo.SetMarkerStyle(2)
-        if i==4: i+=1
-        if i==2: i+=1
-        ratio_histo.SetMarkerColor(i+1)
-        ratio_histo.SetLineColor(i+1)
+        ratio_histo.SetLineColor(colors[i])
+        ratio_histo.SetMarkerStyle(markers[i])
+        #if i==4: i+=1
+        #if i==2: i+=1
+        ratio_histo.SetMarkerColor(colors[i])
+        ratio_histo.SetLineColor(colors[i])
     
 #        ratio_histo.Draw("P same")
         ratio_histo.Draw("E same")
@@ -177,18 +180,19 @@ def plot_MET_resolution(file_dict,folder,filenamebase,ymin=0.2,ymax=1.2,ymax2=1.
 
     i=0
     for key in file_dict:
-        leg.AddEntry(hist_dict[key+"_par"],key,"L")
+        leg.AddEntry(hist_dict[key+"_par"],key,"LP")
 
         c.cd()
     #setup histos
         hist_dict[key+"_par"].GetXaxis().SetTitle("Number of True Interaction")
         hist_dict[key+"_par"].GetYaxis().SetTitle("#sigma(u_{||}) / <u_{||}>")
-        hist_dict[key+"_par"].SetMarkerStyle(2)
-        if i==4: i+=1
-        if i==2: i+=1
+        #hist_dict[key+"_par"].SetMarkerStyle(2)
+        #if i==4: i+=1
+        #if i==2: i+=1
         hist_dict[key+"_par"].SetMarkerSize(1)
-        hist_dict[key+"_par"].SetMarkerColor(i+1)
-        hist_dict[key+"_par"].SetLineColor(i+1)
+        hist_dict[key+"_par"].SetMarkerStyle(markers[i])
+        hist_dict[key+"_par"].SetMarkerColor(colors[i])
+        hist_dict[key+"_par"].SetLineColor(colors[i])
         hist_dict[key+"_par"].GetYaxis().SetRangeUser(ymin,ymax)
 
         hist_dict[key+"_par"].Draw("E same")
@@ -197,9 +201,9 @@ def plot_MET_resolution(file_dict,folder,filenamebase,ymin=0.2,ymax=1.2,ymax2=1.
     #setup histos
         hist_dict[key+"_per"].GetXaxis().SetTitle("Number of True Interaction")
         hist_dict[key+"_per"].GetYaxis().SetTitle("#sigma(u_{#perp}) / <u_{#perp}>")
-        hist_dict[key+"_per"].SetMarkerStyle(2)
-        hist_dict[key+"_per"].SetMarkerColor(i+1)
-        hist_dict[key+"_per"].SetLineColor(i+1)
+        hist_dict[key+"_per"].SetMarkerStyle(markers[i])
+        hist_dict[key+"_per"].SetMarkerColor(colors[i])
+        hist_dict[key+"_per"].SetLineColor(colors[i])
         hist_dict[key+"_per"].GetYaxis().SetRangeUser(ymin,ymax2)
 
         hist_dict[key+"_per"].Draw("E same")
@@ -218,7 +222,6 @@ def plot_MET_resolution(file_dict,folder,filenamebase,ymin=0.2,ymax=1.2,ymax2=1.
     if beps: c_per.Print(folder+filenamebase+"response_per.eps")
     c_per.Print(folder+filenamebase+"response_per.pdf")
 
-colors = [kBlack, kBlue,kRed, kMagenta,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
 
 def plot_MET(infiles,folder, name):
     c = TCanvas()
@@ -247,12 +250,13 @@ def plot_MET(infiles,folder, name):
         hist_to_draw[key].GetXaxis().SetTitle("raw MET")
         hist_to_draw[key].GetYaxis().SetTitle("Events")
         hist_to_draw[key].GetYaxis().SetRangeUser(0.0001,2e6)
-        hist_to_draw[key].SetMarkerStyle(2)
+        hist_to_draw[key].SetMarkerStyle(markers[i])
 #        if i==4: i+=1
 #        if i==2: i+=1
         #hist_to_draw[key].SetMarkerColor(i+1)
         #hist_to_draw[key].SetLineColor(i+1)
         hist_to_draw[key].SetMarkerColor(colors[i])
+        hist_to_draw[key].SetMarkerStyle(markers[i])
         hist_to_draw[key].SetLineColor(colors[i])
         
         leg.AddEntry(hist_to_draw[key], key,"LP")
@@ -328,25 +332,24 @@ file_dict={}
 #file_dict["PUPPI 2017 orig"] = infile_2017_orig
 
 # PUPPI default UL 2017
-infile_2017_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_default.root")
+infile_2017_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_default.root")
 TH1.AddDirectory(0)
-file_dict["PUPPI 2017 UL"] = infile_2017_UL
+file_dict["PUPPI default"] = infile_2017_UL
 
 # CHS UL 2017
-infile_2017_chs_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_chs.root")
+infile_2017_chs_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_chs.root")
 TH1.AddDirectory(0)
-file_dict["CHS 2017 UL"] = infile_2017_chs_UL
-
-# PUPPI v13 UL 2017
-infile_2017_v13_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_newJECsv13/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v13.root")
-TH1.AddDirectory(0)
-file_dict["PUPPI v13 2017 UL"] = infile_2017_v13_UL
+file_dict["CHS"] = infile_2017_chs_UL
 
 # PUPPI v14 UL 2017
-infile_2017_v14_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_newJECsv14/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14.root")
+infile_2017_v14_UL = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14.root")
 TH1.AddDirectory(0)
-file_dict["PUPPI v14 2017 UL"] = infile_2017_v14_UL
+file_dict["PUPPI v14"] = infile_2017_v14_UL
 
+# PUPPI v14 Laurent UL 2017
+infile_2017_v14_UL_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14_Laurent.root")
+TH1.AddDirectory(0)
+file_dict["PUPPI Laurent"] = infile_2017_v14_UL_Laurent
 
 plot_MET_ratio(file_dict,folder,"compare_")
 plot_MET_resolution(file_dict,folder,"compare_",0.2,3,3)

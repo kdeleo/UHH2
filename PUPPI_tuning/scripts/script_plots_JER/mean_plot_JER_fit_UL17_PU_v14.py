@@ -57,8 +57,8 @@ def get_hists(infile_dict,hist_folder):
     # make list for all histogramm JetPtResponse_* based on first file
     #if infile_dict.has_key("PUPPI default"):
     #    lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
-    if infile_dict.has_key("PUPPI v14 ptcplip"):
-        lista = infile_dict["PUPPI v14 ptcplip"].Get(hist_folder).GetListOfKeys()
+    if infile_dict.has_key("PUPPI chihuahua"):
+        lista = infile_dict["PUPPI chihuahua"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -74,11 +74,11 @@ def get_hists(infile_dict,hist_folder):
             #if "Eta2p5to3" in el.GetName(): continue
             if "Eta3to10" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            if "_PU0to10" in el.GetName(): continue
-            if "_PU10to20" in el.GetName(): continue
-            if "_PU30to40" in el.GetName(): continue
-            if "_PU40to50" in el.GetName(): continue
-            if "_PU50to70" in el.GetName(): continue
+            #if "_PU0to10" in el.GetName(): continue
+            #if "_PU10to20" in el.GetName(): continue
+            #if "_PU30to40" in el.GetName(): continue
+            #if "_PU40to50" in el.GetName(): continue
+            #if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
                #if "_PU0to10" in el.GetName(): 
                #if "_PU10to20" in el.GetName(): 
@@ -234,8 +234,10 @@ def get_reso(hists):
             for bin in range(0,hist.GetNbinsX()+1):
                 #if bin != 40 : continue
                 if bin%10 : continue
-                if bin>100 and bin%30: continue
-                #if bin!= 40: continue
+                if bin>100 and bin < 200 and bin%30: continue
+                if bin>200 and bin < 500 and bin%50: continue
+                if bin>450 and bin%200: continue
+
                 projection = hist.ProjectionY("_y",bin,bin+1)
                 #projection.GetXaxis().SetRangeUser(0.5,1.5)
                 #projection.GetXaxis().SetRangeUser(-10.0,10.0)
@@ -260,8 +262,8 @@ def get_reso(hists):
 
 
                 for i in range(0,2):
-                    lower_bound = gaussian_fit.GetParameter(1) -1.0*gaussian_fit.GetParameter(2);
-                    higher_bound = gaussian_fit.GetParameter(1)+1.0*gaussian_fit.GetParameter(2);
+                    lower_bound = gaussian_fit.GetParameter(1) -1.5*gaussian_fit.GetParameter(2);
+                    higher_bound = gaussian_fit.GetParameter(1)+1.5*gaussian_fit.GetParameter(2);
                     
                     gaussian_fit = TF1("gaussian_fit", "gaus",lower_bound,higher_bound);
                     gaussian_fit.SetParameter(1, gaussian_fit.GetParameter(1));
@@ -316,7 +318,7 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
         for key2 in reso_hists: 
          print "key2"
          print key2
-#         if not "_PU" in key2 : continue 
+         if not "_PU" in key2 : continue 
          for pu in reso_hists[key2]:
           #if i == 2 or i==4: i+=1
           reso_hists[key2][pu][reso_mean_rms].SetLineColor(colors[i])
@@ -409,28 +411,19 @@ infile_dict={}
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "mean_UL17_v14_ptclip/"
+folder_CHS = "Laurent_JER_UL17_v14/"
 
 
-#### PUPPI v14 tune - dzcut for eta > 2.4 - new slope 
-#infile_puppi_inc_2017UL_v14_slope = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_v14/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14_slope.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI v14 new"]=infile_puppi_inc_2017UL_v14_slope
-
-### PUPPI v14 tune - dzcut for eta > 2.4  - no pt clip
-infile_puppi_inc_2017UL_v14_noptclip = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV5_noptclip/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
+#### PUPPI v14  
+infile_puppi_inc_2017UL_v14 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
 TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v14 noptcplip"]=infile_puppi_inc_2017UL_v14_noptclip
+infile_dict_CHSVersion["PUPPI chihuahua"]=infile_puppi_inc_2017UL_v14
 
-### PUPPI v14 tune - dzcut for eta > 2.4  - pt clip 8
-infile_puppi_inc_2017UL_v14_ptclip8 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV5_ptclip8/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI v14 ptcplip"]=infile_puppi_inc_2017UL_v14_ptclip8
-
-#### PUPPI v13 - new PR  
-#infile_puppi_inc_2017UL_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_v14/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v13.root")
+#### PUPPI v14 - Laurent tune 
+#infile_puppi_inc_2017UL_v14_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14_Laurent.root")
 #TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI v13"]=infile_puppi_inc_2017UL_v13
+#infile_dict_CHSVersion["PUPPI Laurent tune"]=infile_puppi_inc_2017UL_v14_Laurent 
+
 
 #### Original QCD file from 2017 in CMSSW106
 #infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
@@ -438,12 +431,11 @@ infile_dict_CHSVersion["PUPPI v14 ptcplip"]=infile_puppi_inc_2017UL_v14_ptclip8
 #infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
 #infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
 
-#### CHS original QCD file from 2017 in CMSSW106 
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_v14/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+##### CHS original QCD file from 2017 in CMSSW106 
+#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
 #TH1.AddDirectory(0)
 #infile_dict["CHS"]=infile_QCD_CHS
 #infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
-
 
 
 
@@ -453,12 +445,12 @@ infile_dict_CHSVersion["PUPPI v14 ptcplip"]=infile_puppi_inc_2017UL_v14_ptclip8
 # CHS versions
 ###
 # QCD CHS vs PUPPI
-#hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
-hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8")
+hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
+#hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8")
 
 reso_hists_CHS = get_reso(hists_CHS)
 #plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.05,0.4,True)
-plot_reso(reso_hists_CHS,folder_CHS,"mean","mean",0.2,1.8,False)
+plot_reso(reso_hists_CHS,folder_CHS,"mean","mean",0.0,2.0,False)
 plot_control(hists_CHS,folder_CHS)
 
 

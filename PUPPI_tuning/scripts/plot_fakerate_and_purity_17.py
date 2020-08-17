@@ -43,15 +43,15 @@ gStyle.SetPaintTextFormat("2.3f")
 # markers = [20,25,28,32,47,20,20]
 
 quark_gluon_colors = [kBlack, kRed, kBlue, kCyan,kBlue]
-colors = [kAzure-4,  kRed,kBlack,kBlack,kBlue,kOrange, kCyan]
+colors = [kAzure-4, kRed,kBlack,kOrange-3,kViolet,kBlack,kBlue,kOrange, kCyan]
 #colors = [kRed,   kGreen+2, kOrange+1,kBlack,kBlue]
-marker_sel = [21,22,20,32,21,20,20,22,22]
+marker_sel = [21,22,20,34,21,20,20,22,22]
 
 berror = False
 beps = True
 blogy = False
 
-folder = "koasta/"
+folder = "koasta_Laurent/"
 
 def calculate_eff(infile,folder,name_all,name_trig,name='orig'):
     print name_all
@@ -91,7 +91,8 @@ def calculate_eff(infile,folder,name_all,name_trig,name='orig'):
 def plot(eff_list,leg_list,folder,filenamebase,nameX,nameY, miny=0, legxmin = 0.5,legymin=0.3,legxmax=0.8,legymax=0.5, maxy = 1.05, setmarker=False,markers=marker_sel, textalign =31, all_pre = False):
 
     c = TCanvas()
-    leg=TLegend(legxmin,legymin,legxmax,legymax,"","brNDC")
+    #leg=TLegend(legxmin,legymin,legxmax,legymax,"","brNDC")
+    leg=TLegend(0.5,0.2,0.9,0.5,"","brNDC")
     leg.SetBorderSize(0);
     leg.SetTextSize(0.035);
     leg.SetFillColor(kWhite);
@@ -100,7 +101,7 @@ def plot(eff_list,leg_list,folder,filenamebase,nameX,nameY, miny=0, legxmin = 0.
 
     hr = c.DrawFrame(0,miny,50,maxy);
     #if "Pt" in filenamebase:     hr = c.DrawFrame(0,miny,250,maxy); 
-    if "Pt" in filenamebase:     hr = c.DrawFrame(25,0.8,85,maxy);  #zoom in 
+    if "Pt" in filenamebase:     hr = c.DrawFrame(25,0.8,120,maxy);  #zoom in 
     if "Eta" in filenamebase:     hr = c.DrawFrame(-5,miny,5,maxy);
     c.GetFrame().SetFillColor(21);
     c.GetFrame().SetBorderSize(12);
@@ -669,11 +670,11 @@ if b_DY:
     infile_puppi_v4_inc = TFile("/nfs/dust/cms/user/abenecke/ZPrimeTotTPrime/CMSSW_8X/rootfiles/puppi_DY/uhh2.AnalysisModuleRunner.MC.V4_middle_MC_DY_inc_PUPPI_effpurity.root")
     TH1.AddDirectory(0)
 
-    infile_puppi_v4_2016tune = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3_v4.root")
-    TH1.AddDirectory(0)
+#    infile_puppi_v4_2016tune = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v3_v4.root")
+#    TH1.AddDirectory(0)
 
-    infile_puppi_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v2_v13.root")
-    TH1.AddDirectory(0)
+#    infile_puppi_v13 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfiles/uhh2.AnalysisModuleRunner.MC.MC_DY_2016v2_v13.root")
+#    TH1.AddDirectory(0)
 
 
     ############ puppi v13 newPR 2016
@@ -721,7 +722,7 @@ if b_DY:
 
     ############ Puppi default in UL 2017 
     #infile_puppi_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_newJECs/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_default.root")
-    infile_puppi_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL.root")
+    infile_puppi_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_default.root")
     TH1.AddDirectory(0)
 
     ############ Puppi v13 in UL 2017 
@@ -733,6 +734,14 @@ if b_DY:
     #infile_puppi_v14_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_noJECs/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14.root")
     #infile_puppi_v14_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_newJECs/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14.root")
     infile_puppi_v14_UL_17 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14.root")
+    TH1.AddDirectory(0)
+
+    ############ Puppi v14 Laurent in UL 2017  
+    infile_puppi_v14_UL_17_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14_Laurent.root")
+    TH1.AddDirectory(0)
+
+    ############ Puppi v14 Laurent in UL 2017 - NPV cut 
+    infile_puppi_v14_UL_17_Laurent_NPVcut = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesDY_UL_JECorder/uhh2.AnalysisModuleRunner.MC.MC_DY_2017UL_v14_Laurent_NPVcut.root")
     TH1.AddDirectory(0)
 
     ############ Puppi v14 in UL 2017 - V5 noptclip
@@ -851,6 +860,12 @@ if b_DY:
             ##### puppi v14 UL 2017 - V4 JECs
             eff_v14_UL_17 =calculate_eff(infile_puppi_v14_UL_17,hist_folder,el.GetName(),el.GetName()+postfix)
 
+            ##### puppi v14 Laurent UL 2017 - V4 JECs
+            eff_v14_UL_17_Laurent =calculate_eff(infile_puppi_v14_UL_17_Laurent,hist_folder,el.GetName(),el.GetName()+postfix)
+
+            ##### puppi v14 Laurent UL 2017 - NPV cut
+            eff_v14_UL_17_Laurent_NPVcut =calculate_eff(infile_puppi_v14_UL_17_Laurent_NPVcut,hist_folder,el.GetName(),el.GetName()+postfix)
+ 
             ##### puppi v14 UL 2017 - V5 noptclip
             eff_v14_UL_17_noptclip =calculate_eff(infile_puppi_v14_UL_17_noptclip,hist_folder,el.GetName(),el.GetName()+postfix)
 
@@ -889,8 +904,8 @@ if b_DY:
                 #legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13", "PUPPI 2016 v13ultimative"]
                 #hists =[eff_puppi_orig_2017_CMSSW102,eff_chs_2017_CMSSW102,eff_v13_newPR_17] 
                 #legnames = ["PUPPI default","CHS","PUPPI v13 beagle"]
-                hists =[eff_puppi_default_UL_17,eff_chs_UL_17,eff_v14_UL_17_noptclip] 
-                legnames = ["PUPPI default UL17","CHS UL17","PUPPI v14 no ptclip"]
+                hists =[eff_puppi_default_UL_17,eff_chs_UL_17,eff_v14_UL_17,eff_v14_UL_17_Laurent, eff_v14_UL_17_Laurent_NPVcut] 
+                legnames = ["PUPPI default UL17","CHS UL17","PUPPI v14 UL17", "PUPPI Laurent UL17", "PUPPI Laurent NPVcut UL17"]
 
                 ymax = 1.15
 
@@ -1033,6 +1048,12 @@ if b_DY:
             ##### puppi v14 UL 2017 - V4
             purity_v14_UL_17 =calculate_eff(infile_puppi_v14_UL_17,hist_folder,el.GetName(),el.GetName()+postfix)
 
+            ##### puppi v14 Laurent UL 2017 - V4
+            purity_v14_UL_17_Laurent =calculate_eff(infile_puppi_v14_UL_17_Laurent,hist_folder,el.GetName(),el.GetName()+postfix)
+
+            ##### puppi v14 Laurent UL 2017 - NPV cut
+            purity_v14_UL_17_Laurent_NPVcut =calculate_eff(infile_puppi_v14_UL_17_Laurent_NPVcut,hist_folder,el.GetName(),el.GetName()+postfix)
+
             ##### puppi v14 UL 2017 - V5 noptclip
             purity_v14_UL_17_noptclip =calculate_eff(infile_puppi_v14_UL_17_noptclip,hist_folder,el.GetName(),el.GetName()+postfix)
 
@@ -1071,8 +1092,8 @@ if b_DY:
                 #legnames = ["PUPPI 2016 (JME-18-001)","PUPPI 2016v3","PUPPI 2016 tune","PUPPI 2016 v13","PUPPI 2016 v13ultimative"]
                 #hists =[purity_puppi_orig_2016_CMSSW102,purity_chs_2016_CMSSW102,purity_v13_newPR_16] 
                 #legnames = ["PUPPI default","CHS","PUPPI v13 beagle"]
-                hists =[purity_puppi_default_UL_17,purity_chs_UL_17,purity_v14_UL_17_noptclip] 
-                legnames = ["PUPPI default UL17","CHS UL17","PUPPI v14 noptclip"]
+                hists =[purity_puppi_default_UL_17,purity_chs_UL_17,purity_v14_UL_17,purity_v14_UL_17_Laurent,purity_v14_UL_17_Laurent_NPVcut] 
+                legnames = ["PUPPI default UL17","CHS UL17","PUPPI v14 UL17", "PUPPI Laurent UL17","PUPPI Laurent NPVcut UL17"]
 
                 ymax = 1.1
                 ymin = 0.8
@@ -1208,8 +1229,8 @@ if b_DY:
 #
 #################################### Variables and Resolution
 #    #plot_control_variables(infile_dict,hist_names,folder)
-#    # hist_folder = "jet_output"
-#    # plot_resolution(infile_dict,folder,"resolution/resolution_",hist_folder)
+                hist_folder = "jet_output"
+                plot_resolution(infile_dict,folder,"resolution/resolution_",hist_folder)
 #
 ########################   QCD samples
 #
