@@ -32,6 +32,10 @@ CommonModules::CommonModules(){
   jec_ver_2018 = "19";
 
   jec_jet_coll = "AK4PFchs";
+
+  jec_tag_2017UL = "Summer19UL17";
+  jec_ver_2017UL = "5";
+
 }
 
 
@@ -77,6 +81,7 @@ void CommonModules::init(Context & ctx, const std::string & SysType_PU){
       jet_corrector_MC->setup2016(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2016, jec_ver_2016, jec_jet_coll)));
       jet_corrector_MC->setup2017(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017, jec_ver_2017, jec_jet_coll)));
       jet_corrector_MC->setup2018(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2018, jec_ver_2018, jec_jet_coll)));
+      jet_corrector_MC->setup2017UL(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017UL, jec_ver_2017UL, jec_jet_coll)));
     }
     if(jersmear) jet_resolution_smearer.reset(new JetResolutionSmearer(ctx));
   }
@@ -295,6 +300,7 @@ void CommonModules::print_setup() const {
     cout << "2016 JECs: " << jec_tag_2016 << " V" << jec_ver_2016 << " for " << jec_jet_coll << endl;
     cout << "2017 JECs: " << jec_tag_2017 << " V" << jec_ver_2017 << " for " << jec_jet_coll << endl;
     cout << "2018 JECs: " << jec_tag_2018 << " V" << jec_ver_2018 << " for " << jec_jet_coll << endl;
+    cout << "2017UL JECs: " << jec_tag_2017UL << " V" << jec_ver_2017UL << " for " << jec_jet_coll << endl;
   }
   cout << endl;
 

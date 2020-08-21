@@ -83,11 +83,11 @@ bool GenParticlesPrinter::process(Event & event){
         return true;
     }
     cout << "N_gp = " << event.genparticles->size() << endl;
-    TableOutput to({"id", "ind", "d1", "d2", "mo1", "mo2", "stat", "pt", "eta"});
+    TableOutput to({"id", "ind", "d1", "d2", "mo1", "mo2", "stat", "pt", "eta", "mass"});
     for(const auto & gp : *event.genparticles){
         to.add_row({ to_string(gp.pdgId()), to_string(gp.index()), to_string(gp.daughter1()), to_string(gp.daughter2()),
                    to_string(gp.mother1()), to_string(gp.mother2()),
-                   to_string(gp.status()), double2string(gp.pt(), 4), double2string(gp.eta(), 2)});
+                   to_string(gp.status()), double2string(gp.pt(), 4), double2string(gp.eta(), 2) , double2string(gp.v4().mass(), 2)});
     }
     to.print(cout);
     return true;
