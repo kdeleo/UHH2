@@ -93,8 +93,9 @@ def getStyle():
 
     # postscript
     cmsstyle.SetPaperSize(20.,20.)
-    cmsstyle.SetHatchesLineWidth(5)
-    cmsstyle.SetHatchesSpacing(0.05)
+    cmsstyle.SetHatchesLineWidth(1)
+    #cmsstyle.SetHatchesLineWidth(5)
+    #cmsstyle.SetHatchesSpacing(0.05)
     return cmsstyle
  
 def draw_cmstext(position="default",b_pre = True,factor=1):

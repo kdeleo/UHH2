@@ -33,6 +33,14 @@ class bcolors:
 
 gROOT.SetBatch(kTRUE)
 
+CMSPlotStyle.height = 800
+CMSPlotStyle.width = 800
+CMSPlotStyle.bottom_margin = 0.17
+CMSPlotStyle.left_margin = 0.15
+CMSPlotStyle.right_margin = 0.1
+
+
+
 style = CMSPlotStyle.getStyle()
 style.cd()
 gROOT.SetStyle("CMS_Style")
@@ -57,8 +65,8 @@ def get_hists(infile_dict,hist_folder):
     # make list for all histogramm JetPtResponse_* based on first file
     #if infile_dict.has_key("PUPPI default"):
     #    lista = infile_dict["PUPPI default"].Get(hist_folder).GetListOfKeys()
-    if infile_dict.has_key("PUPPI chihuahua"):
-        lista = infile_dict["PUPPI chihuahua"].Get(hist_folder).GetListOfKeys()
+    if infile_dict.has_key("PUPPI v11"):
+        lista = infile_dict["PUPPI v11"].Get(hist_folder).GetListOfKeys()
     else:
         lista = infile_dict["PUPPI 2017 v6"].Get(hist_folder).GetListOfKeys()
 
@@ -74,12 +82,12 @@ def get_hists(infile_dict,hist_folder):
             #if "Eta3to10" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
             #if "_PU0to10" in el.GetName(): continue
-            #if "_PU10to20" in el.GetName(): continue
-            #if "_PU30to40" in el.GetName(): continue
-            #if "_PU40to50" in el.GetName(): continue
-            #if "_PU50to70" in el.GetName(): continue
+            if "_PU10to20" in el.GetName(): continue
+            if "_PU30to40" in el.GetName(): continue
+            if "_PU40to50" in el.GetName(): continue
+            if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
-               #if "_PU0to10" in el.GetName(): 
+               if "_PU0to10" in el.GetName(): 
                #if "_PU10to20" in el.GetName(): 
                #if "_PU30to40" in el.GetName(): 
                #if "_PU40to50" in el.GetName(): 
@@ -97,8 +105,8 @@ def get_hists(infile_dict,hist_folder):
 def plot_control(hists,folder):
     #markers = [34,21,20,22,34,34,28,20,20,20,20,20,20,20]
     #colors = [kOrange-3,kAzure-4,kBlack,kRed,kOrange-3,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
-    markers = [21,20,34,22,20,24,20,22,21,34,24,20,20,20,20,20,20]
-    colors = [kAzure-4,kBlack,kOrange-3,kRed,kBlack,kViolet-6,kBlack,kRed,kAzure-4,kOrange-3,kViolet-6,kBlack,kOrange-3,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
+    markers = [20,21,22,20,22,20,24,20,22,21,34,24,20,20,20,20,20,20]
+    colors = [kBlack,kAzure-4,kRed,kBlack,kRed,kBlack,kViolet-6,kBlack,kRed,kAzure-4,kOrange-3,kViolet-6,kBlack,kOrange-3,kRed,kBlack,kAzure-4, kBlack, kOrange-3,kAzure,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue]
     print "plot control"
 
     hist_dict = {}
@@ -150,7 +158,8 @@ def plot_control(hists,folder):
     print "============= JER scale"
     for key in hist_dict:
         print "####################3 new key " + key
-        if not "PUPPI_default" in key: continue
+        #if not "PUPPI_default" in key: continue
+        if not "PUPPI_v11" in key: continue
         splitted = key.split("_")
         c1 = TCanvas()
         leg = TLegend(0.5,0.5,0.9,0.9,"","brNDC")        
@@ -239,7 +248,8 @@ def get_reso(hists, folder):
             reso = TH1F("reso","Resolution",hist.GetNbinsX(),0,hist.GetNbinsX())
             mean_h = TH1F("mean_h","Mean",hist.GetNbinsX(),0,hist.GetNbinsX())
             rms_h = TH1F("rms_h","RMS",hist.GetNbinsX(),0,hist.GetNbinsX())
-           
+          
+ 
             for bin in range(0,hist.GetNbinsX()+1):
                 #if bin != 40 : continue
                 if bin%10 : continue
@@ -267,9 +277,8 @@ def get_reso(hists, folder):
 
 
                 # Gaussian fit of the peaks
-                gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
-                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.8, 1.5);
-                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.5, 2.0);
+                #gaussian_fit = TF1("gaussian_fit", "gaus", 0.0, 3.0);
+                gaussian_fit = TF1("gaussian_fit", "gaus", 0.5, 2.0);
                 gaussian_fit.SetParameter(1, 1.0);
                 gaussian_fit.SetParameter(2, 0.1);
                 projection.Fit(gaussian_fit, "R"); 
@@ -324,15 +333,17 @@ def get_reso(hists, folder):
 #plots the resolution for the different hists
 def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy = False):
     print "plot" + name + "  "+ str(len(reso_hists))
-    markers = [22,34,20,21,24,34,24,20,20,20,20,20,20]
-    colors = [kRed,kOrange-3,kBlack,kAzure-4,kViolet-6,kOrange-3,kViolet-6,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
+    markers = [26,25,24,24,24,34,24,20,20,20,20,20,20]
+    colors = [kRed,kBlue,kBlack,kAzure-4,kViolet-6,kOrange-3,kViolet-6,kSpring,kGreen, kBlue,kBlue,kBlue,kBlue,kBlue] 
 
     for key in reso_hists:
         c = TCanvas()
-        leg = TLegend(0.5,0.5,0.9,0.85, "","brNDC")
+        #leg = TLegend(0.6,0.6,0.9,0.87, "","brNDC")
+        leg = TLegend(0.55,0.6,0.85,0.87, "","brNDC")
         leg.SetBorderSize(0);	
         leg.SetFillStyle(0);
         leg.SetTextSize(0.035);
+        leg.SetTextFont(42);
 
         i=0
         jj=0
@@ -341,13 +352,11 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
             reso_hists[key][pu][reso_mean_rms].SetLineColor(colors[i])
             reso_hists[key][pu][reso_mean_rms].SetMarkerColor(colors[i])
             reso_hists[key][pu][reso_mean_rms].SetMarkerStyle(markers[jj])
-            reso_hists[key][pu][reso_mean_rms].SetMarkerSize(1.2)
-            #reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitle("p_{T}^{gen}")
+            reso_hists[key][pu][reso_mean_rms].SetMarkerSize(2)
             reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitle("Particle-level jet p_{T} [GeV]")
             reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle(name)
-            reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitleOffset(1.05)
+            reso_hists[key][pu][reso_mean_rms].GetXaxis().SetTitleOffset(1.3)
             if "resolution" in name:
-                #reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle("#sigma/mean")
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle("Jet energy resolution")
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitleOffset(1.1)
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetNdivisions(505)
@@ -356,9 +365,11 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
                 reso_hists[key][pu][reso_mean_rms].GetYaxis().SetTitle("response (mean)")
 
             if "Pt" in key:
-                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(10,10000)
+                c.SetLogx()
+                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetRangeUser(20,3000)
+                reso_hists[key][pu][reso_mean_rms].GetXaxis().SetMoreLogLabels()
             reso_hists[key][pu][reso_mean_rms].GetYaxis().SetRangeUser(ymin,ymax)
-            reso_hists[key][pu][reso_mean_rms].Draw("PE same")
+            reso_hists[key][pu][reso_mean_rms].Draw("P same")
             leg.AddEntry(reso_hists[key][pu][reso_mean_rms],pu,"lpe")
             i+=1
             jj+=1
@@ -366,45 +377,43 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
 
         leg.Draw()
         CMSPlotStyle.extratext = "Simulation"
-        text = CMSPlotStyle.draw_cmstext("left", True)
+        text = CMSPlotStyle.draw_cmstext("left", True,1.3)
         text[0].Draw()
         text[1].Draw()
         lumi = CMSPlotStyle.draw_lumi(True)
         lumi.Draw()
         
-        anti = CMSPlotStyle.draw_info("Anti-k_{T}, R=0.4,",0.7,0.87)
+        anti = CMSPlotStyle.draw_info("#splitline{Anti-k_{T}, R=0.4}{<#mu>=32}",0.43,0.25)
         anti.Draw()
         
         if "central" in key: 
-            eta = CMSPlotStyle.draw_info("|#eta| < 2.5",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("|#eta| < 2.5",0.85,0.87)
             eta.Draw()
             
         if "1p3to1p6" in key:
-            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1.6",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("1.3 < |#eta| < 1.6",0.85,0.87)
             eta.Draw()
 
         if "1p6to2" in key:
-            eta = CMSPlotStyle.draw_info("1.6 < |#eta| < 2",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("1.6 < |#eta| < 2",0.85,0.87)
             eta.Draw()
 
         if "2to2p5" in key:
-            eta = CMSPlotStyle.draw_info("2 < |#eta| < 2.5",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("2 < |#eta| < 2.5",0.85,0.87)
             eta.Draw()
 
         if "2p5to3" in key:
-            eta = CMSPlotStyle.draw_info("2.5 < |#eta| < 3.0",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("2.5 < |#eta| < 3.0",0.85,0.87)
             eta.Draw()
 
         if "0to1p3" in key:
-            eta = CMSPlotStyle.draw_info(" |#eta| < 1.3",0.92,0.87)
+            eta = CMSPlotStyle.draw_info(" |#eta| < 1.3",0.85,0.87)
             eta.Draw()
 
         if "3to10" in key:
-            eta = CMSPlotStyle.draw_info("3.0 < |#eta| < 5.0",0.92,0.87)
+            eta = CMSPlotStyle.draw_info("3.0 < |#eta| < 5.0",0.85,0.87)
             eta.Draw()
 
-        if "Pt" in key:
-            c.SetLogx()
 
         if blogy:
             c.SetLogy()
@@ -421,31 +430,31 @@ infile_dict={}
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "Laurent_JER_UL17_v14/"
+folder_CHS = "ForDPNote_PU10/"
 
 
 ### PUPPI v14  
-infile_puppi_inc_2017UL_v14 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
-TH1.AddDirectory(0)
-infile_dict_CHSVersion["PUPPI chihuahua"]=infile_puppi_inc_2017UL_v14 
+#infile_puppi_inc_2017UL_v14 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14.root")
+#TH1.AddDirectory(0)
+#infile_dict_CHSVersion["PUPPI chihuahua"]=infile_puppi_inc_2017UL_v14 
 
-#### PUPPI v14 - Laurent tune 
-#infile_puppi_inc_2017UL_v14_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14_Laurent.root")
-#TH1.AddDirectory(0)
-#infile_dict_CHSVersion["PUPPI Laurent tune"]=infile_puppi_inc_2017UL_v14_Laurent 
-#
-#
-#### Original QCD file from 2017 in CMSSW106
-#infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
-#TH1.AddDirectory(0)
-#infile_dict["PUPPI default"]=infile_QCD_orig_2017_106
-#infile_dict_CHSVersion["PUPPI default"]=infile_QCD_orig_2017_106
-#
-#### CHS original QCD file from 2017 in CMSSW106 
-#infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
-#TH1.AddDirectory(0)
-#infile_dict["CHS"]=infile_QCD_CHS
-#infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
+### PUPPI v14 - Laurent tune 
+infile_puppi_inc_2017UL_v14_Laurent = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_v14_Laurent.root")
+TH1.AddDirectory(0)
+infile_dict_CHSVersion["PUPPI v15"]=infile_puppi_inc_2017UL_v14_Laurent 
+
+
+### Original QCD file from 2017 in CMSSW106
+infile_QCD_orig_2017_106 = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_puppi.root")
+TH1.AddDirectory(0)
+infile_dict["PUPPI v11"]=infile_QCD_orig_2017_106
+infile_dict_CHSVersion["PUPPI v11"]=infile_QCD_orig_2017_106
+
+### CHS original QCD file from 2017 in CMSSW106 
+infile_QCD_CHS = TFile("/nfs/dust/cms/user/deleokse/analysis/PUPPI_tuning/rootfilesUL_JECsV4/uhh2.AnalysisModuleRunner.MC.QCD_2017UL_chs.root")
+TH1.AddDirectory(0)
+infile_dict["CHS"]=infile_QCD_CHS
+infile_dict_CHSVersion["CHS"]=infile_QCD_CHS
 
 
 
@@ -461,7 +470,8 @@ hists_CHS = get_hists(infile_dict_CHSVersion,"puppi_jet_pt_8_wJEC")
 
 reso_hists_CHS = get_reso(hists_CHS, folder_CHS)
 #plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.03,0.5,True)
-plot_reso(reso_hists_CHS,folder_CHS,"mean","mean",0.0,2.0,False)
-plot_control(hists_CHS,folder_CHS)
+plot_reso(reso_hists_CHS,folder_CHS,"reso","resolution",0.,0.3,False)
+#plot_reso(reso_hists_CHS,folder_CHS,"mean","mean",0.0,2.0,False)
+#plot_control(hists_CHS,folder_CHS)
 
 
