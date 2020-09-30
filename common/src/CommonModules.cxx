@@ -34,10 +34,9 @@ CommonModules::CommonModules(){
   jec_jet_coll = "AK4PFchs";
 
   jec_tag_2017UL = "Summer19UL17";
-  jec_ver_2017UL = "4";  
+  jec_ver_2017UL = "5";  
   //jec_ver_2017UL = "5_noptclip";  
   //jec_ver_2017UL = "5_ptclip8";  
-  //jec_ver_2017UL = "5";  
 
 }
 
