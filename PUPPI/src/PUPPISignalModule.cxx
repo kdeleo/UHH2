@@ -7,10 +7,10 @@
 #include "UHH2/common/include/CleaningModules.h"
 #include "UHH2/common/include/ElectronHists.h"
 #include "UHH2/common/include/NSelections.h"
-#include "UHH2/PUPPI/include/PUPPIHists.h"
 #include "UHH2/common/include/PrintingModules.h"
 #include <UHH2/common/include/JetCorrections.h>
 
+#include "UHH2/PUPPI/include/PUPPIHists.h"
 
 using namespace std;
 using namespace uhh2;
@@ -33,7 +33,9 @@ private:
     
     std::unique_ptr<CommonModules> common;
     std::unique_ptr<YearSwitcher> topjet_corrector_MC;
+    std::unique_ptr<YearSwitcher> topjet_subjet_corrector_MC;
     std::shared_ptr<RunSwitcher> topjec_switcher_17UL;
+    std::shared_ptr<RunSwitcher> topjec_subjet_switcher_17UL;
 
     std::unique_ptr<AnalysisModule> printer;
     
@@ -50,20 +52,22 @@ private:
 void PUPPISignalModule::init_TopJEC(uhh2::Context& ctx){ 
 
     std::string jec_tag_2017UL, jec_ver_2017UL;
-    std::string jec_jet_coll; 
+    std::string jec_jet_coll, jec_subjet_coll; 
     std::string top_puppi;
   
     jec_tag_2017UL = "Summer19UL17";
     jec_ver_2017UL = "5";
 
     jec_jet_coll = "AK8PFPuppi";
-    //jec_jet_coll = "AK8PFchs";
+    jec_subjet_coll = "AK4PFPuppi";
 
     top_puppi = "toppuppijets";
     
     topjet_corrector_MC.reset(new YearSwitcher(ctx));
+    topjet_subjet_corrector_MC.reset(new YearSwitcher(ctx));
 
     topjet_corrector_MC->setup2017UL(std::make_shared<GenericTopJetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017UL, jec_ver_2017UL, jec_jet_coll),top_puppi));
+    topjet_subjet_corrector_MC->setup2017UL(std::make_shared<GenericSubJetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017UL, jec_ver_2017UL, jec_subjet_coll),top_puppi));
     //topjet_corrector_MC->setup2017UL(std::make_shared<TopJetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017UL, jec_ver_2017UL, jec_jet_coll)));
 
 
@@ -111,19 +115,28 @@ PUPPISignalModule::PUPPISignalModule(Context & ctx){
 
 bool PUPPISignalModule::process(Event & event) {
 
-//if(event.event != 7517385) return false;
+if(event.event != 7517385) return false;
      
-//    cout << "PUPPISignalModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
+    cout << "PUPPISignalModule: Starting to process event (runid, eventid) = (" << event.run << ", " << event.event << "); weight = " << event.weight << endl;
 
-//    printer->process(event);
+    for (const TopJet & toppuppijet: *event.toppuppijets) { 
+
+    printer->process(event);
+
+    cout << "Before common modules -- jet pT = " << toppuppijet.pt() << endl;
+   
+    if(!common->process(event)) return false;
+
+    cout << "After common modules -- jet pT = " << toppuppijet.pt() << endl;
 
     topjet_corrector_MC->process(event);  
- 
-    common->process(event);
+    topjet_subjet_corrector_MC->process(event);  
+
+    cout << "After top jet correction -- jet pT = " << toppuppijet.pt() << endl;
+
 //    jetcleaner->process(event);
 //    genjetcleaner->process(event);
  
-
     h_nocuts->fill(event);
     
 //    bool njet_selection = njet_sel->passes(event);
@@ -132,7 +145,7 @@ bool PUPPISignalModule::process(Event & event) {
 //    }
 //    // 3. decide whether or not to keep the current event in the output:
 //    return njet_selection;
-
+    }
 
 
 return true;

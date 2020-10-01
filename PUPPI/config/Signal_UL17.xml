@@ -4,8 +4,8 @@
 <!ENTITY NEVT "-1">
 <!ENTITY b_Cacheable "False">
 
-<!ENTITY Signal_Laurent_2017UL_ptbin                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2017UL/Signal_LaurentTune/BulkGravitonToHHTo4Q_MX-600to6000_MH-15to250_part2_TuneCP5_13TeV-m_v1.xml">
-<!--<!ENTITY Signal_Laurent_2017UL                               SYSTEM "test_signal.xml">-->
+<!--<!ENTITY Signal_Laurent_2017UL_ptbin                               SYSTEM "/nfs/dust/cms/user/abenecke/CMSSW_10_6_8/CMSSW_10_6_8/src/UHH2/scripts/crab/PUPPIStudies/2017UL/Signal_LaurentTune/BulkGravitonToHHTo4Q_MX-600to6000_MH-15to250_part2_TuneCP5_13TeV-m_v1.xml">-->
+<!ENTITY Signal_Laurent_2017UL                               SYSTEM "test_signal.xml">
 
 ]>
 
@@ -22,13 +22,13 @@
 
     <Cycle Name="uhh2::AnalysisModuleRunner" OutputDirectory="./" PostFix="" TargetLumi="1" >
 
-     <InputData Version="Signal_Laurent_2017UL_ptbin" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
-    &Signal_Laurent_2017UL_ptbin; <InputTree Name="AnalysisTree"/>  </InputData>
+     <InputData Version="Signal_Laurent_2017UL" Lumi="0.005" Type="MC" NEventsMax="&NEVT;" Cacheable="&b_Cacheable;">
+    &Signal_Laurent_2017UL; <InputTree Name="AnalysisTree"/>  </InputData>
 
         <UserConfig>
 
             <!--<Item Name="TopJetCollection" Value="jetsAk8CHSSubstructure_SoftDropCHS" />-->
-            <Item Name="JetCollection" Value="jetsAk4Puppi" />
+            <Item Name="JetCollection" Value="patJetsAk4PuppiJets" />
             <!--<Item Name="GenJetCollection" Value="slimmedGenJets" />-->
             <Item Name="TopPuppiJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
             <Item Name="GenTopJetCollection" Value="genjetsAk8SubstructureSoftDrop" />

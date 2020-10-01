@@ -31,11 +31,14 @@ CommonModules::CommonModules(){
   jec_tag_2018 = "Autumn18";
   jec_ver_2018 = "19";
 
+  jec_tag_UL17 = "Summer19UL17";
+  jec_ver_UL17 = "5";
+
+  // FIXME: update when official set
+  jec_tag_UL18 = "Autumn18";
+  jec_ver_UL18 = "19";
+
   jec_jet_coll = "AK4PFchs";
-
-  jec_tag_2017UL = "Summer19UL17";
-  jec_ver_2017UL = "5";
-
 }
 
 
@@ -81,7 +84,8 @@ void CommonModules::init(Context & ctx, const std::string & SysType_PU){
       jet_corrector_MC->setup2016(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2016, jec_ver_2016, jec_jet_coll)));
       jet_corrector_MC->setup2017(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017, jec_ver_2017, jec_jet_coll)));
       jet_corrector_MC->setup2018(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2018, jec_ver_2018, jec_jet_coll)));
-      jet_corrector_MC->setup2017UL(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_2017UL, jec_ver_2017UL, jec_jet_coll)));
+      jet_corrector_MC->setupUL17(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_UL17, jec_ver_UL17, jec_jet_coll)));
+      jet_corrector_MC->setupUL18(std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesMC(jec_tag_UL18, jec_ver_UL18, jec_jet_coll)));
     }
     if(jersmear) jet_resolution_smearer.reset(new JetResolutionSmearer(ctx));
   }
@@ -103,10 +107,22 @@ void CommonModules::init(Context & ctx, const std::string & SysType_PU){
         jec_switcher_18->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(jec_tag_2018, jec_ver_2018, jec_jet_coll, runItr)));
       }
 
+      jec_switcher_UL17.reset(new RunSwitcher(ctx, "2017"));
+      for (const auto & runItr : runPeriods2017) {
+        jec_switcher_UL17->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(jec_tag_UL17, jec_ver_UL17, jec_jet_coll, runItr)));
+      }
+
+      jec_switcher_UL18.reset(new RunSwitcher(ctx, "2018"));
+      for (const auto & runItr : runPeriods2018) {
+        jec_switcher_UL18->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(jec_tag_UL18, jec_ver_UL18, jec_jet_coll, runItr)));
+      }
+
       jet_corrector_data.reset(new YearSwitcher(ctx));
       jet_corrector_data->setup2016(jec_switcher_16);
       jet_corrector_data->setup2017(jec_switcher_17);
       jet_corrector_data->setup2018(jec_switcher_18);
+      jet_corrector_data->setupUL17(jec_switcher_UL17);
+      jet_corrector_data->setupUL18(jec_switcher_UL18);
     }
   }
   if(metfilters){
@@ -141,6 +157,8 @@ void CommonModules::init(Context & ctx, const std::string & SysType_PU){
       JLC_MC->setup2016(std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesMC(jec_tag_2016, jec_ver_2016, jec_jet_coll)));
       JLC_MC->setup2017(std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesMC(jec_tag_2017, jec_ver_2017, jec_jet_coll)));
       JLC_MC->setup2018(std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesMC(jec_tag_2018, jec_ver_2018, jec_jet_coll)));
+      JLC_MC->setupUL17(std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesMC(jec_tag_UL17, jec_ver_UL17, jec_jet_coll)));
+      JLC_MC->setupUL18(std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesMC(jec_tag_UL18, jec_ver_UL18, jec_jet_coll)));
     }
     else{
       JLC_switcher_16.reset(new RunSwitcher(ctx, "2016"));
@@ -158,10 +176,22 @@ void CommonModules::init(Context & ctx, const std::string & SysType_PU){
         JLC_switcher_18->setupRun(runItr, std::make_shared<JetLeptonCleaner_by_KEYmatching>(ctx, JERFiles::JECFilesDATA(jec_tag_2018, jec_ver_2018, jec_jet_coll, runItr)));
       }
 
+      JLC_switcher_UL17.reset(new RunSwitcher(ctx, "2017"));
+      for (const auto & runItr : runPeriods2017) {
+        JLC_switcher_UL17->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(jec_tag_UL17, jec_ver_UL17, jec_jet_coll, runItr)));
+      }
+
+      JLC_switcher_UL18.reset(new RunSwitcher(ctx, "2018"));
+      for (const auto & runItr : runPeriods2018) {
+        JLC_switcher_UL18->setupRun(runItr, std::make_shared<JetCorrector>(ctx, JERFiles::JECFilesDATA(jec_tag_UL18, jec_ver_UL18, jec_jet_coll, runItr)));
+      }
+
       JLC_data.reset(new YearSwitcher(ctx));
       JLC_data->setup2016(JLC_switcher_16);
       JLC_data->setup2017(JLC_switcher_17);
       JLC_data->setup2018(JLC_switcher_18);
+      JLC_data->setupUL17(JLC_switcher_UL17);
+      JLC_data->setupUL18(JLC_switcher_UL18);
     }
   }
   modules.emplace_back(new HTCalculator(ctx,HT_jetid));
@@ -300,7 +330,8 @@ void CommonModules::print_setup() const {
     cout << "2016 JECs: " << jec_tag_2016 << " V" << jec_ver_2016 << " for " << jec_jet_coll << endl;
     cout << "2017 JECs: " << jec_tag_2017 << " V" << jec_ver_2017 << " for " << jec_jet_coll << endl;
     cout << "2018 JECs: " << jec_tag_2018 << " V" << jec_ver_2018 << " for " << jec_jet_coll << endl;
-    cout << "2017UL JECs: " << jec_tag_2017UL << " V" << jec_ver_2017UL << " for " << jec_jet_coll << endl;
+    cout << "UL17 JECs: " << jec_tag_UL17 << " V" << jec_ver_UL17 << " for " << jec_jet_coll << endl;
+    cout << "UL18 JECs: " << jec_tag_UL18 << " V" << jec_ver_UL18 << " for " << jec_jet_coll << endl;
   }
   cout << endl;
 
