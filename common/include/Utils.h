@@ -102,7 +102,7 @@ enum class Year {
     is2017v1,
     is2017v2,
     is2018,
-    isUL17,
+    is2017UL,
     isUL18,
 };
 
@@ -113,7 +113,7 @@ const std::map<Year, std::string> year_str_map = {
     {Year::is2017v1,        "2017v1"},
     {Year::is2017v2,        "2017v2"},
     {Year::is2018,          "2018"},
-    {Year::isUL17,          "UL17"},
+    {Year::is2017UL,        "2017UL"},
     {Year::isUL18,          "UL18"},
 };
 
@@ -123,7 +123,7 @@ const std::map<Year, std::string> year_str_map_simple = {
     {Year::is2017v1,        "2017"},
     {Year::is2017v2,        "2017"},
     {Year::is2018,          "2018"},
-    {Year::isUL17,          "2017"},
+    {Year::is2017UL,        "2017"},
     {Year::isUL18,          "2018"},
 };
 // TODO: inverse map?

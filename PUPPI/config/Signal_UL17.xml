@@ -30,7 +30,8 @@
             <!--<Item Name="TopJetCollection" Value="jetsAk8CHSSubstructure_SoftDropCHS" />-->
             <Item Name="JetCollection" Value="patJetsAk4PuppiJets" />
             <!--<Item Name="GenJetCollection" Value="slimmedGenJets" />-->
-            <Item Name="TopPuppiJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
+            <!--<Item Name="TopPuppiJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />-->
+            <Item Name="TopJetCollection" Value="jetsAk8PuppiSubstructure_SoftDropPuppi" />
             <Item Name="GenTopJetCollection" Value="genjetsAk8SubstructureSoftDrop" />
             <Item Name="usePuppiWeightJets" Value="true" />
             <Item Name="usePuppiWeightTopJets" Value="true" />  
