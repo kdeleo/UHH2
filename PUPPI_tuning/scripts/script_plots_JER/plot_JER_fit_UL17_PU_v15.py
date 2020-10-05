@@ -81,17 +81,17 @@ def get_hists(infile_dict,hist_folder):
             #if "Eta2p5to3" in el.GetName(): continue
             #if "Eta3to10" in el.GetName(): continue
             if "Eta3to3" in el.GetName(): continue
-            #if "_PU0to10" in el.GetName(): continue
+            if "_PU0to10" in el.GetName(): continue
             if "_PU10to20" in el.GetName(): continue
             if "_PU30to40" in el.GetName(): continue
             if "_PU40to50" in el.GetName(): continue
-            if "_PU50to70" in el.GetName(): continue
+            #if "_PU50to70" in el.GetName(): continue
             if "JetPtResponse_" in el.GetName():
-               if "_PU0to10" in el.GetName(): 
+               #if "_PU0to10" in el.GetName(): 
                #if "_PU10to20" in el.GetName(): 
                #if "_PU30to40" in el.GetName(): 
                #if "_PU40to50" in el.GetName(): 
-               #if "_PU50to70" in el.GetName(): 
+               if "_PU50to70" in el.GetName(): 
                 print el.GetName()
 
                 # read in histogram JetPtResponse_*
@@ -383,7 +383,8 @@ def plot_reso(reso_hists, folder, reso_mean_rms, name, ymin=0.1, ymax=0.4,blogy 
         lumi = CMSPlotStyle.draw_lumi(True)
         lumi.Draw()
         
-        anti = CMSPlotStyle.draw_info("#splitline{Anti-k_{T}, R=0.4}{<#mu>=32}",0.43,0.25)
+        #anti = CMSPlotStyle.draw_info("#splitline{Anti-k_{T}, R=0.4}{<#mu>=32}",0.43,0.25)
+        anti = CMSPlotStyle.draw_info("#splitline{Anti-k_{T}, R=0.4}{#mu>50}",0.43,0.25)
         anti.Draw()
         
         if "central" in key: 
@@ -430,7 +431,7 @@ infile_dict={}
 # all variante of PUPPI CHS versions included
 ###
 infile_dict_CHSVersion={}
-folder_CHS = "ForDPNote_PU10/"
+folder_CHS = "ForDPNote_PU50/"
 
 
 ### PUPPI v14  
