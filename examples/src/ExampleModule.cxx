@@ -4,6 +4,8 @@
 #include "UHH2/core/include/AnalysisModule.h"
 #include "UHH2/core/include/Event.h"
 #include "UHH2/common/include/CommonModules.h"
+#include "UHH2/common/include/JetCorrections.h"
+#include "UHH2/common/include/JetCorrectionSets.h"
 #include "UHH2/common/include/CleaningModules.h"
 #include "UHH2/common/include/ElectronHists.h"
 #include "UHH2/common/include/NSelections.h"
@@ -64,6 +66,7 @@ ExampleModule::ExampleModule(Context & ctx){
     common.reset(new CommonModules());
     // TODO: configure common here, e.g. by 
     // calling common->set_*_id or common->disable_*
+    //common->disable_jersmear();
     common->init(ctx);
     jetcleaner.reset(new JetCleaner(ctx, 30.0, 2.4)); 
     

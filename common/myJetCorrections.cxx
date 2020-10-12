@@ -62,15 +62,15 @@ void correct_jet(FactorizedJetCorrector & corrector, Jet & jet, const Event & ev
 
 namespace {
 
-  // to share some code between JetCorrector and JetLeptonCleaner, provide some methods
-  // dealing with jet energy corrections here:
-  std::unique_ptr<FactorizedJetCorrector> build_corrector(const std::vector<std::string> & filenames){
-    std::vector<JetCorrectorParameters> pars;
-    for(const auto & filename : filenames){
-      pars.emplace_back(locate_file(filename));
-    }
-    return uhh2::make_unique<FactorizedJetCorrector>(pars);
+// to share some code between JetCorrector and JetLeptonCleaner, provide some methods
+// dealing with jet energy corrections here:
+std::unique_ptr<FactorizedJetCorrector> build_corrector(const std::vector<std::string> & filenames){
+  std::vector<JetCorrectorParameters> pars;
+  for(const auto & filename : filenames){
+    pars.emplace_back(locate_file(filename));
   }
+  return uhh2::make_unique<FactorizedJetCorrector>(pars);
+}
 
 
 
@@ -117,20 +117,20 @@ namespace {
       to_be_corrected = to_be_corrected && ( fabs(jet.v4().Eta())<eta_thresh_low || fabs(jet.v4().Eta())>eta_thresh_high || jet.v4().Pt() > pt_thresh );
       to_be_corrected = to_be_corrected && (jet.neutralEmEnergyFraction()+jet.chargedEmEnergyFraction())<0.9;
       if(to_be_corrected){
-        auto factor_raw = jet.JEC_factor_raw();
+	auto factor_raw = jet.JEC_factor_raw();
 
-        corrector_L1RC.setJetPt(jet.pt() * factor_raw);
-        corrector_L1RC.setJetEta(jet.eta());
-        corrector_L1RC.setJetE(jet.energy() * factor_raw);
-        corrector_L1RC.setJetA(jet.jetArea());
-        corrector_L1RC.setRho(event.rho);
-        auto correctionfactors_L1RC = corrector_L1RC.getSubCorrections();
-        auto correctionfactor_L1RC  = correctionfactors_L1RC.back();
+	corrector_L1RC.setJetPt(jet.pt() * factor_raw);
+	corrector_L1RC.setJetEta(jet.eta());
+	corrector_L1RC.setJetE(jet.energy() * factor_raw);
+	corrector_L1RC.setJetA(jet.jetArea());
+	corrector_L1RC.setRho(event.rho);
+	auto correctionfactors_L1RC = corrector_L1RC.getSubCorrections();
+	auto correctionfactor_L1RC  = correctionfactors_L1RC.back();
 
-        LorentzVector L1RCcorr = (correctionfactor_L1RC*factor_raw)*jet.v4();   //L1RC corrected jets
-        LorentzVector L123corr = jet.v4();                                      //L123 corrected jets (L23 in case of puppi)
-        metv4 -=  L123corr;
-        metv4 += L1RCcorr;
+	LorentzVector L1RCcorr = (correctionfactor_L1RC*factor_raw)*jet.v4();   //L1RC corrected jets
+	LorentzVector L123corr = jet.v4();                                      //L123 corrected jets (L23 in case of puppi)
+	metv4 -=  L123corr;
+	metv4 += L1RCcorr;
       }
     }
 
@@ -141,21 +141,18 @@ namespace {
 
 
 
-  JetCorrectionUncertainty* corrector_uncertainty(uhh2::Context & ctx, const std::vector<std::string> & filenames, int &direction){
+JetCorrectionUncertainty* corrector_uncertainty(uhh2::Context & ctx, const std::vector<std::string> & filenames, int &direction){
 
     auto dir = ctx.get("jecsmear_direction", "nominal");
-    if (ctx.get("dataset_type") != "MC") {
-      direction = 0;
-    }
-    else if(dir == "up"){
-      direction = 1;
+    if(dir == "up"){
+        direction = 1;
     }
     else if(dir == "down"){
-      direction = -1;
+        direction = -1;
     }
     else if(dir != "nominal"){
-      // direction = 0 is default
-      throw runtime_error("JetCorrector: invalid value jecsmear_direction='" + dir + "' (valid: 'nominal', 'up', 'down')");
+        // direction = 0 is default
+        throw runtime_error("JetCorrector: invalid value jecsmear_direction='" + dir + "' (valid: 'nominal', 'up', 'down')");
     }
 
     // Get optional source of JEC, defaults the total uncertainty if the user doesn't specify one
@@ -177,9 +174,9 @@ namespace {
       JetCorrectionUncertainty* jec_uncertainty = new JetCorrectionUncertainty(*(new JetCorrectorParameters(unc_file.Data(), source)));
       return jec_uncertainty;
     }
-    return NULL;
+  return NULL;
 
-  }
+}
 
 }
 
@@ -321,18 +318,16 @@ bool GenericTopJetCorrector::process(uhh2::Event & event){
 // note: implement here because only here (and not in the header file), the destructor of FactorizedJetCorrector is known
 GenericTopJetCorrector::~GenericTopJetCorrector(){}
 
-GenericSubJetCorrector::GenericSubJetCorrector(uhh2::Context & ctx, const std::vector<std::string> & filenames, const std::string & _collectionname){
-  collectionname = _collectionname;
+GenericSubJetCorrector::GenericSubJetCorrector(uhh2::Context & ctx, const std::vector<std::string> & filenames, const std::string & collectionname){
   corrector = build_corrector(filenames);
   direction = 0;
   jec_uncertainty = corrector_uncertainty(ctx, filenames, direction) ;
-  h_topjets = ctx.get_handle<std::vector<TopJet> >(collectionname);
+  h_jets = ctx.get_handle<std::vector<TopJet> >(collectionname);
 }
 
 bool GenericSubJetCorrector::process(uhh2::Event & event){
 
-  const auto topjets = &event.get(h_topjets);
-
+  const auto topjets = &event.get(h_jets);
   assert(topjets);
   for(auto & topjet : *topjets){
     auto subjets = topjet.subjets();
@@ -861,7 +856,7 @@ JetResolutionSmearer::JetResolutionSmearer(uhh2::Context & ctx){
     resFilename = "2017/Fall17_V3_MC_PtResolution_" + filenameAppend;
   } else if (year == Year::is2018) {
     sfFilename = "common/data/2018/Autumn18_V7_MC_SF_" + filenameAppend;
-    resFilename = "common/data/2018/Autumn18_V7_MC_PtResolution_" + filenameAppend;
+    resFilename = "2018/Autumn18_V7_MC_PtResolution_" + filenameAppend;
   } else {
     throw runtime_error("Cannot find suitable jet resolution file & scale factors for this year for JetResolutionSmearer");
   }

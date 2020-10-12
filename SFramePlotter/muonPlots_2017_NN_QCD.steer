@@ -2,16 +2,16 @@ SteerPlotter(){
   
   // steering for the plotter
   fCycleName     = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_NNvars_V4_0810_jetsel/muon/NOMINAL/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
-  fInputFiles    = "DATA.DATA.root, MC.TTbar.root, MC.WJets.root, MC.DY.root, MC.ST.root, MC.ZprimeToTT_M2000_W200_2017v2.root"; // name of the input files (second part)
-  fSampleNames   = "      DATA, TTbar, WJets, DY, ST, Zprime_M2000"; // name of chains to be plotted
-  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
-  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples
-  fHistColors =  "        1, 810, 416, 800, 600, 1";   // the colors of the histograms, negative numbers mean no filling
-  fHistMarkers = "        20, 0, 0, 0, 0, -1";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
+  fInputFiles    = "DATA.DATA.root, MC.TTbar.root, MC.WJets.root, MC.QCD.root, MC.Diboson.root, MC.DY.root, MC.ST.root, MC.ZprimeToTT_M2000_W200_2017v2.root"; // name of the input files (second part)
+  fSampleNames   = "      DATA, TTbar, WJets, QCD, Diboson, DY, ST, Zprime_M2000"; // name of chains to be plotted
+  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
+  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples
+  fHistColors =  "        1, 810, 416, 867, 400, 800, 600, 1";   // the colors of the histograms, negative numbers mean no filling
+  fHistMarkers = "        20, 0, 0, 0, 0, 0, 0, -1";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
 
-  fSamplesToStack = "ST, TTbar, WJets, DY"; // the names of chains which you would like to stack (same as in input filenames)
+  fSamplesToStack = "ST, TTbar, WJets, QCD, DY, Diboson"; // the names of chains which you would like to stack (same as in input filenames)
 
-  fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_NNvars_V4_0810_jetsel/muon/NOMINAL/Histo.ps";
+  fOutputPsFile = "/nfs/dust/cms/user/deleokse/analysis/ZPrime_2017/Analysis_NNvars_V4_0810_jetsel/muon/NOMINAL/AllBkg_Histo.ps";
   
   bRatioPlot = true;   // plot ratio histograms?
   bZScoreInRatio = false;   // plot z-score instead of usual ratio

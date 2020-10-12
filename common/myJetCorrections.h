@@ -15,7 +15,6 @@
 #include <fstream>
 
 class FactorizedJetCorrector;
-class GenericJetResolutionSmearer;
 
 void correct_jet(FactorizedJetCorrector & corrector, Jet & jet, const uhh2::Event & event, JetCorrectionUncertainty* jec_unc = NULL, int jec_unc_direction=0);
 
@@ -119,7 +118,7 @@ private:
 
 class GenericSubJetCorrector: public uhh2::AnalysisModule {
 public:
-  explicit GenericSubJetCorrector(uhh2::Context & ctx, const std::vector<std::string> & filenames, const std::string & _collectionname);
+  explicit GenericSubJetCorrector(uhh2::Context & ctx, const std::vector<std::string> & filenames, const std::string & collectionname);
 
   virtual bool process(uhh2::Event & event) override;
 
@@ -127,13 +126,9 @@ public:
 
 private:
   std::unique_ptr<FactorizedJetCorrector> corrector;
-  uhh2::Event::Handle<std::vector<TopJet> > h_topjets;
+  uhh2::Event::Handle<std::vector<TopJet> > h_jets;
   JetCorrectionUncertainty* jec_uncertainty;
   int direction = 0; // -1 = down, +1 = up, 0 = nominal
-  std::string collectionname;
-
-  std::unique_ptr<GenericJetResolutionSmearer> m_gjrs;
-  uhh2::Event::Handle<std::vector<GenTopJet> > h_gentopjets;
 };
 
 /** \brief Cross-clean lepton and jets by subtracting lepton four momenta from nearby jets
@@ -162,15 +157,15 @@ class JetLeptonCleaner: public uhh2::AnalysisModule {
 public:
     // jec_filenames is teh same as for the JetCorrector.
     explicit JetLeptonCleaner(uhh2::Context & ctx, const std::vector<std::string> & jec_filenames);
-
+  
     void set_muon_id(const MuonId & mu_id_){
         mu_id = mu_id_;
     }
-
+  
     void set_electron_id(const ElectronId & ele_id_){
         ele_id = ele_id_;
     }
-
+  
     void set_drmax(double drmax_){
         drmax = drmax_;
     }

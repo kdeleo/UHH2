@@ -352,6 +352,8 @@ void RootPlotter::PlotHistos(const char* psfilename)
     TString dirname(((TObjString*) dirs->At(i))->GetString());
     TString text(dirname.Data());
 
+    if(text!=)
+
     text.Prepend("Plotting all histograms in directory ");
 
     cout << "\n+---------------------- histograms with ratios -----------------------+" << endl;
