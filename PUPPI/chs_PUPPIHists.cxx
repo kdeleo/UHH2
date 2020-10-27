@@ -132,74 +132,74 @@ void PUPPIHists::fill(const Event & event){
       }
   }
 
-/*
+
  
-// Ak8 PUPPI jets SD mass response
-  for (const TopJet & toppuppijet: *event.toppuppijets) {
+// Ak8 CHS jets SD mass response
+  for (const TopJet & topjet: *event.topjets) {
   for (const GenTopJet & gentopjet: *event.gentopjets) {
-       if ( deltaR(gentopjet,toppuppijet)<0.8 && toppuppijet.softdropmass()>=10){
-       hist("H_mSD")->Fill(toppuppijet.softdropmass(),weight);
-       hist("H_pt")->Fill(toppuppijet.pt(),weight);
-       hist("H_mSD_mGEN")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+       if ( deltaR(gentopjet,topjet)<0.8 && topjet.softdropmass()>=10){
+       hist("H_mSD")->Fill(topjet.softdropmass(),weight);
+       hist("H_pt")->Fill(topjet.pt(),weight);
+       hist("H_mSD_mGEN")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          if(trueinteraction>=0 && trueinteraction<=10){
-         hist("H_mSD_mGEN_PU0-10")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU0-10")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=10 && trueinteraction<=20){
-         hist("H_mSD_mGEN_PU10-20")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU10-20")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=20 && trueinteraction<=30){
-         hist("H_mSD_mGEN_PU20-30")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU20-30")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=30 && trueinteraction<=40){
-         hist("H_mSD_mGEN_PU30-40")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU30-40")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=40 && trueinteraction<=50){
-         hist("H_mSD_mGEN_PU40-50")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU40-50")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=50 && trueinteraction<=60){
-         hist("H_mSD_mGEN_PU50-60")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU50-60")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=60 && trueinteraction<=70){
-         hist("H_mSD_mGEN_PU60-70")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU60-70")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
             if (  70 <= gentopjet.softdropmass() && gentopjet.softdropmass() <= 90 ){
-            hist("W_mSD")->Fill(toppuppijet.softdropmass(),weight);
-            hist("W_pt")->Fill(toppuppijet.pt(),weight);
-            hist("W_mSD_mGEN")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+            hist("W_mSD")->Fill(topjet.softdropmass(),weight);
+            hist("W_pt")->Fill(topjet.pt(),weight);
+            hist("W_mSD_mGEN")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               if(trueinteraction>=0 && trueinteraction<=10){
-              hist("W_mSD_PU0-10")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU0-10")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU0-10")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU0-10")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU0-10")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU0-10")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=10 && trueinteraction<=20){
-              hist("W_mSD_PU10-20")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU10-20")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU10-20")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU10-20")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU10-20")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU10-20")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=20 && trueinteraction<=30){
-              hist("W_mSD_PU20-30")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU20-30")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU20-30")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU20-30")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU20-30")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU20-30")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=30 && trueinteraction<=40){
-              hist("W_mSD_PU30-40")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU30-40")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU30-40")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU30-40")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU30-40")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU30-40")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=40 && trueinteraction<=50){
-              hist("W_mSD_PU40-50")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU40-50")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU40-50")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU40-50")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU40-50")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU40-50")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=50 && trueinteraction<=60){
-              hist("W_mSD_PU50-60")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU50-60")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU50-60")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU50-60")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU50-60")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU50-60")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=60 && trueinteraction<=70){
-              hist("W_mSD_PU60-70")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_pt_PU60-70")->Fill(toppuppijet.pt(),weight);
-              hist("W_mSD_mGEN_PU60-70")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU60-70")->Fill(topjet.softdropmass(),weight);
+              hist("W_pt_PU60-70")->Fill(topjet.pt(),weight);
+              hist("W_mSD_mGEN_PU60-70")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
            }
        }
@@ -207,64 +207,64 @@ void PUPPIHists::fill(const Event & event){
   }
 
 
-  // Ak8 PUPPI jets SD mass response pt 400-600
-  for (const TopJet & toppuppijet: *event.toppuppijets) {
+  // Ak8 CHS jets SD mass response pt 400-600
+  for (const TopJet & topjet: *event.topjets) {
   for (const GenTopJet & gentopjet: *event.gentopjets) {
-       if (deltaR(gentopjet,toppuppijet)<0.8 && toppuppijet.softdropmass()>=10){
-       if (toppuppijet.pt()>=400 && toppuppijet.pt()<=600){
-       hist("H_mSD_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-       hist("H_mSD_mGEN_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+       if (deltaR(gentopjet,topjet)<0.8 && topjet.softdropmass()>=10){
+       if (topjet.pt()>=400 && topjet.pt()<=600){
+       hist("H_mSD_pt400-600")->Fill(topjet.softdropmass(),weight);
+       hist("H_mSD_mGEN_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          if(trueinteraction>=0 && trueinteraction<=10){
-         hist("H_mSD_mGEN_PU0-10_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU0-10_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=10 && trueinteraction<=20){
-         hist("H_mSD_mGEN_PU10-20_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU10-20_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=20 && trueinteraction<=30){
-         hist("H_mSD_mGEN_PU20-30_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU20-30_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=30 && trueinteraction<=40){
-         hist("H_mSD_mGEN_PU30-40_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU30-40_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=40 && trueinteraction<=50){
-         hist("H_mSD_mGEN_PU40-50_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU40-50_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=50 && trueinteraction<=60){
-         hist("H_mSD_mGEN_PU50-60_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU50-60_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
          if(trueinteraction>=60 && trueinteraction<=70){
-         hist("H_mSD_mGEN_PU60-70_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+         hist("H_mSD_mGEN_PU60-70_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
          }
             if (  70 <= gentopjet.softdropmass() && gentopjet.softdropmass() <= 90 ){
-            hist("W_mSD_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-            hist("W_mSD_mGEN_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+            hist("W_mSD_pt400-600")->Fill(topjet.softdropmass(),weight);
+            hist("W_mSD_mGEN_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               if(trueinteraction>=0 && trueinteraction<=10){
-              hist("W_mSD_PU0-10_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU0-10_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU0-10_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU0-10_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=10 && trueinteraction<=20){
-              hist("W_mSD_PU10-20_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU10-20_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU10-20_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU10-20_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=20 && trueinteraction<=30){
-              hist("W_mSD_PU20-30_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU20-30_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU20-30_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU20-30_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=30 && trueinteraction<=40){
-              hist("W_mSD_PU30-40_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU30-40_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU30-40_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU30-40_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=40 && trueinteraction<=50){
-              hist("W_mSD_PU40-50_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU40-50_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU40-50_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU40-50_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=50 && trueinteraction<=60){
-              hist("W_mSD_PU50-60_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU50-60_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU50-60_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU50-60_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
               if(trueinteraction>=60 && trueinteraction<=70){
-              hist("W_mSD_PU60-70_pt400-600")->Fill(toppuppijet.softdropmass(),weight);
-              hist("W_mSD_mGEN_PU60-70_pt400-600")->Fill(toppuppijet.softdropmass()/gentopjet.softdropmass(),weight);
+              hist("W_mSD_PU60-70_pt400-600")->Fill(topjet.softdropmass(),weight);
+              hist("W_mSD_mGEN_PU60-70_pt400-600")->Fill(topjet.softdropmass()/gentopjet.softdropmass(),weight);
               }
            }
        }
@@ -274,33 +274,33 @@ void PUPPIHists::fill(const Event & event){
 
 
 
-  // Ak8 PUPPI jets tau21 pt 400-600
-  for (const TopJet & toppuppijet: *event.toppuppijets) {
+  // Ak8 CHS jets tau21 pt 400-600
+  for (const TopJet & topjet: *event.topjets) {
   for (const GenTopJet & gentopjet: *event.gentopjets) {
-      if (deltaR(gentopjet,toppuppijet)<0.8 && toppuppijet.softdropmass()>=10){
-      if (toppuppijet.pt()>=400 && toppuppijet.pt()<=600){
+      if (deltaR(gentopjet,topjet)<0.8 && topjet.softdropmass()>=10){
+      if (topjet.pt()>=400 && topjet.pt()<=600){
          if (  70 <= gentopjet.softdropmass() && gentopjet.softdropmass() <= 90 ){
-            hist("W_tau21_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+            hist("W_tau21_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
             if(trueinteraction>=0 && trueinteraction<=10){
-              hist("W_tau21_PU0-10_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU0-10_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=10 && trueinteraction<=20){
-              hist("W_tau21_PU10-20_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU10-20_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=20 && trueinteraction<=30){
-              hist("W_tau21_PU20-30_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU20-30_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=30 && trueinteraction<=40){
-              hist("W_tau21_PU30-40_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU30-40_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=40 && trueinteraction<=50){
-              hist("W_tau21_PU40-50_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU40-50_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=50 && trueinteraction<=60){
-              hist("W_tau21_PU50-60_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU50-60_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
               if(trueinteraction>=60 && trueinteraction<=70){
-              hist("W_tau21_PU60-70_pt400-600")->Fill(toppuppijet.tau2()/toppuppijet.tau1(),weight);
+              hist("W_tau21_PU60-70_pt400-600")->Fill(topjet.tau2()/topjet.tau1(),weight);
               }
 
          }
@@ -309,7 +309,7 @@ void PUPPIHists::fill(const Event & event){
   }
   }
 
-*/
+
 
 }
 

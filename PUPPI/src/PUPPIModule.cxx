@@ -30,11 +30,11 @@ private:
     
     std::unique_ptr<CommonModules> common;
     
-    std::unique_ptr<JetCleaner> jetcleaner;
+    //std::unique_ptr<JetCleaner> jetcleaner;
    
     // declare the Selections to use. Use unique_ptr to ensure automatic call of delete in the destructor,
     // to avoid memory leaks.
-    std::unique_ptr<Selection> njet_sel;
+    //std::unique_ptr<Selection> njet_sel;
     
     // store the Hists collection as member variables. Again, use unique_ptr to avoid memory leaks.
     std::unique_ptr<Hists> h_nocuts, h_njet;
@@ -64,8 +64,17 @@ PUPPIModule::PUPPIModule(Context & ctx){
     common.reset(new CommonModules());
     // TODO: configure common here, e.g. by 
     // calling common->set_*_id or common->disable_*
+    common->disable_mcpileupreweight();
+    common->disable_mclumiweight();
+    common->disable_lumisel();
+    common->disable_metfilters();
+    common->disable_pvfilter();
+    common->disable_jersmear();
+    common->disable_jec();
+    common->disable_jetpfidfilter();
+    common->switch_jetPtSorter(true);
     common->init(ctx);
-    jetcleaner.reset(new JetCleaner(ctx, 300.0, 2.5)); 
+    //jetcleaner.reset(new JetCleaner(ctx, 300.0, 2.5)); 
     
     // note that the JetCleaner is only kept for the sake of example;
     // instead of constructing a jetcleaner explicitly,
@@ -74,7 +83,7 @@ PUPPIModule::PUPPIModule(Context & ctx){
     // before the 'common->init(ctx)' line.
     
     // 2. set up selections
-    njet_sel.reset(new NJetSelection(2)); // see common/include/NSelections.h
+    //njet_sel.reset(new NJetSelection(2)); // see common/include/NSelections.h
 
     // 3. Set up Hists classes:
     h_nocuts.reset(new PUPPIHists(ctx, "NoCuts"));
@@ -97,17 +106,18 @@ bool PUPPIModule::process(Event & event) {
     
     // 1. run all modules other modules.
     common->process(event);
-    jetcleaner->process(event);
+    //jetcleaner->process(event);
     
     // 2. test selections and fill histograms
     h_nocuts->fill(event);
     
-    bool njet_selection = njet_sel->passes(event);
-    if(njet_selection){
-        h_njet->fill(event);
-    }
+    //bool njet_selection = njet_sel->passes(event);
+    //if(njet_selection){
+    //    h_njet->fill(event);
+    //}
     // 3. decide whether or not to keep the current event in the output:
-    return njet_selection;
+    //return njet_selection;
+return true;
 }
 
 // as we want to run the ExampleCycleNew directly with AnalysisModuleRunner,
