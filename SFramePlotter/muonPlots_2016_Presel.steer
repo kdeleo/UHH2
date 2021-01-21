@@ -1,17 +1,17 @@
 SteerPlotter(){
   
   // steering for the plotter
-  fCycleName     = "/nfs/dust/cms/user/deleokse/RunII_102X_v2/ZPrime_lowmass_HOTVR/ZPrime_2018/Preselection_2018/NOMINAL/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
-  fInputFiles    = "DATA.DATA.root, MC.TTbar.root, MC.WJets.root, MC.DY.root, MC.ST.root, MC.QCD.root, MC.Diboson.root, MC.ZprimeToTT_M500_W50_2018.root, MC.ZprimeToTT_M1000_W100_2018.root"; // name of the input files (second part)
-  fSampleNames   = "      Data, TTbar, WJets, DY, ST, QCD, Diboson, ZprimeToTT_M500_W50, ZprimeToTT_M1000_W100"; // name of chains to be plotted
-  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
-  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples 
-  fHistColors =  "        1, 810, 416, 400,860, 867, 880, 1, 920";   // the colors of the histograms, negative numbers mean no filling
-  fHistMarkers = "        20, 0, 0, 0, 0, 0, 0, -1, -1";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
+  fCycleName     = "/nfs/dust/cms/user/deleokse/RunII_102X_v2/ZPrime_2016/Preselection_2016/NOMINAL/uhh2.AnalysisModuleRunner"; // name of the cycle (first part of the name of the root files)
+  fInputFiles    = "DATA.DATA.root, MC.TTbar.root, MC.WJets.root, MC.DY.root, MC.ST.root, MC.QCD.root, MC.Diboson.root, MC.ZprimeToTT_M1000_W100_2016.root"; // name of the input files (second part)
+  fSampleNames   = "      Data, TTbar, WJets, DY, ST, QCD, Diboson, ZprimeToTT_M1000_W100"; // name of chains to be plotted
+  fSamplesWeight = "      1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0"; // weights applied to the samples (same order as in fInputFiles)
+  fSamplesUnc  = "        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0"; // normalisation uncertainty of individual samples 
+  fHistColors =  "        1, 810, 416, 400,860, 867, 880, 1";   // the colors of the histograms, negative numbers mean no filling
+  fHistMarkers = "        20, 0, 0, 0, 0, 0, 0, -1";   // histogram markers (0=solid line, -1=dashed line, 24=open circle...)
 
   fSamplesToStack = "ST, TTbar, WJets, DY, QCD, Diboson"; // the names of chains which you would like to stack (same as in input filenames)
 
-  fOutputPsFile = "/nfs/dust/cms/user/deleokse/RunII_102X_v2/ZPrime_lowmass_HOTVR/ZPrime_2018/Preselection_2018/NOMINAL/HistoLog.ps";
+  fOutputPsFile = "/nfs/dust/cms/user/deleokse/RunII_102X_v2/ZPrime_2016/Preselection_2016/NOMINAL/HistoLog.ps";
   
   bRatioPlot = true;   // plot ratio histograms?
   bZScoreInRatio = false;   // plot z-score instead of usual ratio
